@@ -1,0 +1,3 @@
+import http from 'node:http';import {readFile} from 'node:fs/promises';
+const files={'/':'index.html','/index.html':'index.html','/style.css':'style.css','/app.js':'app.js','/logo.svg':'logo.svg'};
+http.createServer(async(req,res)=>{const f=files[new URL(req.url,'http://localhost').pathname];if(!f){res.writeHead(404);return res.end('Not found')}try{res.setHeader('Content-Type',({'html':'text/html','css':'text/css','js':'text/javascript','svg':'image/svg+xml'})[f.split('.').pop()]);res.end(await readFile(new URL(f,import.meta.url)))}catch{res.writeHead(500);res.end('Server error')}}).listen(4173,'127.0.0.1',()=>console.log('http://127.0.0.1:4173'));
