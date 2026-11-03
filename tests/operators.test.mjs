@@ -1,0 +1,11 @@
+import test from 'node:test';import assert from 'node:assert/strict';
+import {amount,localDateTime,normalize,validateQuery,searchOperator} from '../lib/operators.mjs';
+import {receiptPages} from '../receipts.js';
+const query={card:'1234567890123456',start:'2026-01-01',end:'2026-01-31',operator:'astra'};
+const row={no_kartu:query.card,tgl_transaksi:'2026-01-02T12:34:56',tarif:'6.000',saldo:'15.000',struk_no:'TEST',gb_asal:'A',gb_tujuan:'B',gol:1};
+test('validates dates and permitted operators',()=>{assert.deepEqual(validateQuery(query),query);for(const q of [{...query,start:'2026-02-30'},{...query,end:'2025-01-01'},{...query,operator:'jtd'},{...query,card:'123'}])assert.throws(()=>validateQuery(q));});
+test('parses Indonesian money and rejects corrupt amounts',()=>{assert.equal(amount('6.000'),6000);assert.equal(amount('Rp 1.234,50'),1234.5);assert.equal(amount(0),0);assert.equal(amount('oops'),null);assert.equal(amount(-1),null);});
+test('operator dates retain wall clock',()=>assert.equal(localDateTime('02/01/2026  12:34:56'),'2026-01-02T12:34:56'));
+test('normalization excludes wrong card and out-of-range data',()=>{assert.equal(normalize(row,'mms',query).fare,6000);assert.equal(normalize({...row,no_kartu:'9999999999999999'},'mms',query),null);assert.equal(normalize({...row,tgl_transaksi:'2025-01-01T12:00'},'mms',query),null);assert.throws(()=>normalize({...row,tarif:'bad'},'mms',query));});
+test('partial upstream failure retains valid source and deduplicates',async()=>{const result=await searchOperator(query,async url=>{if(url.includes('margaharjaya'))throw new Error('network');return new Response(JSON.stringify({data:url.includes(':2001')?[]:[row,row,{...row,tarif:'bad'}]}));});assert.equal(result.transactions.length,1);assert.equal(result.sources[0].status,'partial');assert.equal(result.sources[1].status,'error');assert.equal(result.sources[2].status,'success');});
+test('receipt markup escapes operator data and separates sources/pages',()=>{const r=normalize({...row,gb_asal:'<script>alert(1)</script>'},'mms',query);const html=receiptPages(Array.from({length:10},()=>r),query);assert.equal((html.match(/class="receipt-page/g)||[]).length,2);assert.ok(!html.includes('<script>'));assert.ok(html.includes('&lt;script&gt;'));});

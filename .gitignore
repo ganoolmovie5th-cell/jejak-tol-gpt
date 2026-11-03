@@ -3,3 +3,8 @@ node_modules/
 .DS_Store
 .vercel/
 .env*
+android/.gradle/
+android/local.properties
+android/**/build/
+*.jks
+*.keystore

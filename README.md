@@ -1,31 +1,36 @@
-# SakuKartu
+# SakuKartu — Struk Tol
 
-Aplikasi web berbahasa Indonesia untuk pencatatan kartu uang elektronik. Identitas visual asli dengan logo SVG dompet/kartu, warna forest green dan mint. Dibangun dari awal tanpa menyalin kode atau aset CekSaldo.
+Website pencarian transaksi tol berdasarkan nomor kartu, tanggal, dan operator. Responsif untuk iPhone, Android, dan desktop; tanpa NFC atau instalasi.
 
 ## Fitur
-- Tambah, edit, hapus kartu: e-Money, Flazz, BRIZZI, TapCash, KMT, JakCard, MegaCash.
-- Saldo **manual**, ringkasan pengeluaran dan isi saldo bulan berjalan.
-- Transaksi dengan pembaruan saldo, pencarian, filter, dan pembatalan transaksi.
-- Ekspor CSV (mengikuti filter) dengan mitigasi formula injection; cetak PDF lewat browser.
-- Privasi nominal, penyimpanan localStorage, data demo opsional yang ditandai.
-- Responsif, dialog native, label formulir, navigasi keyboard.
-
-## Batasan yang disengaja
-Browser tidak dapat membaca saldo e-money melalui Web NFC: API NDEF tidak menyediakan low-level ISO-DEP/APDU. Tidak ada scan palsu, top-up fisik, sinkronisasi bank, atau pengambilan struk operator. Untuk pembacaan kartu diperlukan aplikasi native/bridge dan implementasi protokol yang terverifikasi. https://developer.chrome.com/docs/capabilities/nfc
-
-Data hanya ada di browser/perangkat ini, tidak terenkripsi oleh aplikasi, dan dapat hilang saat data browser dihapus. CSV merupakan laporan, bukan format restore. Tidak ada backend, login, telemetry, atau API key. Google Fonts dimuat sebagai resource eksternal dengan font fallback lokal. Batas saldo/nominal pencatatan: Rp1 miliar. Mengedit saldo langsung tidak membuat transaksi penyesuaian. Demo memakai saldo akhir contoh.
+- Astra Tol: Tangerang–Merak (MMS), Jombang–Mojokerto (MHI), Cikopo–Palimanan (LMS).
+- Serbaraja: Serpong–Balaraja.
+- JTD, BSD Tol, Tol Makassar, Citra Persada, JLB ditandai **Segera**, belum diintegrasikan.
+- Pencarian paralel, status masing-masing sumber, filter, urutan, tabel/kartu, pilihan transaksi, pratinjau dan unduhan PDF A4.
+- Tidak menyimpan nomor kartu/transaksi di database atau localStorage. POST API dan respons no-store; jangan aktifkan request-body logging di hosting.
 
 ## Lokal
-Node.js 20+; tidak perlu dependensi.
+Node.js 22 atau lebih baru.
 
 ```sh
-npm run dev
-# http://127.0.0.1:4173
+npm ci
+npm test
 npm run build
+npm run dev
 ```
+Buka http://127.0.0.1:4173. Build ulang setelah mengubah sumber.
 
-## Deploy Vercel
-Impor repo ini, pilih framework **Other**, build command `npm run build`, output directory `dist`. Konfigurasi sudah ada di `vercel.json`. Tidak perlu environment variable atau database. Branch produksi: `main`.
+## Vercel
+Import repository, branch `main`, framework **Other**. `vercel.json` mengatur build `npm run build`, output `dist`, serta fungsi `api/search.js`. Tidak memerlukan environment variable. Pastikan versi Node proyek 22 atau lebih baru. Uji konektivitas operator setelah deployment: akses dari jaringan Vercel dapat berbeda dari jaringan lokal, khususnya port LMS 2001.
 
-## Struktur
-`index.html`, `style.css`, `app.js`, `logo.svg` adalah sumber aplikasi; `build.mjs` membuat output statis; `server.mjs` hanya server pengembangan lokal.
+## Data dan struk
+API server hanya menghubungi origin operator yang ditentukan dalam kode. Periode maksimal 93 hari; Astra menyatakan retensi 30 hari sehingga hasil lebih lama tidak dijamin lengkap. Saldo adalah saldo saat transaksi.
+
+PDF dibuat di browser dari data operator, mengikuti struktur cetak resmi dan memakai logo operator sebagai identitas sumber. PDF ini bukan berkas asli yang diterbitkan operator; kesamaan piksel 100% tidak dijamin. Provenance SakuKartu tercetak di bawah. Tautan ke situs operator tersedia untuk memperoleh salinan langsung. PDF berbasis raster seperti alur cetak Astra, sehingga teksnya tidak dapat diseleksi.
+
+Batas 180 transaksi per PDF untuk membatasi memori perangkat. Pembatas 12 permintaan per menit per instance adalah best effort, bukan pembatas terdistribusi. Untuk trafik besar, gunakan proteksi/rate limit hosting. Tidak ada kunci API operator; endpoint publik bisa berubah atau dibatasi sewaktu-waktu. Tidak ada login, email, atau pengiriman struk otomatis.
+
+## Validasi
+Pengujian lokal 3 November 2026 dengan kartu yang diizinkan pemilik: 14 transaksi MMS, 0 MHI, 0 LMS, 1 Serbaraja. Nomor kartu dan respons mentah tidak disertakan dalam repository. Tes otomatis menggunakan data sintetis.
+
+SakuKartu independen dan tidak berafiliasi dengan operator. Logo operator tetap milik pemiliknya. Lihat `docs/operators.md`.
