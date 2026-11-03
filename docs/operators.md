@@ -16,3 +16,7 @@ Tidak memakai endpoint email. Payload operator dinormalisasi; nomor kartu yang b
 Logo grayscale MMS/MHI/LMS serta watermark berasal dari aset publik Astra: `/logo_header-grayscale.png`, `/mhi-grayscale.png`, `/lms-grayscale.png`, `/watermark-astra-infra.png`. Logo Serbaraja berasal dari aset publik situs Serbaraja. Digunakan untuk mengidentifikasi sumber transaksi, bukan menyatakan afiliasi.
 
 Astra mengubah halaman cetak menjadi gambar dengan html2canvas dan jsPDF; Serbaraja membuka template cetak browser. Tidak ditemukan URL PDF asli yang tetap. Implementasi ini merekonstruksi tata letak, mengelompokkan per ruas/operator, dan menambahkan asal pembuatan SakuKartu. Perbedaan tipografi, paginasi, dan revisi situs dapat menghasilkan perbedaan visual.
+
+## Penyelarasan contoh PDF
+
+Template diperiksa terhadap PDF resmi yang diberikan pengguna pada 3 November 2026. Astra memakai urutan timestamp mentah, termasuk akhiran zona waktu, 9 struk per halaman, header hanya pada halaman pertama, watermark ukuran asli, dan teks overload beserta gerbang tujuan sesuai kondisi situs. Font fallback Arial mengikuti hasil contoh, dengan ukuran 12px/20px pada detail. Serbaraja mempertahankan detik, golongan Romawi, tabel bertitik dua, dan format kartu berkelompok. Tidak menyalin tanggal cetak lama, header/footer browser, atau mengklaim file dicetak langsung oleh situs operator. Kesamaan biner/piksel lintas browser tidak dijamin.

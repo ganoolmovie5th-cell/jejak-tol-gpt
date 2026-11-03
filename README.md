@@ -26,7 +26,7 @@ Import repository, branch `main`, framework **Other**. `vercel.json` mengatur bu
 ## Data dan struk
 API server hanya menghubungi origin operator yang ditentukan dalam kode. Periode maksimal 93 hari; Astra menyatakan retensi 30 hari sehingga hasil lebih lama tidak dijamin lengkap. Saldo adalah saldo saat transaksi.
 
-PDF dibuat di browser dari data operator, mengikuti struktur cetak resmi dan memakai logo operator sebagai identitas sumber. PDF ini bukan berkas asli yang diterbitkan operator; kesamaan piksel 100% tidak dijamin. Provenance SakuKartu tercetak di bawah. Tautan ke situs operator tersedia untuk memperoleh salinan langsung. PDF berbasis raster seperti alur cetak Astra, sehingga teksnya tidak dapat diseleksi.
+PDF dibuat di browser dari data operator, mengikuti struktur cetak resmi dan memakai logo operator sebagai identitas sumber. PDF ini bukan berkas asli yang diterbitkan operator; kesamaan piksel 100% tidak dijamin. Asal pembuatan SakuKartu tercatat dalam metadata PDF; footer Serbaraja menyebut sumber data dan SakuKartu. Header/footer bawaan browser (tanggal cetak, URL about:blank, nomor halaman) pada contoh Serbaraja tidak disalin karena bukan bagian data struk. Tautan ke situs operator tersedia untuk memperoleh salinan langsung. PDF berbasis raster seperti alur cetak Astra, sehingga teksnya tidak dapat diseleksi.
 
 Batas 180 transaksi per PDF untuk membatasi memori perangkat. Pembatas 12 permintaan per menit per instance adalah best effort, bukan pembatas terdistribusi. Untuk trafik besar, gunakan proteksi/rate limit hosting. Tidak ada kunci API operator; endpoint publik bisa berubah atau dibatasi sewaktu-waktu. Tidak ada login, email, atau pengiriman struk otomatis.
 

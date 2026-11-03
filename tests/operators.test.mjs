@@ -9,3 +9,16 @@ test('operator dates retain wall clock',()=>assert.equal(localDateTime('02/01/20
 test('normalization excludes wrong card and out-of-range data',()=>{assert.equal(normalize(row,'mms',query).fare,6000);assert.equal(normalize({...row,no_kartu:'9999999999999999'},'mms',query),null);assert.equal(normalize({...row,tgl_transaksi:'2025-01-01T12:00'},'mms',query),null);assert.throws(()=>normalize({...row,tarif:'bad'},'mms',query));});
 test('partial upstream failure retains valid source and deduplicates',async()=>{const result=await searchOperator(query,async url=>{if(url.includes('margaharjaya'))throw new Error('network');return new Response(JSON.stringify({data:url.includes(':2001')?[]:[row,row,{...row,tarif:'bad'}]}));});assert.equal(result.transactions.length,1);assert.equal(result.sources[0].status,'partial');assert.equal(result.sources[1].status,'error');assert.equal(result.sources[2].status,'success');});
 test('receipt markup escapes operator data and separates sources/pages',()=>{const r=normalize({...row,gb_asal:'<script>alert(1)</script>'},'mms',query);const html=receiptPages(Array.from({length:10},()=>r),query);assert.equal((html.match(/class="receipt-page/g)||[]).length,2);assert.ok(!html.includes('<script>'));assert.ok(html.includes('&lt;script&gt;'));});
+test('official receipt details preserve gate instructions, raw-time order and seconds',async()=>{
+ const {overloadInstruction}=await import('../receipts.js');
+ const first=normalize({...row,ol:1,gb_asal:'Balaraja Timur',gb_tujuan:'Cikupa 2'},'mms',query);
+ assert.equal(overloadInstruction(first),'Anda Harus Keluar Gerbang Balaraja Barat');
+ assert.equal(overloadInstruction({...first,exit:'Balaraja Barat'}),'');
+ const second={...first,rawDate:first.rawDate+'.000+07:00',exit:'CIKUPA',overload:false};
+ const html=receiptPages([first,second],query);
+ assert.ok(html.indexOf('GERBANG CIKUPA<')<html.indexOf('GERBANG Cikupa 2<'));
+ assert.ok(html.includes('Kendaraan Overload Tidak Patuh'));
+ const serba={...first,source:'serbaraja',rawDate:'02/01/2026  12:34:56',vehicleClass:'1',exit:''};
+ const printed=receiptPages([serba],query);
+ assert.ok(printed.includes('12:34:56'));assert.ok(printed.includes('Golongan I'));assert.ok(!printed.includes('Terima Kasih'));assert.ok(!printed.includes('Total Transaksi :'));
+});
