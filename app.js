@@ -4,6 +4,10 @@ import '@fontsource/roboto/700.css';
 import '@fontsource/roboto/900.css';
 import {escapeHTML as e,money,dateLabel,receiptPages,savePDF} from './receipts.js';
 import {ARCHIVE_START,searchWindows,mergeTransactions,abortableDelay} from './lib/search-plan.mjs';
+import { inject } from '@vercel/analytics';
+
+// Initialize Vercel Web Analytics
+inject();
 const $=id=>document.getElementById(id);
 let rows=[],statuses=[],selected=new Set(),filter='all',view='table',query=null,previewRows=[],controller=null,loading=false,exporting=false;
 const today=()=>new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Jakarta',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
