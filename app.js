@@ -5,7 +5,7 @@ import '@fontsource/roboto/900.css';
 import {escapeHTML as e,money,dateLabel,receiptPages,savePDF} from './receipts.js';
 import {ARCHIVE_START,searchWindows,mergeTransactions,abortableDelay} from './lib/search-plan.mjs';
 const $=id=>document.getElementById(id);
-let rows=[],statuses=[],selected=new Set(),filter='all',view='table',query=null,previewRows=[],controller=null,loading=false,exporting=false;
+let rows=[],statuses=[],selected=new Set(),filter='all',view=matchMedia('(max-width:700px)').matches?'card':'table',query=null,previewRows=[],controller=null,loading=false,exporting=false;
 const today=()=>new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Jakarta',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
 function period(days){$('archive-hint').hidden=true;const end=today(),start=new Date(end+'T00:00:00Z');start.setUTCDate(start.getUTCDate()-days+1);$('start').value=start.toISOString().slice(0,10);$('end').value=end;}
 period(7);$('start').max=$('end').max=today();
@@ -32,6 +32,7 @@ function render(){
 $('select-all').onchange=()=>{visible().forEach(r=>$('select-all').checked?selected.add(r.id):selected.delete(r.id));render();};
 document.querySelectorAll('[data-filter]').forEach(b=>b.onclick=()=>{filter=b.dataset.filter;document.querySelectorAll('[data-filter]').forEach(t=>t.classList.toggle('selected',t===b));render();});
 $('sort').onchange=render;
+for(const mode of ['table','card']){$(mode+'-view').classList.toggle('selected',view===mode);$(mode+'-view').setAttribute('aria-pressed',String(view===mode));}
 for(const mode of ['table','card'])$(mode+'-view').onclick=()=>{view=mode;for(const m of ['table','card']){$(m+'-view').classList.toggle('selected',m===mode);$(m+'-view').setAttribute('aria-pressed',String(m===mode));}render();};
 $('search-form').onsubmit=async event=>{
  event.preventDefault();$('form-error').hidden=true;
@@ -79,7 +80,11 @@ $('search-form').onsubmit=async event=>{
 };
 $('stop-search').onclick=()=>controller?.abort();
 $('clear-results').onclick=()=>{controller?.abort();controller=null;rows=[];statuses=[];query=null;selected.clear();previewRows=[];$('receipt-pages').replaceChildren();$('receipt-dialog').close();$('results').hidden=true;$('search-progress').hidden=true;$('search-button').disabled=false;loading=false;};
-function showPreview(list){previewRows=list;$('receipt-pages').innerHTML=receiptPages(list,query);$('receipt-dialog').showModal();}
+let previewEnlarged=false;
+function fitReceipt(){const scroll=$('receipt-pages').parentElement;const width=scroll.clientWidth-parseFloat(getComputedStyle(scroll).paddingLeft)-parseFloat(getComputedStyle(scroll).paddingRight);$('receipt-pages').style.zoom=previewEnlarged?1:Math.min(1,width/794);$('preview-size').textContent=previewEnlarged?'Pas layar':'Perbesar';$('preview-size').setAttribute('aria-pressed',String(previewEnlarged));}
+new ResizeObserver(()=>{if($('receipt-dialog').open)fitReceipt();}).observe($('receipt-dialog'));
+$('preview-size').onclick=()=>{previewEnlarged=!previewEnlarged;fitReceipt();};
+function showPreview(list){previewRows=list;previewEnlarged=false;$('receipt-pages').innerHTML=receiptPages(list,query);$('receipt-dialog').showModal();fitReceipt();}
 $('preview').onclick=()=>showPreview(rows.filter(r=>selected.has(r.id)));$('close-dialog').onclick=()=>$('receipt-dialog').close();
 let timer;function toast(message){$('toast').textContent=message;$('toast').hidden=false;clearTimeout(timer);timer=setTimeout(()=>$('toast').hidden=true,6000);}
 async function download(list){if(exporting)return;exporting=true;selection();$('dialog-download').disabled=true;toast('Menyiapkan PDF…');try{await savePDF(list,{...query});toast('PDF siap. Periksa unduhan browser Anda.');}catch(err){toast(err.message||'PDF gagal dibuat. Coba lagi.');}finally{exporting=false;selection();$('dialog-download').disabled=false;}}

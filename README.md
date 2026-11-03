@@ -1,5 +1,8 @@
 # JejakTol — Struk Tol
 
+Repository: https://github.com/ganoolmovie5th-cell/jejaktol
+Folder lokal: `Downloads/github/jejaktol`.
+
 Website pencarian transaksi tol berdasarkan nomor kartu, tanggal, dan operator. Responsif untuk iPhone, Android, dan desktop; tanpa NFC atau instalasi.
 
 ## Fitur
@@ -34,3 +37,7 @@ Batas 180 transaksi per PDF untuk membatasi memori perangkat. Pembatas 12 permin
 Pengujian lokal 3 November 2026 dengan kartu yang diizinkan pemilik: 14 transaksi MMS, 0 MHI, 0 LMS, 1 Serbaraja. Nomor kartu dan respons mentah tidak disertakan dalam repository. Tes otomatis menggunakan data sintetis.
 
 JejakTol independen dan tidak berafiliasi dengan operator. Logo operator tetap milik pemiliknya. Lihat `docs/operators.md`.
+
+## Pemeriksaan responsif
+
+Diperiksa pada viewport 320, 360, 390, 412, dan 768 piksel: tidak ada overflow halaman horizontal. Ponsel memakai tampilan kartu secara default; tabel tetap bisa dipilih dan digulir di dalam panel. Input 16px, kontrol sentuh diperbesar, tanggal ditumpuk pada layar paling sempit. Pratinjau A4 menyesuaikan lebar dialog, dengan tombol Perbesar/Pas layar; ekspor memakai root A4 terpisah. Pencarian, pemilihan transaksi, dan zoom preview diuji di browser desktop pada ukuran mobile, belum di perangkat iOS/Android fisik.
