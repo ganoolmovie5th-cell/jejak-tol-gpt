@@ -7,7 +7,9 @@ import {ARCHIVE_START,searchWindows,mergeTransactions,abortableDelay} from './li
 import { inject } from '@vercel/analytics';
 
 // Initialize Vercel Web Analytics
-inject();
+inject({
+  mode: 'production'
+});
 const $=id=>document.getElementById(id);
 let rows=[],statuses=[],selected=new Set(),filter='all',view='table',query=null,previewRows=[],controller=null,loading=false,exporting=false;
 const today=()=>new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Jakarta',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
