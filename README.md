@@ -48,3 +48,9 @@ Diperiksa pada viewport 320, 360, 390, 412, dan 768 piksel: tidak ada overflow h
 ## Vercel Web Analytics
 
 PR #1 dan #2 pemasangan Analytics sudah merged. Loader produksi dan endpoint `/_vercel/insights/script.js` terverifikasi tersedia (HTTP 200) pada 3 November 2026. Pesan dashboard “Error creating pull request” adalah kegagalan alur pembuatan PR, bukan bukti script Analytics belum terpasang; jangan membuat PR pemasangan berulang. Status event pada dashboard belum diverifikasi karena memerlukan login. Analytics dinonaktifkan di localhost; query string dan hash dihapus sebelum pageview dikirim. Jangan mengirim nomor kartu atau detail transaksi sebagai custom event.
+
+## Domain dan indeks pencarian
+
+Domain utama: https://www.jejak-tol.web.id/. Canonical, Open Graph, dan WebSite JSON-LD menggunakan domain ini. `sitemap.xml` memuat halaman utama saja; hasil transaksi bersifat sementara dan tidak memiliki URL publik. `robots.txt` mengizinkan halaman publik dan mengecualikan `/api/`. Kedua file ikut disalin ke `dist/` saat build.
+
+Aset logo disimpan lokal; sumber dan atribusi ada di `assets/brands/SOURCES.md`.

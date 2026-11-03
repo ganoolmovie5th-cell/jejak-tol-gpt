@@ -11,5 +11,5 @@ http.createServer(async(req,res)=>{
  }
  const path=resolve(root,'.'+(pathname==='/'?'/index.html':pathname));
  if(!path.startsWith(root+sep)){res.writeHead(403);return res.end();}
- try{if(!(await stat(path)).isFile())throw new Error();const mime={'.html':'text/html','.css':'text/css','.js':'application/javascript','.svg':'image/svg+xml','.png':'image/png','.woff':'font/woff','.woff2':'font/woff2'};res.setHeader('Content-Type',mime[extname(path)]||'application/octet-stream');res.setHeader('Cache-Control','no-store');res.end(await readFile(path));}catch{res.writeHead(404);res.end('Not found');}
+ try{if(!(await stat(path)).isFile())throw new Error();const mime={'.html':'text/html','.css':'text/css','.js':'application/javascript','.xml':'application/xml','.txt':'text/plain','.svg':'image/svg+xml','.png':'image/png','.woff':'font/woff','.woff2':'font/woff2'};res.setHeader('Content-Type',mime[extname(path)]||'application/octet-stream');res.setHeader('Cache-Control','no-store');res.end(await readFile(path));}catch{res.writeHead(404);res.end('Not found');}
 }).listen(4173,'127.0.0.1',()=>console.log('JejakTol: http://127.0.0.1:4173'));
