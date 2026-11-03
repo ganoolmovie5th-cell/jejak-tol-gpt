@@ -21,7 +21,7 @@ export function receiptPages(rows,query){
   for(let offset=0;offset<group.length;offset+=9){
    const slice=group.slice(offset,offset+9);
    if(source==='serbaraja'){
-    pages.push(`<section class="receipt-page serba-page"><div class="serba-info"><div>Card Number: <b class="mono">${e(groupCard(query.card,' '))}</b></div><div>Period: <b>${e(query.start)} — ${e(query.end)}</b></div><div>Total Transactions: <b>${group.length}</b></div></div><div class="serba-grid">${slice.map(r=>serbaTicket(r,query.card)).join('')}</div><div class="serba-footer">Data from serbaraja.sinarmasland.com · Disusun SakuKartu · This is a digital receipt</div></section>`);
+    pages.push(`<section class="receipt-page serba-page"><div class="serba-info"><div>Card Number: <b class="mono">${e(groupCard(query.card,' '))}</b></div><div>Period: <b>${e(query.start)} — ${e(query.end)}</b></div><div>Total Transactions: <b>${group.length}</b></div></div><div class="serba-grid">${slice.map(r=>serbaTicket(r,query.card)).join('')}</div><div class="serba-footer">Data from serbaraja.sinarmasland.com · Disusun JejakTol · This is a digital receipt</div></section>`);
    }else{
     pages.push(`<section class="receipt-page astra-page">${offset===0?`<header class="print-heading"><strong>${e(group[0].company)}</strong><span>ASTRA Infra Struk Digital Transaksi Toll</span></header>`:''}<div class="print-grid">${slice.map(astraTicket).join('')}</div>${offset+9>=group.length?`<div class="print-total">Total Transaksi : ${e(rupiah(group.reduce((s,r)=>s+r.fare,0),true))}</div>`:''}</section>`);
    }
@@ -36,9 +36,9 @@ export async function savePDF(rows,query){
  const root=document.getElementById('pdf-render-root');root.innerHTML=receiptPages(rows,query);
  try{
   await document.fonts.ready;await Promise.all([...root.querySelectorAll('img')].map(img=>img.decode()));
-  const pdf=new jsPDF({orientation:'portrait',unit:'mm',format:'a4'});pdf.setProperties({title:'Struk transaksi tol',author:'SakuKartu',subject:'Disusun dari data operator'});
+  const pdf=new jsPDF({orientation:'portrait',unit:'mm',format:'a4'});pdf.setProperties({title:'Struk transaksi tol',author:'JejakTol',subject:'Disusun dari data operator'});
   const pages=[...root.children];
   for(let i=0;i<pages.length;i++){const canvas=await html2canvas(pages[i],{scale:2,backgroundColor:'#ffffff',logging:false,scrollX:0,scrollY:0,windowWidth:1440});if(i)pdf.addPage();pdf.addImage(canvas.toDataURL('image/jpeg',1),'JPEG',0,0,210,297);canvas.width=0;canvas.height=0;}
-  pdf.save(`SakuKartu-${query.start}-${query.end}.pdf`);
+  pdf.save(`JejakTol-${query.start}-${query.end}.pdf`);
  }finally{root.replaceChildren();}
 }

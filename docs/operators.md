@@ -15,7 +15,7 @@ Tidak memakai endpoint email. Payload operator dinormalisasi; nomor kartu yang b
 ## Aset dan cetak
 Logo grayscale MMS/MHI/LMS serta watermark berasal dari aset publik Astra: `/logo_header-grayscale.png`, `/mhi-grayscale.png`, `/lms-grayscale.png`, `/watermark-astra-infra.png`. Logo Serbaraja berasal dari aset publik situs Serbaraja. Digunakan untuk mengidentifikasi sumber transaksi, bukan menyatakan afiliasi.
 
-Astra mengubah halaman cetak menjadi gambar dengan html2canvas dan jsPDF; Serbaraja membuka template cetak browser. Tidak ditemukan URL PDF asli yang tetap. Implementasi ini merekonstruksi tata letak, mengelompokkan per ruas/operator, dan menambahkan asal pembuatan SakuKartu. Perbedaan tipografi, paginasi, dan revisi situs dapat menghasilkan perbedaan visual.
+Astra mengubah halaman cetak menjadi gambar dengan html2canvas dan jsPDF; Serbaraja membuka template cetak browser. Tidak ditemukan URL PDF asli yang tetap. Implementasi ini merekonstruksi tata letak, mengelompokkan per ruas/operator, dan menambahkan asal pembuatan JejakTol. Perbedaan tipografi, paginasi, dan revisi situs dapat menghasilkan perbedaan visual.
 
 ## Penyelarasan contoh PDF
 

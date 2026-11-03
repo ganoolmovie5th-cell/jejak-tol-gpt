@@ -1,4 +1,4 @@
-# SakuKartu — Struk Tol
+# JejakTol — Struk Tol
 
 Website pencarian transaksi tol berdasarkan nomor kartu, tanggal, dan operator. Responsif untuk iPhone, Android, dan desktop; tanpa NFC atau instalasi.
 
@@ -24,13 +24,13 @@ Buka http://127.0.0.1:4173. Build ulang setelah mengubah sumber.
 Import repository, branch `main`, framework **Other**. `vercel.json` mengatur build `npm run build`, output `dist`, serta fungsi `api/search.js`. Tidak memerlukan environment variable. Pastikan versi Node proyek 22 atau lebih baru. Uji konektivitas operator setelah deployment: akses dari jaringan Vercel dapat berbeda dari jaringan lokal, khususnya port LMS 2001.
 
 ## Data dan struk
-API server hanya menghubungi origin operator yang ditentukan dalam kode. Periode maksimal 93 hari; Astra menyatakan retensi 30 hari sehingga hasil lebih lama tidak dijamin lengkap. Saldo adalah saldo saat transaksi.
+API server hanya menghubungi origin operator yang ditentukan dalam kode. Tidak ada batas total rentang tanggal. Tombol Sejak awal mengisi tanggal 1970-01-01 secara transparan (bukan klaim awal arsip operator). Pencarian berjalan per lima tahun kalender dari terbaru ke terlama, dengan jeda 6,1 detik antarpanggilan, penggabungan ID unik, status kegagalan per periode, dan tombol berhenti yang mempertahankan hasil. Rentang dengan hasil kosong tidak menghentikan pencarian periode sebelumnya. Astra menyatakan retensi 30 hari sehingga hasil lebih lama tidak dijamin lengkap. Saldo adalah saldo saat transaksi.
 
-PDF dibuat di browser dari data operator, mengikuti struktur cetak resmi dan memakai logo operator sebagai identitas sumber. PDF ini bukan berkas asli yang diterbitkan operator; kesamaan piksel 100% tidak dijamin. Asal pembuatan SakuKartu tercatat dalam metadata PDF; footer Serbaraja menyebut sumber data dan SakuKartu. Header/footer bawaan browser (tanggal cetak, URL about:blank, nomor halaman) pada contoh Serbaraja tidak disalin karena bukan bagian data struk. Tautan ke situs operator tersedia untuk memperoleh salinan langsung. PDF berbasis raster seperti alur cetak Astra, sehingga teksnya tidak dapat diseleksi.
+PDF dibuat di browser dari data operator, mengikuti struktur cetak resmi dan memakai logo operator sebagai identitas sumber. PDF ini bukan berkas asli yang diterbitkan operator; kesamaan piksel 100% tidak dijamin. Asal pembuatan JejakTol tercatat dalam metadata PDF; footer Serbaraja menyebut sumber data dan JejakTol. Header/footer bawaan browser (tanggal cetak, URL about:blank, nomor halaman) pada contoh Serbaraja tidak disalin karena bukan bagian data struk. Tautan ke situs operator tersedia untuk memperoleh salinan langsung. PDF berbasis raster seperti alur cetak Astra, sehingga teksnya tidak dapat diseleksi.
 
 Batas 180 transaksi per PDF untuk membatasi memori perangkat. Pembatas 12 permintaan per menit per instance adalah best effort, bukan pembatas terdistribusi. Untuk trafik besar, gunakan proteksi/rate limit hosting. Tidak ada kunci API operator; endpoint publik bisa berubah atau dibatasi sewaktu-waktu. Tidak ada login, email, atau pengiriman struk otomatis.
 
 ## Validasi
 Pengujian lokal 3 November 2026 dengan kartu yang diizinkan pemilik: 14 transaksi MMS, 0 MHI, 0 LMS, 1 Serbaraja. Nomor kartu dan respons mentah tidak disertakan dalam repository. Tes otomatis menggunakan data sintetis.
 
-SakuKartu independen dan tidak berafiliasi dengan operator. Logo operator tetap milik pemiliknya. Lihat `docs/operators.md`.
+JejakTol independen dan tidak berafiliasi dengan operator. Logo operator tetap milik pemiliknya. Lihat `docs/operators.md`.
