@@ -1,3 +1,4 @@
+import {operators,operatorName} from './lib/operator-catalog.mjs';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
@@ -7,9 +8,7 @@ import {ARCHIVE_START,searchWindows,mergeTransactions,abortableDelay} from './li
 import { inject } from '@vercel/analytics';
 
 // Initialize Vercel Web Analytics
-inject({
-  mode: 'production'
-});
+if(!['localhost','127.0.0.1','::1'].includes(location.hostname))inject({mode:'production',beforeSend(event){const url=new URL(event.url,location.origin);url.search='';url.hash='';return {...event,url:url.href};}});
 const $=id=>document.getElementById(id);
 let rows=[],statuses=[],selected=new Set(),filter='all',view=matchMedia('(max-width:700px)').matches?'card':'table',query=null,previewRows=[],controller=null,loading=false,exporting=false;
 const today=()=>new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Jakarta',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
@@ -23,11 +22,11 @@ const visible=()=>rows.filter(r=>filter==='all'||r.operator===filter).sort((a,b)
 function selection(){const list=visible();$('selected-count').textContent=`${selected.size} dipilih`;$('select-all').checked=!!list.length&&list.every(r=>selected.has(r.id));$('select-all').indeterminate=list.some(r=>selected.has(r.id))&&!$('select-all').checked;$('preview').disabled=$('download').disabled=!selected.size||exporting;}
 function render(){
  const list=visible();$('count').textContent=rows.length;$('total').textContent=money(rows.reduce((s,r)=>s+r.fare,0));$('operator-count').textContent=`${new Set(rows.map(r=>r.operator)).size} operator`;
- for(const op of ['all','astra','serbaraja'])$('tab-'+op).textContent=rows.filter(r=>op==='all'||r.operator===op).length;
- $('source-status').innerHTML=statuses.map(s=>`<div class="source-chip ${s.status==='pending'?'pending':s.status!=='success'?'error-status':''}">${e(s.name)} · ${s.status==='pending'?e(s.message||'Menghubungkan…'):s.status==='success'?`${s.count} transaksi`:e(s.message)}${s.status==='error'?` <a href="${s.source==='serbaraja'?'https://serbaraja.sinarmasland.com/':'https://www.astratol.co.id/'}" target="_blank" rel="noopener noreferrer">Situs resmi ↗</a>`:''}</div>`).join('');
- const check=r=>`<input type="checkbox" data-select="${r.id}" ${selected.has(r.id)?'checked':''} aria-label="Pilih transaksi ${e(r.dateTime)}">`,badge=r=>`<span class="operator-label ${r.operator}">${r.operator==='astra'?'Astra Tol':'Serbaraja'}</span>`,preview=r=>`<button class="row-preview" data-preview="${r.id}" aria-label="Pratinjau transaksi">↗</button>`;
+ for(const op of ['all',...Object.keys(operators)])$('tab-'+op).textContent=rows.filter(r=>op==='all'||r.operator===op).length;
+ $('source-status').innerHTML=statuses.map(s=>`<div class="source-chip ${s.status==='pending'?'pending':s.status!=='success'?'error-status':''}">${e(s.name)} · ${s.status==='pending'?e(s.message||'Menghubungkan…'):s.status==='success'?`${s.count} transaksi`:e(s.message)}${s.status==='error'?` <a href="${operators[s.source]?.url||operators.astra.url}" target="_blank" rel="noopener noreferrer">Situs resmi ↗</a>`:''}</div>`).join('');
+ const check=r=>`<input type="checkbox" data-select="${r.id}" ${selected.has(r.id)?'checked':''} aria-label="Pilih transaksi ${e(r.dateTime)}">`,badge=r=>`<span class="operator-label ${r.operator}">${e(operatorName(r.operator))}</span>`,preview=r=>`${r.originalReceiptUrl?`<a class="row-preview" href="${e(r.originalReceiptUrl)}" target="_blank" rel="noopener noreferrer" aria-label="Struk asli operator">↓</a>`:''}<button class="row-preview" data-preview="${r.id}" aria-label="Pratinjau transaksi">↗</button>`;
  $('transaction-rows').innerHTML=list.map(r=>`<tr><td>${check(r)}</td><td>${e(r.dateTime.slice(0,10))}<small>${e(r.dateTime.slice(11))}</small></td><td class="route-cell">${e(r.entry||'—')} <span>→</span> ${e(r.exit||'—')}<small>${e(r.road)}${r.integrated?' · Integrasi':''}</small></td><td>${badge(r)}</td><td>${e(r.vehicleClass)}<small>${e(r.bank)}</small></td><td class="right fare">${money(r.fare)}</td><td class="right">${money(r.balance)}</td><td>${preview(r)}</td></tr>`).join('');
- $('transaction-cards').innerHTML=list.map(r=>`<article class="transaction-card"><div class="transaction-card-head">${check(r)}${badge(r)}</div><h3>${e(r.entry||'—')} → ${e(r.exit||'—')}</h3><p>${e(dateLabel(r.dateTime))}</p><p>${e(r.road)}</p><dl><dt>Bank / Golongan</dt><dd>${e(r.bank)} / ${e(r.vehicleClass)}</dd><dt>Tarif</dt><dd>${money(r.fare)}</dd><dt>Sisa saldo</dt><dd>${money(r.balance)}</dd></dl><button class="secondary" data-preview="${r.id}">Lihat struk ↗</button></article>`).join('');
+ $('transaction-cards').innerHTML=list.map(r=>`<article class="transaction-card"><div class="transaction-card-head">${check(r)}${badge(r)}</div><h3>${e(r.entry||'—')} → ${e(r.exit||'—')}</h3><p>${e(dateLabel(r.dateTime))}</p><p>${e(r.road)}</p>${r.originalReceiptUrl?`<a href="${e(r.originalReceiptUrl)}" target="_blank" rel="noopener noreferrer">Unduh struk asli ↗</a>`:''}<dl><dt>Bank / Golongan</dt><dd>${e(r.bank)} / ${e(r.vehicleClass)}</dd><dt>Tarif</dt><dd>${money(r.fare)}</dd><dt>Sisa saldo</dt><dd>${money(r.balance)}</dd></dl><button class="secondary" data-preview="${r.id}">Lihat struk ↗</button></article>`).join('');
  $('table-container').hidden=view!=='table'||!list.length;$('transaction-cards').hidden=view!=='card'||!list.length;$('empty-results').hidden=!!list.length;
  $('empty-title').textContent=loading?'Mencari jejak perjalanan…':statuses.every(s=>s.status==='error')?'Operator belum dapat dihubungi':'Belum ada transaksi untuk pilihan ini';
  $('empty-message').textContent=loading?'Hasil akan muncul saat setiap operator selesai merespons.':'Periksa nomor kartu, tanggal, dan status operator di atas. Anda juga bisa mencoba situs resmi.';
@@ -47,7 +46,7 @@ $('search-form').onsubmit=async event=>{
  let periods;try{periods=searchWindows(q.start,q.end);}catch{error=error||'Tanggal tidak valid.';}
  if(error){$('form-error').textContent=error;$('form-error').hidden=false;return;}
  controller?.abort();controller=new AbortController();const active=controller;query=q;rows=[];selected.clear();loading=true;
- const ops=$('operator').value==='all'?['astra','serbaraja']:[$('operator').value];statuses=ops.map(op=>({source:op,name:op==='astra'?'Astra Tol':'Serbaraja',status:'pending'}));
+ const ops=$('operator').value==='all'?Object.keys(operators):[$('operator').value];statuses=ops.map(op=>({source:op,name:operatorName(op),status:'pending'}));
  $('results').hidden=false;$('query-summary').textContent=`Kartu •••• ${q.card.slice(-4)} · ${q.start} — ${q.end}`;$('retention-note').hidden=!ops.includes('astra')||(Date.parse(today())-Date.parse(q.start))/86400000<=30;$('search-button').disabled=true;render();$('results').scrollIntoView({behavior:'smooth',block:'start'});
  const jobs=periods.flatMap(period=>ops.map(operator=>({...period,operator})));let completed=0;const sourceTotals=new Map();
  $('search-progress').hidden=false;$('progress-bar').max=jobs.length;$('progress-bar').value=0;$('stop-search').disabled=false;
@@ -55,12 +54,13 @@ $('search-form').onsubmit=async event=>{
  try{
   for(const job of jobs){
    if(active.signal.aborted)break;
-   $('progress-detail').textContent=`${job.operator==='astra'?'Astra Tol':'Serbaraja'} · ${job.start} — ${job.end}${completed?' · Mengambil arsip berikutnya…':''}`;
+   $('progress-detail').textContent=`${operatorName(job.operator)} · ${job.start} — ${job.end}${completed?' · Mengambil arsip berikutnya…':''}`;
    // Ten requests/minute leaves room under the server's 12/minute safety limit.
    if(completed)await abortableDelay(6100,active.signal);
    const response=await fetch('/api/search',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({...q,...job}),signal:active.signal});
    const data=await response.json();if(!response.ok)throw new Error(data.error||'Pencarian gagal.');if(controller!==active)return;
-   rows=mergeTransactions(rows,data.transactions);
+   const previousCount=rows.length;rows=mergeTransactions(rows,data.transactions);
+   if(data.nextPage){if(rows.length===previousCount){for(const source of data.sources){source.status='partial';source.message='Operator mengulang halaman yang sama; buka situs resmi untuk memeriksa kelengkapan.';}}else{jobs.splice(completed+1,0,{...job,page:data.nextPage});$('progress-bar').max=jobs.length;}}
    for(const source of data.sources){
     const total=sourceTotals.get(source.source)||{...source,count:0,failed:[],partial:[],checked:0};total.checked++;
     if(source.status==='error')total.failed.push(`${job.start} — ${job.end}: ${source.message}`);

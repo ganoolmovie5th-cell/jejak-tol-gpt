@@ -3,7 +3,7 @@ import {amount,localDateTime,normalize,validateQuery,searchOperator} from '../li
 import {receiptPages} from '../receipts.js';
 const query={card:'1234567890123456',start:'2026-01-01',end:'2026-01-31',operator:'astra'};
 const row={no_kartu:query.card,tgl_transaksi:'2026-01-02T12:34:56',tarif:'6.000',saldo:'15.000',struk_no:'TEST',gb_asal:'A',gb_tujuan:'B',gol:1};
-test('validates dates and permitted operators',()=>{assert.deepEqual(validateQuery(query),query);for(const q of [{...query,start:'2026-02-30'},{...query,end:'2025-01-01'},{...query,operator:'jtd'},{...query,card:'123'}])assert.throws(()=>validateQuery(q));});
+test('validates dates and permitted operators',()=>{assert.deepEqual(validateQuery(query),query);for(const q of [{...query,start:'2026-02-30'},{...query,end:'2025-01-01'},{...query,operator:'ctp'},{...query,card:'123'}])assert.throws(()=>validateQuery(q));});
 test('parses Indonesian money and rejects corrupt amounts',()=>{assert.equal(amount('6.000'),6000);assert.equal(amount('Rp 1.234,50'),1234.5);assert.equal(amount(0),0);assert.equal(amount('oops'),null);assert.equal(amount(-1),null);});
 test('operator dates retain wall clock',()=>assert.equal(localDateTime('02/01/2026  12:34:56'),'2026-01-02T12:34:56'));
 test('normalization excludes wrong card and out-of-range data',()=>{assert.equal(normalize(row,'mms',query).fare,6000);assert.equal(normalize({...row,no_kartu:'9999999999999999'},'mms',query),null);assert.equal(normalize({...row,tgl_transaksi:'2025-01-01T12:00'},'mms',query),null);assert.throws(()=>normalize({...row,tarif:'bad'},'mms',query));});

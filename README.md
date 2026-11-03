@@ -1,14 +1,17 @@
 # JejakTol — Struk Tol
 
-Repository: https://github.com/ganoolmovie5th-cell/jejaktol
-Folder lokal: `Downloads/github/jejaktol`.
+Repository: https://github.com/ganoolmovie5th-cell/jejak-tol-gpt
+Folder lokal: `Downloads/github/jejak-tol-gpt`.
 
 Website pencarian transaksi tol berdasarkan nomor kartu, tanggal, dan operator. Responsif untuk iPhone, Android, dan desktop; tanpa NFC atau instalasi.
 
 ## Fitur
 - Astra Tol: Tangerang–Merak (MMS), Jombang–Mojokerto (MHI), Cikopo–Palimanan (LMS).
 - Serbaraja: Serpong–Balaraja.
-- JTD, BSD Tol, Tol Makassar, Citra Persada, JLB ditandai **Segera**, belum diintegrasikan.
+- JTD, BSD Tol, Tol Makassar, Citra Persada, JLB tersedia untuk pencarian; CTP Tollways ditandai **Segera**.
+- API Citra saat pengujian mengalami timeout. JTD/BSD/Makassar/JLB mengembalikan hasil kosong untuk kartu dan periode yang diizinkan; hasil berisi transaksi masih perlu validasi dengan contoh nyata.
+- Pagination BSD/Makassar diambil bertahap. JLB menggunakan cookie dan token CSRF per permintaan.
+- JTD menyertakan tautan unduh asli jika diberikan API. PDF gabungan lima operator baru berupa rekap JejakTol, belum reproduksi format resmi.
 - Pencarian paralel, status masing-masing sumber, filter, urutan, tabel/kartu, pilihan transaksi, pratinjau dan unduhan PDF A4.
 - Tidak menyimpan nomor kartu/transaksi di database atau localStorage. POST API dan respons no-store; jangan aktifkan request-body logging di hosting.
 
@@ -41,3 +44,7 @@ JejakTol independen dan tidak berafiliasi dengan operator. Logo operator tetap m
 ## Pemeriksaan responsif
 
 Diperiksa pada viewport 320, 360, 390, 412, dan 768 piksel: tidak ada overflow halaman horizontal. Ponsel memakai tampilan kartu secara default; tabel tetap bisa dipilih dan digulir di dalam panel. Input 16px, kontrol sentuh diperbesar, tanggal ditumpuk pada layar paling sempit. Pratinjau A4 menyesuaikan lebar dialog, dengan tombol Perbesar/Pas layar; ekspor memakai root A4 terpisah. Pencarian, pemilihan transaksi, dan zoom preview diuji di browser desktop pada ukuran mobile, belum di perangkat iOS/Android fisik.
+
+## Vercel Web Analytics
+
+PR #1 dan #2 pemasangan Analytics sudah merged. Loader produksi dan endpoint `/_vercel/insights/script.js` terverifikasi tersedia (HTTP 200) pada 3 November 2026. Pesan dashboard “Error creating pull request” adalah kegagalan alur pembuatan PR, bukan bukti script Analytics belum terpasang; jangan membuat PR pemasangan berulang. Status event pada dashboard belum diverifikasi karena memerlukan login. Analytics dinonaktifkan di localhost; query string dan hash dihapus sebelum pageview dikirim. Jangan mengirim nomor kartu atau detail transaksi sebagai custom event.

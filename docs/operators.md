@@ -20,3 +20,14 @@ Astra mengubah halaman cetak menjadi gambar dengan html2canvas dan jsPDF; Serbar
 ## Penyelarasan contoh PDF
 
 Template diperiksa terhadap PDF resmi yang diberikan pengguna pada 3 November 2026. Astra memakai urutan timestamp mentah, termasuk akhiran zona waktu, 9 struk per halaman, header hanya pada halaman pertama, watermark ukuran asli, dan teks overload beserta gerbang tujuan sesuai kondisi situs. Font fallback Arial mengikuti hasil contoh, dengan ukuran 12px/20px pada detail. Serbaraja mempertahankan detik, golongan Romawi, tabel bertitik dua, dan format kartu berkelompok. Tidak menyalin tanggal cetak lama, header/footer browser, atau mengklaim file dicetak langsung oleh situs operator. Kesamaan biner/piksel lintas browser tidak dijamin.
+
+## Operator tambahan (3 November 2026)
+
+- JTD: GET `https://bc01.jtd.co.id/api/jlp/beranda/struk`, query tglAwal, tglAkhir, noKartu. Array data; field waktu, nama_gerbang, gardu, saldo, tarif, resi, link_api. Link unduhan dibatasi origin bc01.jtd.co.id.
+- BSD: GET `https://www.bsdtol.com/struk` dengan header X-Requested-With XMLHttpRequest dan query kartu, tanggal_awal, tanggal_akhir, start, length (DataTables).
+- Makassar: GET `https://tolmakassar.com/struk`, header AJAX, query kartu, tanggal_awal (00:00:00), tanggal_akhir (23:59:59), page. Halaman berikut diminta sampai kosong atau penanda akhir.
+- Citra: frontend https://struk.citrapersada.net memakai POST https://struk.citrapersada.co.id/getStruk, JSON no_card (kelompok 4 digit dipisahkan tanda hubung), tgl_awal, tgl_akhir (ISO). Array query. Endpoint mengalami timeout dari jaringan pengujian, bukan bukti nihil transaksi.
+- JLB: GET lalu POST https://strukdigital.jlbjorrw1.com/struk, token _token dan cookie sesi baru, field card_number, start_date, end_date. Parser konservatif untuk struk dengan checkboxs[]; bentuk tidak dikenal dilaporkan partial dan pengguna diarahkan ke situs resmi, tidak disisipkan HTML operator. Uji nyata menghasilkan halaman tanpa struk; parser transaksi berisi diuji dengan fixture sintetis saja.
+- CTP Tollways: https://www.ctptollways.co.id/cetak-struk tetap Segera.
+
+Tidak menambah counter cetak atau mengirim email ke operator. Hasil uji kosong tidak membuktikan seluruh bentuk data produksi sudah tervalidasi. PDF operator tambahan diberi label Rekap transaksi, bukan salinan resmi.

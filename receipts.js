@@ -1,3 +1,4 @@
+import {operators} from './lib/operator-catalog.mjs';
 export const escapeHTML = value => String(value ?? '').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export const money = n => n === null ? '—' : new Intl.NumberFormat('id-ID',{style:'currency',currency:'IDR',maximumFractionDigits:0}).format(n);
 export const dateLabel = s => new Date(s).toLocaleString('id-ID',{dateStyle:'full',timeStyle:'short'});
@@ -15,12 +16,14 @@ function astraTicket(r){const e=escapeHTML;return `<article class="print-ticket"
 function serbaTicket(r,card){const e=escapeHTML;const roman=['','I','II','III','IV','V','VI'][Number(r.vehicleClass)]||r.vehicleClass;return `<article class="serba-ticket"><div class="serba-logo"><img src="/assets/serbaraja.png" alt="Serbaraja"></div><div class="serba-call">Layanan Toll : 021 50502300</div><div class="serba-gate"><strong>${e((r.entry||'GERBANG —').split(' - ')[0])}</strong><div>${e(r.rawDate)}</div><div>Golongan ${e(roman)}${r.exit?`, dari ${e(r.exit)}`:''}</div></div><div class="serba-divider"></div><table class="serba-detail"><tbody>${[['Bank',r.bank],['e-TollCard',groupCard(card,' ')],['Tarif',rupiah(r.fare)],['Sisa Saldo',rupiah(r.balance)],['No. Resi',r.receiptNo||'—']].map(([k,v])=>`<tr><td>${k}</td><td>:</td><td class="${k==='e-TollCard'?'mono':''}">${e(v)}</td></tr>`).join('')}</tbody></table></article>`;}
 export function receiptPages(rows,query){
  const e=escapeHTML,pages=[];
- for(const source of ['mms','mhi','lms','serbaraja']){
+ for(const source of ['mms','mhi','lms','serbaraja','jtd','bsd','makassar','citra','jlb']){
   // The official Astra export compares the original timestamp strings, including their suffixes.
-  const group=rows.filter(r=>r.source===source).sort((a,b)=>source==='serbaraja'?b.dateTime.localeCompare(a.dateTime):b.rawDate.localeCompare(a.rawDate));
+  const group=rows.filter(r=>r.source===source).sort((a,b)=>['mms','mhi','lms'].includes(source)?b.rawDate.localeCompare(a.rawDate):b.dateTime.localeCompare(a.dateTime));
   for(let offset=0;offset<group.length;offset+=9){
    const slice=group.slice(offset,offset+9);
-   if(source==='serbaraja'){
+   if(!['mms','mhi','lms','serbaraja'].includes(source)){
+    pages.push(`<section class="receipt-page recap-page"><header><strong>${e(operators[source].name)}</strong><span>Rekap transaksi · JejakTol</span></header><p>${e(query.start)} — ${e(query.end)}</p><div class="recap-grid">${slice.map(r=>`<article><h3>${e(r.exit||r.road)}</h3><p>${e(r.dateTime.replace('T',' '))}</p><dl>${[['No. Kartu',groupCard(r.card)],['Bank',r.bank||'—'],['Golongan',r.vehicleClass||'—'],['Tarif',rupiah(r.fare)],['Saldo',rupiah(r.balance)],['No. Resi',r.receiptNo||'—']].map(([k,v])=>`<dt>${k}</dt><dd>${e(v)}</dd>`).join('')}</dl></article>`).join('')}</div><p class="recap-note">Disusun dari data ${e(operators[source].name)}. Rekap ini bukan salinan cetakan resmi operator.</p></section>`);
+   }else if(source==='serbaraja'){
     pages.push(`<section class="receipt-page serba-page"><div class="serba-info"><div>Card Number: <b class="mono">${e(groupCard(query.card,' '))}</b></div><div>Period: <b>${e(query.start)} — ${e(query.end)}</b></div><div>Total Transactions: <b>${group.length}</b></div></div><div class="serba-grid">${slice.map(r=>serbaTicket(r,query.card)).join('')}</div><div class="serba-footer">Data from serbaraja.sinarmasland.com · Disusun JejakTol · This is a digital receipt</div></section>`);
    }else{
     pages.push(`<section class="receipt-page astra-page">${offset===0?`<header class="print-heading"><strong>${e(group[0].company)}</strong><span>ASTRA Infra Struk Digital Transaksi Toll</span></header>`:''}<div class="print-grid">${slice.map(astraTicket).join('')}</div>${offset+9>=group.length?`<div class="print-total">Total Transaksi : ${e(rupiah(group.reduce((s,r)=>s+r.fare,0),true))}</div>`:''}</section>`);
