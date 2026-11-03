@@ -1,3 +1,4 @@
+import {detectCardBrand} from './lib/card-brand.mjs';
 import {operators,operatorName} from './lib/operator-catalog.mjs';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
@@ -12,12 +13,18 @@ if(!['localhost','127.0.0.1','::1'].includes(location.hostname))inject({mode:'pr
 const $=id=>document.getElementById(id);
 let rows=[],statuses=[],selected=new Set(),filter='all',view=matchMedia('(max-width:700px)').matches?'card':'table',query=null,previewRows=[],controller=null,loading=false,exporting=false;
 const today=()=>new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Jakarta',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
-function period(days){$('archive-hint').hidden=true;const end=today(),start=new Date(end+'T00:00:00Z');start.setUTCDate(start.getUTCDate()-days+1);$('start').value=start.toISOString().slice(0,10);$('end').value=end;}
+function syncDates(){for(const id of ['start','end']){const value=$(id).value;$(id+'-display').textContent=value?value.split('-').reverse().join(' / '):'Pilih tanggal';}}
+function updateCardBrand(){const brand=detectCardBrand($('card').value);$('card-brand-icon').innerHTML=brand?`<img src="/assets/brands/${brand.id}.svg" alt="">`:'▣';$('card-brand-icon').classList.toggle('recognized',!!brand);$('card-brand-status').textContent=brand?`Perkiraan jenis kartu: ${brand.name}.`:'Jenis kartu belum dikenali.';}
+function period(days){$('archive-hint').hidden=true;const end=today(),start=new Date(end+'T00:00:00Z');start.setUTCDate(start.getUTCDate()-days+1);$('start').value=start.toISOString().slice(0,10);$('end').value=end;syncDates();}
 period(7);$('start').max=$('end').max=today();
 document.querySelectorAll('[data-days]').forEach(b=>b.onclick=()=>period(Number(b.dataset.days)));
-$('all-history').onclick=()=>{$('start').value=ARCHIVE_START;$('end').value=today();$('archive-hint').hidden=false;};
-$('start').onchange=()=>{$('archive-hint').hidden=$('start').value!==ARCHIVE_START;};
-$('card').oninput=()=>{$('card').value=$('card').value.replace(/\D/g,'').slice(0,16).replace(/(.{4})(?=.)/g,'$1 ');};
+$('all-history').onclick=()=>{$('start').value=ARCHIVE_START;$('end').value=today();$('archive-hint').hidden=false;syncDates();};
+for(const id of ['start','end'])$(id).addEventListener('input',syncDates);
+$('end').onchange=syncDates;
+$('start').onchange=()=>{$('archive-hint').hidden=$('start').value!==ARCHIVE_START;syncDates();};
+$('card').oninput=()=>{$('card').value=$('card').value.replace(/\D/g,'').slice(0,16).replace(/(.{4})(?=.)/g,'$1 ');updateCardBrand();};
+$('card').addEventListener('change',updateCardBrand);
+window.addEventListener('pageshow',()=>{updateCardBrand();syncDates();});
 const visible=()=>rows.filter(r=>filter==='all'||r.operator===filter).sort((a,b)=>$('sort').value==='asc'?a.dateTime.localeCompare(b.dateTime):b.dateTime.localeCompare(a.dateTime));
 function selection(){const list=visible();$('selected-count').textContent=`${selected.size} dipilih`;$('select-all').checked=!!list.length&&list.every(r=>selected.has(r.id));$('select-all').indeterminate=list.some(r=>selected.has(r.id))&&!$('select-all').checked;$('preview').disabled=$('download').disabled=!selected.size||exporting;}
 function render(){
