@@ -54,3 +54,7 @@ PR #1 dan #2 pemasangan Analytics sudah merged. Loader produksi dan endpoint `/_
 Domain utama: https://www.jejak-tol.web.id/. Canonical, Open Graph, dan WebSite JSON-LD menggunakan domain ini. `sitemap.xml` memuat halaman utama saja; hasil transaksi bersifat sementara dan tidak memiliki URL publik. `robots.txt` mengizinkan halaman publik dan mengecualikan `/api/`. Kedua file ikut disalin ke `dist/` saat build.
 
 Aset logo disimpan lokal; sumber dan atribusi ada di `assets/brands/SOURCES.md`.
+
+## Google Tag Manager
+
+Container `GTM-5DMPHWB2` dimuat sekali melalui `index.html`. Data layer diinisialisasi sebelum script async, dengan event startup GTM dan fungsi `gtag` sesuai permintaan. Fallback noscript dipasang setelah tag body. Tidak ada event pencarian, nomor kartu, atau transaksi yang ditambahkan ke dataLayer oleh kode aplikasi; konfigurasi tag/trigger di dalam container dikelola melalui GTM.
