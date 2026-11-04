@@ -1,3 +1,4 @@
+import {trackEvent} from './lib/analytics.mjs';
 import {detectCardBrand} from './lib/card-brand.mjs';
 import {operators,operatorName} from './lib/operator-catalog.mjs';
 import '@fontsource/roboto/400.css';
@@ -84,6 +85,7 @@ $('search-form').onsubmit=async event=>{
  }finally{
   if(controller===active){loading=false;$('search-button').disabled=false;$('stop-search').disabled=true;updateProgress();
    statuses=statuses.map(s=>s.status==='pending'?{...s,status:'partial',message:'Belum selesai diperiksa.'}:s);
+   if(completed===jobs.length&&!active.signal.aborted&&statuses.every(s=>s.status==='success'))trackEvent('toll_search_success');
    if(completed===jobs.length)$('progress-detail').textContent='Pencarian selesai. Hasil mencakup arsip yang dikembalikan operator; periksa status sumber untuk periode yang gagal.';
    else {$('progress-label').textContent=`Pencarian belum lengkap · ${completed}/${jobs.length} tahap`;$('progress-detail').textContent=active.signal.aborted?'Pencarian dihentikan. Hasil yang sudah ditemukan tetap tersedia.':$('progress-detail').textContent;}
    render();
@@ -100,5 +102,5 @@ $('preview-size').onclick=()=>{previewEnlarged=!previewEnlarged;fitReceipt();};
 function showPreview(list){previewRows=list;previewEnlarged=false;$('receipt-pages').innerHTML=receiptPages(list,query);$('receipt-dialog').showModal();fitReceipt();}
 $('preview').onclick=()=>showPreview(rows.filter(r=>selected.has(r.id)));$('close-dialog').onclick=()=>$('receipt-dialog').close();
 let timer;function toast(message){$('toast').textContent=message;$('toast').hidden=false;clearTimeout(timer);timer=setTimeout(()=>$('toast').hidden=true,6000);}
-async function download(list){if(exporting)return;exporting=true;selection();$('dialog-download').disabled=true;toast('Menyiapkan PDF…');try{await savePDF(list,{...query});toast('PDF siap. Periksa unduhan browser Anda.');}catch(err){toast(err.message||'PDF gagal dibuat. Coba lagi.');}finally{exporting=false;selection();$('dialog-download').disabled=false;}}
+async function download(list){if(exporting)return;exporting=true;selection();$('dialog-download').disabled=true;toast('Menyiapkan PDF…');try{await savePDF(list,{...query});trackEvent('toll_pdf_download');toast('PDF siap. Periksa unduhan browser Anda.');}catch(err){toast(err.message||'PDF gagal dibuat. Coba lagi.');}finally{exporting=false;selection();$('dialog-download').disabled=false;}}
 $('download').onclick=()=>download(rows.filter(r=>selected.has(r.id)));$('dialog-download').onclick=()=>download(previewRows);
