@@ -44,7 +44,9 @@ function renderFavorites(){
  $('clear-favorites').hidden=!favoriteCards.length;
 }
 function loadFavorites(){try{favoriteCards=readFavorites(localStorage);renderFavorites();}catch{$('favorite-message').textContent='Favorit tidak dapat dibaca. Anda tetap bisa mengetik nomor kartu untuk mencari.';$('clear-favorites').hidden=false;}}
-$('save-favorite').onclick=()=>{try{favoriteCards=saveFavorite(localStorage,$('card').value,$('favorite-name').value);renderFavorites();$('favorite-message').textContent='Kartu disimpan di browser perangkat ini.';}catch(err){$('favorite-message').textContent=err.name==='Error'?err.message:'Penyimpanan tidak tersedia. Anda tetap bisa mencari tanpa menyimpan kartu.';}};
+$('add-favorite').onclick=()=>{$('favorite-card').value=$('card').value;$('favorite-name').value='';$('favorite-error').textContent='';$('favorite-dialog').showModal();$('favorite-card').focus();};
+$('cancel-favorite').onclick=()=>$('favorite-dialog').close();
+$('favorite-form').onsubmit=event=>{event.preventDefault();try{favoriteCards=saveFavorite(localStorage,$('favorite-card').value,$('favorite-name').value);renderFavorites();$('card').value=$('favorite-card').value.replace(/\s/g,'').replace(/(.{4})(?=.)/g,'$1 ');updateCardBrand();$('favorite-dialog').close();$('favorite-message').textContent='Kartu disimpan dan siap dipakai untuk pencarian.';}catch(err){$('favorite-error').textContent=err.name==='Error'?err.message:'Penyimpanan browser tidak tersedia.';}};
 $('clear-favorites').onclick=()=>{try{clearFavorites(localStorage);favoriteCards=[];renderFavorites();$('favorite-message').textContent='Semua kartu favorit dihapus.';}catch{$('favorite-message').textContent='Penyimpanan tidak dapat diakses. Hapus data situs lewat pengaturan browser.';}};
 window.addEventListener('storage',event=>{if(event.key===null||event.key==='jejaktol.favorite-cards.v1')loadFavorites();});
 loadFavorites();
@@ -119,12 +121,12 @@ $('search-form').onsubmit=async event=>{
 $('stop-search').onclick=()=>controller?.abort();
 $('clear-results').onclick=()=>{controller?.abort();controller=null;rows=[];statuses=[];query=null;selected.clear();previewRows=[];$('receipt-pages').replaceChildren();$('receipt-dialog').close();$('results').hidden=true;$('search-progress').hidden=true;$('search-button').disabled=false;loading=false;};
 let previewEnlarged=false;
-function fitReceipt(){const scroll=$('receipt-pages').parentElement;const width=scroll.clientWidth-parseFloat(getComputedStyle(scroll).paddingLeft)-parseFloat(getComputedStyle(scroll).paddingRight);$('receipt-pages').style.zoom=previewEnlarged?1:Math.min(1,width/794);$('preview-size').textContent=previewEnlarged?'Pas layar':'Perbesar';$('preview-size').setAttribute('aria-pressed',String(previewEnlarged));}
+function fitReceipt(){const scroll=$('receipt-pages').parentElement;const width=scroll.clientWidth-parseFloat(getComputedStyle(scroll).paddingLeft)-parseFloat(getComputedStyle(scroll).paddingRight);$('receipt-pages').style.zoom=previewEnlarged?1.5:Math.min(1,width/794);$('preview-size').textContent=previewEnlarged?'Pas layar':'Perbesar';$('preview-size').setAttribute('aria-pressed',String(previewEnlarged));}
 new ResizeObserver(()=>{if($('receipt-dialog').open)fitReceipt();}).observe($('receipt-dialog'));
 $('preview-size').onclick=()=>{previewEnlarged=!previewEnlarged;fitReceipt();};
 function showPreview(list){previewRows=list;previewEnlarged=false;$('receipt-pages').innerHTML=receiptPages(list,query);$('receipt-dialog').showModal();fitReceipt();}
 $('preview').onclick=()=>showPreview(rows.filter(r=>selected.has(r.id)));$('close-dialog').onclick=()=>$('receipt-dialog').close();
 let timer;function toast(message){$('toast').textContent=message;$('toast').hidden=false;clearTimeout(timer);timer=setTimeout(()=>$('toast').hidden=true,6000);}
 async function download(list,format='pdf'){if(exporting)return;exporting=true;selection();$('dialog-download').disabled=true;toast(`Menyiapkan ${format==='xlsx'?'Excel':format.toUpperCase()}…`);try{if(format==='pdf'){await savePDF(list,{...query});trackEvent('toll_pdf_download');}else {saveSpreadsheet(list,format);trackEvent(format==='csv'?'toll_csv_download':'toll_excel_download');}toast('File siap. Periksa unduhan browser Anda.');}catch(err){trackEvent('toll_download_failed');toast(err.message||'File gagal dibuat. Coba lagi.');}finally{exporting=false;selection();$('dialog-download').disabled=false;}}
-$('export-format').onchange=()=>{$('download').textContent='↓ Unduh '+({pdf:'PDF',csv:'CSV',xlsx:'Excel'}[$('export-format').value]);};
+$('export-format').onchange=()=>{$('download').setAttribute('aria-label','Unduh '+({pdf:'PDF',csv:'CSV',xlsx:'Excel'}[$('export-format').value]));};
 $('download').onclick=()=>download(rows.filter(r=>selected.has(r.id)),$('export-format').value);$('dialog-download').onclick=()=>download(previewRows);

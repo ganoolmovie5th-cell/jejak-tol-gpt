@@ -12,3 +12,5 @@ Operator sources:
 - Makassar: https://tolmakassar.com/nita/nita-logo-blue.png (current website brand)
 - Citra: https://struk.citrapersada.net/assets/logos-c7fc0840.png
 - JLB: https://strukdigital.jlbjorrw1.com/assets/img/JLB_Logo.png
+
+JakCard and BTN SVGs: IDN Finlogos, same license as other card SVGs. BTN Blink is shown using the BTN logo and a text product label (not a recreated Blink logo).
