@@ -36,8 +36,8 @@ function renderFavorites(){
  $('favorite-list').replaceChildren();
  const groups=new Map();
  for(const item of favoriteCards){
-  const brand=detectCardBrand(item.card)?.name||'Kartu lainnya';
-  if(!groups.has(brand)){const group=document.createElement('details');group.open=true;const title=document.createElement('summary');title.textContent=brand;const list=document.createElement('ul');group.append(title,list);$('favorite-list').append(group);groups.set(brand,list);}
+  const detected=detectCardBrand(item.card),brand=detected?.name||'Kartu lainnya';
+  if(!groups.has(brand)){const group=document.createElement('details');group.open=true;const title=document.createElement('summary');if(detected){const logo=document.createElement('img');logo.src=`/assets/brands/${detected.id}.svg`;logo.alt=brand;title.append(logo);}else title.textContent=brand;const list=document.createElement('ul');group.append(title,list);$('favorite-list').append(group);groups.set(brand,list);}
   const li=document.createElement('li');li.className='favorite-item';
   const use=document.createElement('button');use.type='button';use.className='favorite-use';use.textContent=item.name;
   const detail=document.createElement('small');detail.textContent=`${detectCardBrand(item.card)?.name||'Kartu'} · •••• ${item.card.slice(-4)}`;use.append(detail);
@@ -135,8 +135,8 @@ $('preview-size').onclick=()=>{previewEnlarged=!previewEnlarged;fitReceipt();};
 function showPreview(list){previewRows=list;previewEnlarged=false;$('receipt-pages').innerHTML=receiptPages(list,query);$('receipt-dialog').showModal();fitReceipt();}
 $('preview').onclick=()=>showPreview(rows.filter(r=>selected.has(r.id)));$('close-dialog').onclick=()=>$('receipt-dialog').close();
 let timer;function toast(message){$('toast').textContent=message;$('toast').hidden=false;clearTimeout(timer);timer=setTimeout(()=>$('toast').hidden=true,6000);}
-async function download(list,format='pdf'){if(exporting)return;exporting=true;selection();$('dialog-download').disabled=true;toast(`Menyiapkan ${format==='xlsx'?'Excel':format.toUpperCase()}…`);try{if(format==='pdf'){await savePDF(list,{...query});trackEvent('toll_pdf_download');}else {saveSpreadsheet(list,format);trackEvent(format==='csv'?'toll_csv_download':'toll_excel_download');}toast('File siap. Periksa unduhan browser Anda.');}catch(err){trackEvent('toll_download_failed');toast(err.message||'File gagal dibuat. Coba lagi.');}finally{exporting=false;selection();$('dialog-download').disabled=false;}}
+async function download(list,format='pdf'){if(exporting)return;exporting=true;selection();toast(`Menyiapkan ${format==='xlsx'?'Excel':format.toUpperCase()}…`);try{if(format==='pdf'){await savePDF(list,{...query});trackEvent('toll_pdf_download');}else {saveSpreadsheet(list,format);trackEvent(format==='csv'?'toll_csv_download':'toll_excel_download');}toast('File siap. Periksa unduhan browser Anda.');}catch(err){trackEvent('toll_download_failed');toast(err.message||'File gagal dibuat. Coba lagi.');}finally{exporting=false;selection();}}
 $('export-format').onchange=()=>{$('download').setAttribute('aria-label','Unduh '+({pdf:'PDF',csv:'CSV',xlsx:'Excel'}[$('export-format').value]));};
-$('download').onclick=()=>download(rows.filter(r=>selected.has(r.id)),$('export-format').value);$('dialog-download').onclick=()=>download(previewRows);
+$('download').onclick=()=>download(rows.filter(r=>selected.has(r.id)),$('export-format').value);
 
 setupDisplayPreferences();
