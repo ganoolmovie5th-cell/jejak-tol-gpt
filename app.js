@@ -39,7 +39,7 @@ function renderFavorites(){
  const groups=new Map();
  for(const item of favoriteCards){
   const detected=detectCardBrand(item.card),brand=detected?.name||'Kartu lainnya';
-  if(!groups.has(brand)){const group=document.createElement('details');group.open=true;const title=document.createElement('summary');if(detected){const logo=document.createElement('img');logo.src=`/assets/brands/${detected.id}.svg`;logo.alt=brand;title.append(logo);}else title.textContent=brand;const list=document.createElement('ul');group.append(title,list);$('favorite-list').append(group);groups.set(brand,list);}
+  if(!groups.has(brand)){const group=document.createElement('details');const title=document.createElement('summary');if(detected){const logo=document.createElement('img');logo.src=`/assets/brands/${detected.id}.svg`;logo.alt=brand;title.append(logo);}else title.textContent=brand;const list=document.createElement('ul');group.append(title,list);$('favorite-list').append(group);groups.set(brand,list);}
   const li=document.createElement('li');li.className='favorite-item';
   const use=document.createElement('button');use.type='button';use.className='favorite-use';use.textContent=item.name;
   const detail=document.createElement('small');detail.textContent=`${detectCardBrand(item.card)?.name||'Kartu'} · •••• ${item.card.slice(-4)}`;use.append(detail);
