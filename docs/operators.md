@@ -31,3 +31,8 @@ Template diperiksa terhadap PDF resmi yang diberikan pengguna pada 3 November 20
 - CTP Tollways: https://www.ctptollways.co.id/cetak-struk tetap Segera.
 
 Tidak menambah counter cetak atau mengirim email ke operator. Hasil uji kosong tidak membuktikan seluruh bentuk data produksi sudah tervalidasi. PDF operator tambahan diberi label Rekap transaksi, bukan salinan resmi.
+
+## Tampilan hasil, 6 November 2026
+Serbaraja: waktu, gerbang masuk, gerbang keluar, golongan, bank, tarif, saldo, nomor resi.
+JTD: resi, gerbang, gardu, saldo, tarif, waktu. BSD: waktu, gardu, golongan, tarif, saldo (kolom kartu/resi tersembunyi di situs sumber tidak ditampilkan).
+Astra, Makassar, Citra menampilkan kartu detail; data relevan dipertahankan dalam urutan bacanya, lalu dapat ditampilkan sebagai tabel JejakTol. JLB halaman publik hanya menunjukkan placeholder tanpa transaksi; urutan detail JLB belum dapat diverifikasi dengan contoh berisi. Semua tabel ditambah checkbox dan tindakan JejakTol.

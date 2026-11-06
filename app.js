@@ -1,3 +1,5 @@
+import {resultColumns,resultValue} from './lib/result-columns.mjs';
+import {setupDisplayPreferences} from './lib/display-preferences.mjs';
 import {searchWithRetry} from './lib/search-retry.mjs';
 import {saveSpreadsheet} from './lib/transaction-export.mjs';
 import {readFavorites,saveFavorite,removeFavorite,clearFavorites} from './lib/favorite-cards.mjs';
@@ -18,7 +20,7 @@ const $=id=>document.getElementById(id);
 let rows=[],statuses=[],selected=new Set(),filter='all',view=matchMedia('(max-width:700px)').matches?'card':'table',query=null,previewRows=[],controller=null,loading=false,exporting=false;
 const today=()=>new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Jakarta',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
 function syncDates(){for(const id of ['start','end']){const value=$(id).value;$(id+'-display').textContent=value?value.split('-').reverse().join(' / '):'Pilih tanggal';}}
-function updateCardBrand(){const brand=detectCardBrand($('card').value);$('card-brand-icon').innerHTML=brand?`<img src="/assets/brands/${brand.id}.svg" alt="">`:'▣';$('card-brand-icon').classList.toggle('recognized',!!brand);$('card-brand-status').textContent=brand?`Perkiraan jenis kartu: ${brand.name}.`:'Jenis kartu belum dikenali.';}
+function updateCardBrand(field='card',prefix='card-brand'){const brand=detectCardBrand($(field).value);$(prefix+'-icon').innerHTML=brand?`<img src="/assets/brands/${brand.id}.svg" alt="">`:'▣';$(prefix+'-icon').classList.toggle('recognized',!!brand);$(prefix+'-status').textContent=brand?`Perkiraan jenis kartu: ${brand.name}.`:'Jenis kartu belum dikenali.';}
 function period(days){$('archive-hint').hidden=true;const end=today(),start=new Date(end+'T00:00:00Z');start.setUTCDate(start.getUTCDate()-days+1);$('start').value=start.toISOString().slice(0,10);$('end').value=end;syncDates();}
 period(7);$('start').max=$('end').max=today();
 document.querySelectorAll('[data-days]').forEach(b=>b.onclick=()=>period(Number(b.dataset.days)));
@@ -32,19 +34,23 @@ window.addEventListener('pageshow',()=>{updateCardBrand();syncDates();});
 let favoriteCards=[];
 function renderFavorites(){
  $('favorite-list').replaceChildren();
+ const groups=new Map();
  for(const item of favoriteCards){
+  const brand=detectCardBrand(item.card)?.name||'Kartu lainnya';
+  if(!groups.has(brand)){const group=document.createElement('details');group.open=true;const title=document.createElement('summary');title.textContent=brand;const list=document.createElement('ul');group.append(title,list);$('favorite-list').append(group);groups.set(brand,list);}
   const li=document.createElement('li');li.className='favorite-item';
   const use=document.createElement('button');use.type='button';use.className='favorite-use';use.textContent=item.name;
   const detail=document.createElement('small');detail.textContent=`${detectCardBrand(item.card)?.name||'Kartu'} · •••• ${item.card.slice(-4)}`;use.append(detail);
   use.onclick=()=>{$('card').value=item.card.replace(/(.{4})(?=.)/g,'$1 ');$('favorite-name').value=item.name;updateCardBrand();$('favorite-message').textContent='Nomor kartu terisi. Pilih tanggal dan tekan Cari struk.';$('card').focus();};
   const remove=document.createElement('button');remove.type='button';remove.className='text-button';remove.textContent='Hapus';remove.setAttribute('aria-label',`Hapus kartu ${item.name}`);
   remove.onclick=()=>{try{favoriteCards=removeFavorite(localStorage,item.card);renderFavorites();$('favorite-message').textContent='Kartu favorit dihapus.';}catch{$('favorite-message').textContent='Kartu tidak dapat dihapus. Periksa izin penyimpanan browser.';}};
-  li.append(use,remove);$('favorite-list').append(li);
+  li.append(use,remove);groups.get(brand).append(li);
  }
  $('clear-favorites').hidden=!favoriteCards.length;
 }
 function loadFavorites(){try{favoriteCards=readFavorites(localStorage);renderFavorites();}catch{$('favorite-message').textContent='Favorit tidak dapat dibaca. Anda tetap bisa mengetik nomor kartu untuk mencari.';$('clear-favorites').hidden=false;}}
-$('add-favorite').onclick=()=>{$('favorite-card').value=$('card').value;$('favorite-name').value='';$('favorite-error').textContent='';$('favorite-dialog').showModal();$('favorite-card').focus();};
+$('add-favorite').onclick=()=>{$('favorite-card').value=$('card').value;$('favorite-name').value='';$('favorite-error').textContent='';updateCardBrand('favorite-card','favorite-brand');$('favorite-dialog').showModal();$('favorite-card').focus();};
+$('favorite-card').oninput=()=>{$('favorite-card').value=$('favorite-card').value.replace(/\D/g,'').slice(0,16).replace(/(.{4})(?=.)/g,'$1 ');updateCardBrand('favorite-card','favorite-brand');};
 $('cancel-favorite').onclick=()=>$('favorite-dialog').close();
 $('favorite-form').onsubmit=event=>{event.preventDefault();try{favoriteCards=saveFavorite(localStorage,$('favorite-card').value,$('favorite-name').value);renderFavorites();$('card').value=$('favorite-card').value.replace(/\s/g,'').replace(/(.{4})(?=.)/g,'$1 ');updateCardBrand();$('favorite-dialog').close();$('favorite-message').textContent='Kartu disimpan dan siap dipakai untuk pencarian.';}catch(err){$('favorite-error').textContent=err.name==='Error'?err.message:'Penyimpanan browser tidak tersedia.';}};
 $('clear-favorites').onclick=()=>{try{clearFavorites(localStorage);favoriteCards=[];renderFavorites();$('favorite-message').textContent='Semua kartu favorit dihapus.';}catch{$('favorite-message').textContent='Penyimpanan tidak dapat diakses. Hapus data situs lewat pengaturan browser.';}};
@@ -55,10 +61,12 @@ function selection(){const list=visible();$('selected-count').textContent=`${sel
 function render(){
  const list=visible();$('count').textContent=rows.length;$('total').textContent=money(rows.reduce((s,r)=>s+r.fare,0));$('operator-count').textContent=`${new Set(rows.map(r=>r.operator)).size} operator`;
  for(const op of ['all',...Object.keys(operators)])$('tab-'+op).textContent=rows.filter(r=>op==='all'||r.operator===op).length;
- $('source-status').innerHTML=statuses.map(s=>`<div class="source-chip ${s.status==='pending'?'pending':s.status!=='success'?'error-status':''}">${e(s.name)} · ${s.status==='pending'?e(s.message||'Menghubungkan…'):s.status==='success'?`${s.count} transaksi`:e(s.message)}${s.status==='error'?` <a href="${operators[s.source]?.url||operators.astra.url}" target="_blank" rel="noopener noreferrer">Situs resmi ↗</a>`:''}</div>`).join('');
- const check=r=>`<input type="checkbox" data-select="${r.id}" ${selected.has(r.id)?'checked':''} aria-label="Pilih transaksi ${e(r.dateTime)}">`,badge=r=>`<span class="operator-label ${r.operator}"><img src="/assets/brands/${r.operator}.${r.operator==='jtd'?'svg':'png'}" alt="${e(operatorName(r.operator))}" width="90" height="30"></span>`,preview=r=>`${r.originalReceiptUrl?`<a class="row-preview" href="${e(r.originalReceiptUrl)}" target="_blank" rel="noopener noreferrer" aria-label="Struk asli operator">↓</a>`:''}<button class="row-preview" data-preview="${r.id}" aria-label="Pratinjau transaksi">↗</button>`;
- $('transaction-rows').innerHTML=list.map(r=>`<tr><td>${check(r)}</td><td>${e(r.dateTime.slice(0,10))}<small>${e(r.dateTime.slice(11))}</small></td><td class="route-cell">${e(r.entry||'—')} <span>→</span> ${e(r.exit||'—')}<small>${e(r.road)}${r.integrated?' · Integrasi':''}</small></td><td>${badge(r)}</td><td>${e(r.vehicleClass)}<small>${e(r.bank)}</small></td><td class="right fare">${money(r.fare)}</td><td class="right">${money(r.balance)}</td><td>${preview(r)}</td></tr>`).join('');
- $('transaction-cards').innerHTML=list.map(r=>`<article class="transaction-card"><div class="transaction-card-head">${check(r)}${badge(r)}</div><h3>${e(r.entry||'—')} → ${e(r.exit||'—')}</h3><p>${e(dateLabel(r.dateTime))}</p><p>${e(r.road)}</p>${r.originalReceiptUrl?`<a href="${e(r.originalReceiptUrl)}" target="_blank" rel="noopener noreferrer">Unduh struk asli ↗</a>`:''}<dl><dt>Bank / Golongan</dt><dd>${e(r.bank)} / ${e(r.vehicleClass)}</dd><dt>Tarif</dt><dd>${money(r.fare)}</dd><dt>Sisa saldo</dt><dd>${money(r.balance)}</dd></dl><button class="secondary" data-preview="${r.id}">Lihat struk ↗</button></article>`).join('');
+ $('source-status').innerHTML=statuses.map(s=>`<div class="source-chip ${s.status==='pending'?'pending':s.status!=='success'?'error-status':''}">${e(s.name)} · ${s.status==='pending'?e(s.message||'Menghubungkan…'):s.status==='success'?`${s.count} transaksi`:e(s.message)}${s.status==='error'?` <a href="${operators[s.source]?.url||operators.astra.url}" target="_blank" rel="noopener noreferrer">Situs resmi </a>`:''}</div>`).join('');
+ const check=r=>`<input type="checkbox" data-select="${r.id}" ${selected.has(r.id)?'checked':''} aria-label="Pilih transaksi ${e(r.dateTime)}">`,badge=r=>`<span class="operator-label ${r.operator}"><img src="/assets/brands/${r.operator}.${r.operator==='jtd'?'svg':'png'}" alt="${e(operatorName(r.operator))}" width="90" height="30"></span>`,preview=r=>`${r.originalReceiptUrl?`<a class="row-preview" href="${e(r.originalReceiptUrl)}" target="_blank" rel="noopener noreferrer" aria-label="Struk asli operator">Struk asli</a>`:''}<button class="row-preview" data-preview="${r.id}" aria-label="Pratinjau transaksi">Lihat struk</button>`;
+ const value=(r,key)=>key==='fare'||key==='balance'?money(r[key]??null):e(resultValue(r,key));
+ const groups=Object.keys(operators).map(op=>({op,items:list.filter(r=>r.operator===op)})).filter(g=>g.items.length);
+ $('table-container').innerHTML=groups.map(({op,items})=>`<section class="operator-results"><h3>${e(operatorName(op))}</h3><div class="operator-scroll"><table><thead><tr><th><span class="sr-only">Pilih</span></th>${resultColumns[op].map(([,label])=>`<th>${e(label)}</th>`).join('')}<th>Tindakan</th></tr></thead><tbody>${items.map(r=>`<tr><td>${check(r)}</td>${resultColumns[op].map(([key])=>`<td class="operator-data ${['fare','balance'].includes(key)?'fare':''}">${value(r,key)}</td>`).join('')}<td>${preview(r)}</td></tr>`).join('')}</tbody></table></div></section>`).join('');
+ $('transaction-cards').innerHTML=groups.map(({op,items})=>`<section class="operator-results"><h3>${e(operatorName(op))}</h3>${items.map(r=>`<article class="transaction-card"><div class="transaction-card-head">${check(r)}${badge(r)}</div><dl>${resultColumns[op].map(([key,label])=>`<dt>${e(label)}</dt><dd class="operator-data">${value(r,key)}</dd>`).join('')}</dl>${preview(r)}</article>`).join('')}</section>`).join('');
  $('table-container').hidden=view!=='table'||!list.length;$('transaction-cards').hidden=view!=='card'||!list.length;$('empty-results').hidden=!!list.length;
  $('empty-title').textContent=loading?'Mencari jejak perjalanan…':statuses.every(s=>s.status==='error')?'Operator belum dapat dihubungi':'Belum ada transaksi untuk pilihan ini';
  $('empty-message').textContent=loading?'Hasil akan muncul saat setiap operator selesai merespons.':'Periksa nomor kartu, tanggal, dan status operator di atas. Anda juga bisa mencoba situs resmi.';
@@ -130,3 +138,5 @@ let timer;function toast(message){$('toast').textContent=message;$('toast').hidd
 async function download(list,format='pdf'){if(exporting)return;exporting=true;selection();$('dialog-download').disabled=true;toast(`Menyiapkan ${format==='xlsx'?'Excel':format.toUpperCase()}…`);try{if(format==='pdf'){await savePDF(list,{...query});trackEvent('toll_pdf_download');}else {saveSpreadsheet(list,format);trackEvent(format==='csv'?'toll_csv_download':'toll_excel_download');}toast('File siap. Periksa unduhan browser Anda.');}catch(err){trackEvent('toll_download_failed');toast(err.message||'File gagal dibuat. Coba lagi.');}finally{exporting=false;selection();$('dialog-download').disabled=false;}}
 $('export-format').onchange=()=>{$('download').setAttribute('aria-label','Unduh '+({pdf:'PDF',csv:'CSV',xlsx:'Excel'}[$('export-format').value]));};
 $('download').onclick=()=>download(rows.filter(r=>selected.has(r.id)),$('export-format').value);$('dialog-download').onclick=()=>download(previewRows);
+
+setupDisplayPreferences();
