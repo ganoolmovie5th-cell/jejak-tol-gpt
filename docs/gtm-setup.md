@@ -1,18 +1,13 @@
-# JejakTol GTM configuration
+# JejakTol measurement
 
-Container: GTM-5DMPHWB2. GA4: G-YVM1Z7BV1F.
+Container GTM-5DMPHWB2 loads the existing Google tag for G-YVM1Z7BV1F.
+The app queues standard gtag event commands on the same dataLayer, with explicit send_to.
+It does not initialize another Google tag or send additional page_view events.
+Do not add GTM Custom Event tags for these commands: they are forwarded by the existing Google tag.
 
-Code emits only fixed event names; no card number, date range, route, balance or receipt data.
-- toll_search_success: once after every search job finishes successfully (including an empty result). No event on cancellation, failure or partial result.
-- toll_pdf_download: after savePDF resolves and the browser download is initiated. This does not prove the user saved the file.
-
-## Dashboard changes still required
-
-1. Pause the old GTM-v1 tag that sends GA4-v1 on three startup triggers.
-2. On Google Analytics G-YVM1Z7BV1F, retain only Initialization - All Pages. Remove All Pages and Consent Initialization triggers.
-3. Create a Custom Event trigger named toll_search_success (exact match), and a GA4 Event tag with measurement ID G-YVM1Z7BV1F and event name toll_search_success using that trigger.
-4. Repeat for toll_pdf_download. No custom parameters or user properties.
-5. Preview: confirm one page_view per page load, no GA4-v1 hits, one matching event per completed action. Confirm canceled/failed searches do not fire success.
-6. Submit and publish the workspace, then verify the published container and GA4 DebugView.
-
-The code removes the redundant gtag js initialization, retaining one standard gtm.js initialization. Dashboard changes and publication are not yet performed: browser-control tools became unavailable during the task.
+Events: toll_search_start, toll_search_success (including empty results), toll_search_partial,
+toll_search_failed, toll_search_cancelled, toll_search_retry, toll_pdf_download,
+toll_csv_download, toll_excel_download, toll_download_failed.
+Downloads mean file generation and browser download initiation, not proof of a saved file.
+Only fixed names and destination are sent: no card, date range, route, amount, receipt or error text.
+Existing Google tag consent handling applies. Blocking analytics must not block app actions.
