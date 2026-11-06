@@ -2,9 +2,11 @@ import http from 'node:http';
 import {readFile,stat} from 'node:fs/promises';
 import {extname,resolve,sep} from 'node:path';
 import handler from './api/search.js';
+import tariffs from './api/tariffs.js';
 const root=resolve('dist');
 http.createServer(async(req,res)=>{
  const pathname=new URL(req.url,'http://localhost').pathname;
+ if(pathname==='/api/tariffs')return tariffs(req,res);
  if(pathname==='/api/search'){
   let body='';for await(const chunk of req){body+=chunk;if(body.length>4096){res.writeHead(413);res.end();return;}}
   req.body=body;return handler(req,res);
