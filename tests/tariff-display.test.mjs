@@ -1,0 +1,3 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {fetchedTime,tariffPage} from '../lib/tariff-display.mjs';
+test('fetch timestamp is WIB with fixed-width components',()=>{assert.equal(fetchedTime('2026-11-06T18:02:03Z'),'2026-11-07 01:02:03');assert.equal(fetchedTime('bad'),'—');});
+test('pagination covers boundary, last and empty pages',()=>{const rows=Array.from({length:51},(_,i)=>i);assert.equal(tariffPage(rows,1).rows.length,25);assert.equal(tariffPage(rows,2).rows[0],25);assert.deepEqual(tariffPage(rows,99).rows,[50]);assert.deepEqual(tariffPage([],2),{page:1,pages:1,rows:[],total:0});});
