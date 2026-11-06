@@ -60,3 +60,6 @@
 #favorite-list .favorite-use small{color:var(--muted)}
 [data-theme=dark] #favorite-list summary img{background:#f7faf3;border-radius:5px;padding:4px}
 .local-section{margin:40px auto;padding:24px;border:1px solid var(--line);border-radius:16px;max-width:1280px}.local-section p,.spending-summary p{color:var(--muted);line-height:1.7}.local-actions{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin:16px 0}.result-filters{display:flex;gap:12px;flex-wrap:wrap;padding:20px 0;align-items:end}.result-filters label{display:grid;gap:8px;flex:1;min-width:140px;font-size:13px}.result-filters input,.result-filters select{width:100%;min-width:0;padding:12px;border:1px solid var(--line);border-radius:8px;background:transparent;color:var(--ink)}.spending-summary{padding:20px;border:1px solid var(--line);border-radius:12px;margin-bottom:20px}.summary-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-height:300px;overflow:auto}.tariff-table{width:100%;border-collapse:collapse}.tariff-table td,.tariff-table th{padding:12px;text-align:left;border-bottom:1px solid var(--line)}@media(max-width:700px){.summary-grid{grid-template-columns:1fr}.local-section{margin:24px 16px;padding:16px}}
+
+/* Temporarily hide archive and transaction search without removing stored data. */
+#local-archive,#archive-actions,#transaction-filters{display:none!important}
