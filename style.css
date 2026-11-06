@@ -42,11 +42,12 @@
 /* Compact display controls and tonal saved cards. */
 .display-settings{gap:2px;padding:4px;border:1px solid var(--line);border-radius:999px;background:color-mix(in srgb,var(--ink) 4%,transparent)}
 .display-settings select,.display-settings button{border:0;border-radius:999px;background:transparent!important;box-shadow:none;height:34px;color:var(--ink);font-size:12px;font-weight:600}
-.display-settings select{width:66px;padding:0 10px;cursor:pointer}
+.display-settings select{appearance:none;-webkit-appearance:none;width:66px;padding:0 28px 0 12px;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23657c73' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")!important;background-repeat:no-repeat!important;background-position:right 12px center!important}
+:root[data-theme=dark] .display-settings select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23adbcaf' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")!important}
 .display-settings #theme-toggle{width:34px;padding:8px;display:grid;place-items:center;border-left:1px solid var(--line)}
 #theme-toggle svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 #theme-toggle .theme-sun,#theme-toggle[aria-pressed=true] .theme-moon{display:none}#theme-toggle[aria-pressed=true] .theme-sun{display:block}
-.display-settings button:hover,.display-settings select:hover{background:color-mix(in srgb,var(--ink) 8%,transparent)!important}
+.display-settings button:hover,.display-settings select:hover{background-color:color-mix(in srgb,var(--ink) 8%,transparent)!important}
 .display-settings :focus-visible,#favorite-list summary:focus-visible{outline:2px solid var(--muted);outline-offset:3px}
 #favorite-list details{background:transparent;border-radius:12px;padding:14px}
 #favorite-list summary{display:flex;align-items:center;gap:12px;min-height:32px;list-style:none;border-radius:5px}
