@@ -14,3 +14,6 @@ Operator sources:
 - JLB: https://strukdigital.jlbjorrw1.com/assets/img/JLB_Logo.png
 
 JakCard and BTN SVGs: IDN Finlogos, same license as other card SVGs. BTN Blink is shown using the BTN logo and a text product label (not a recreated Blink logo).
+
+- CTP Tollways: https://www.ctptollways.co.id/logo-ctp.png
+- Travoy: https://travoy-admin.jasamarga.co.id/images/travoykecil.png

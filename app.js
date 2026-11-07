@@ -1,3 +1,4 @@
+import {setupTripPlanner} from './lib/trip-planner.mjs';
 import {fetchedTime,tariffPage} from './lib/tariff-display.mjs';
 import {ARCHIVE_KEY,readArchive,saveArchive,deleteArchive,filterTransactions,summarizeTransactions} from './lib/local-archive.mjs';
 import {resultColumns,resultValue} from './lib/result-columns.mjs';
@@ -157,3 +158,5 @@ $('load-tariffs').onclick=async()=>{$('load-tariffs').disabled=true;try{const re
 for(const id of ['tariff-search','tariff-region','tariff-class'])$(id).oninput=()=>{tariffCurrentPage=1;renderTariffs();};for(const [id,step] of [['tariff-prev',-1],['tariff-next',1]])$(id).onclick=()=>{tariffCurrentPage+=step;renderTariffs();$('tariff-controls').scrollIntoView({block:'start'});};
 
 setupDisplayPreferences();
+
+setupTripPlanner();

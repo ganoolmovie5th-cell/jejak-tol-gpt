@@ -8,6 +8,9 @@
     },
     "api/jlb-pdf.js": {
       "maxDuration": 60
+    },
+    "api/trip.js": {
+      "maxDuration": 30
     }
   },
   "headers": [
