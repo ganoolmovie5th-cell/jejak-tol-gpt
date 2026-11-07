@@ -3,13 +3,14 @@ import {readFile,stat} from 'node:fs/promises';
 import {extname,resolve,sep} from 'node:path';
 import handler from './api/search.js';
 import tariffs from './api/tariffs.js';
+import jlbPdf from './api/jlb-pdf.js';
 const root=resolve('dist');
 http.createServer(async(req,res)=>{
  const pathname=new URL(req.url,'http://localhost').pathname;
  if(pathname==='/api/tariffs')return tariffs(req,res);
- if(pathname==='/api/search'){
+ if(pathname==='/api/search'||pathname==='/api/jlb-pdf'){
   let body='';for await(const chunk of req){body+=chunk;if(body.length>4096){res.writeHead(413);res.end();return;}}
-  req.body=body;return handler(req,res);
+  req.body=body;return (pathname==='/api/jlb-pdf'?jlbPdf:handler)(req,res);
  }
  const path=resolve(root,'.'+(pathname==='/'?'/index.html':pathname));
  if(!path.startsWith(root+sep)){res.writeHead(403);return res.end();}

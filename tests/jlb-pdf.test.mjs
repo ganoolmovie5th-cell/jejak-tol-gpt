@@ -1,0 +1,2 @@
+import test from 'node:test';import assert from 'node:assert/strict';import handler from '../api/jlb-pdf.js';
+test('JLB original PDF endpoint rejects invalid selection and cross-site access',async()=>{for(const [req,expected] of [[{method:'GET',headers:{}},405],[{method:'POST',headers:{'sec-fetch-site':'cross-site'}},403],[{method:'POST',headers:{},body:{card:'0145000000000001',start:'2026-11-06',end:'2026-11-06',ids:['<bad>']}},400]]){let status;await handler(req,{set statusCode(v){status=v;},setHeader(){},end(){}});assert.equal(status,expected);}});
