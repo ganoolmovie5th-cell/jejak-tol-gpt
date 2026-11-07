@@ -8,4 +8,6 @@ Jagorawi open-system reference: https://investor.jasamarga.com/misc/AR/html/2024
 
 Each location search makes one TomTom request; route calculation makes one Routing request. The per-instance 12-request/minute limit reduces accidental repeats, but is not a global quota or spending cap. Set account-side limits and monitor provider usage; the free allowance is shared by site visitors.
 
-Exit guidance (`EXIT`, `EXIT_LEFT`, `EXIT_RIGHT`) names the next road, not the road at the instruction point. Non-toll exit destination names are shown separately; explicit toll-road transfers remain unpriced until supported. Other unknown road instructions continue to block totals. Regression covers Jagorawi to Pajajaran and transfers to Cijago.
+Exit guidance (`TAKE_EXIT`, `MOTORWAY_EXIT_LEFT`, `MOTORWAY_EXIT_RIGHT`) names the next road, not the road at the instruction point. Non-toll exit destination names are shown separately; explicit toll-road transfers remain unpriced until supported. Other unknown road instructions continue to block totals. Regression covers Jagorawi to Pajajaran and transfers to Cijago.
+
+Exit context persists through the final turn off the ramp, until an explicit motorway/freeway/highway entrance. This covers the observed Botani/Pajajaran final TURN_RIGHT inside the tolled-section boundary. Explicitly named toll transfers remain part of the priced-road set.

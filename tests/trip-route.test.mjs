@@ -12,8 +12,15 @@ test('endpoint validates requests before contacting upstream',async()=>{assert.e
 test('key stays server-side and upstream failures redact details',async()=>{const oldFetch=global.fetch,oldKey=process.env.tomtom_api_key;process.env.tomtom_api_key='secret-test-key';try{global.fetch=async url=>{assert.equal(url.searchParams.get('key'),'secret-test-key');return {ok:false,status:403}};const r=await call({action:'places',query:'Jakarta'});assert.equal(r.statusCode,502);assert.ok(!JSON.stringify(r).includes('secret-test-key'));}finally{global.fetch=oldFetch;if(oldKey===undefined)delete process.env.tomtom_api_key;else process.env.tomtom_api_key=oldKey;}});
 
 test('exit guidance names the destination road, not another toll road',()=>{
- const exiting=structuredClone(route);exiting.guidance.instructions.push({pointIndex:1,maneuver:'EXIT_RIGHT',street:'Jalan Raya Pajajaran'});
+ const exiting=structuredClone(route);exiting.guidance.instructions.push({pointIndex:1,maneuver:'MOTORWAY_EXIT_RIGHT',street:'Jalan Raya Pajajaran'});
  const result=tripSummary(exiting,tariffs);assert.equal(result.total,7500);assert.deepEqual(result.tolls[0].names,['Jalan Tol Jagorawi']);assert.deepEqual(result.tolls[0].exitRoads,['Jalan Raya Pajajaran']);
  exiting.guidance.instructions[1].street='Jalan Tol Cijago';assert.equal(tripSummary(exiting,tariffs).total,null);
  exiting.guidance.instructions[1]={pointIndex:1,maneuver:'STRAIGHT',street:'Unknown highway'};assert.equal(tripSummary(exiting,tariffs).total,null);
+});
+
+test('real Cibubur to Botani guidance keeps Pajajaran outside the Jagorawi fare',()=>{
+ const sample=structuredClone(route);sample.legs[0].points=Array.from({length:450},()=>({latitude:-6.4,longitude:106.8}));sample.sections[0]={sectionType:'TOLL_ROAD',startPointIndex:100,endPointIndex:445};
+ sample.guidance.instructions=[{street:'Jalan Tol Jagorawi',maneuver:'BEAR_RIGHT',pointIndex:103},{street:'Jalan Tol Jagorawi',maneuver:'ENTER_MOTORWAY',pointIndex:117},{street:'Jalan Tol Jagorawi',maneuver:'STRAIGHT',pointIndex:130},{street:'Jalan Tol Jagorawi',maneuver:'FOLLOW',pointIndex:135},{street:'Jalan Tol Jagorawi',maneuver:'TAKE_EXIT',pointIndex:366},{street:'Jalan Tol Jagorawi',maneuver:'KEEP_RIGHT',pointIndex:422},{street:'Jalan Tol Jagorawi',maneuver:'KEEP_RIGHT',pointIndex:439},{street:'Jalan Raya Pajajaran',maneuver:'TURN_RIGHT',pointIndex:441}];
+ assert.equal(tripSummary(sample,tariffs).total,7500);assert.deepEqual(tripSummary(sample,tariffs).tolls[0].exitRoads,['Jalan Raya Pajajaran']);
+ sample.guidance.instructions.push({street:'Unknown motorway',maneuver:'ENTER_MOTORWAY',pointIndex:443});assert.equal(tripSummary(sample,tariffs).total,null);
 });
