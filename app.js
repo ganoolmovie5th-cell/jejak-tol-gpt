@@ -30,10 +30,10 @@ $('all-history').onclick=()=>{$('start').value=ARCHIVE_START;$('end').value=toda
 for(const id of ['start','end'])$(id).addEventListener('input',syncDates);
 $('end').onchange=syncDates;
 $('start').onchange=()=>{$('archive-hint').hidden=$('start').value!==ARCHIVE_START;syncDates();};
-$('card').oninput=()=>{chosenFavorite=null;$('card').value=$('card').value.replace(/\D/g,'').slice(0,16).replace(/(.{4})(?=.)/g,'$1 ');updateCardBrand();};
+$('card').oninput=()=>{$('card').value=$('card').value.replace(/\D/g,'').slice(0,16).replace(/(.{4})(?=.)/g,'$1 ');updateCardBrand();};
 $('card').addEventListener('change',updateCardBrand);
 window.addEventListener('pageshow',()=>{updateCardBrand();syncDates();});
-let favoriteCards=[],chosenFavorite=null;
+let favoriteCards=[];
 function renderFavorites(){
  $('favorite-list').replaceChildren();
  const groups=new Map();
@@ -43,7 +43,7 @@ function renderFavorites(){
   const li=document.createElement('li');li.className='favorite-item';
   const use=document.createElement('button');use.type='button';use.className='favorite-use';use.textContent=item.name;
   const detail=document.createElement('small');detail.textContent=`${detectCardBrand(item.card)?.name||'Kartu'} · •••• ${item.card.slice(-4)}`;use.append(detail);
-  use.onclick=()=>{chosenFavorite={...item};$('card').value=item.card.replace(/(.{4})(?=.)/g,'$1 ');$('favorite-name').value=item.name;updateCardBrand();$('favorite-message').textContent='Nomor kartu terisi. Pilih tanggal dan tekan Cari struk.';$('card').focus();};
+  use.onclick=()=>{$('card').value=item.card.replace(/(.{4})(?=.)/g,'$1 ');$('favorite-name').value=item.name;updateCardBrand();$('favorite-message').textContent='Nomor kartu terisi. Pilih tanggal dan tekan Cari struk.';$('card').focus();};
   const remove=document.createElement('button');remove.type='button';remove.className='text-button';remove.textContent='Hapus';remove.setAttribute('aria-label',`Hapus kartu ${item.name}`);
   remove.onclick=()=>{try{favoriteCards=removeFavorite(localStorage,item.card);renderFavorites();$('favorite-message').textContent='Kartu favorit dihapus.';}catch{$('favorite-message').textContent='Kartu tidak dapat dihapus. Periksa izin penyimpanan browser.';}};
   li.append(use,remove);groups.get(brand).append(li);
@@ -61,7 +61,7 @@ loadFavorites();
 const visible=()=>filterTransactions(rows,{operator:filter,text:$('result-search').value,card:$('result-card').value,month:$('result-month').value,min:$('result-min').value,max:$('result-max').value}).sort((a,b)=>$('sort').value==='asc'?a.dateTime.localeCompare(b.dateTime):b.dateTime.localeCompare(a.dateTime));
 function selection(){const list=visible();$('selected-count').textContent=`${selected.size} dipilih`;$('select-all').checked=!!list.length&&list.every(r=>selected.has(r.id));$('select-all').indeterminate=list.some(r=>selected.has(r.id))&&!$('select-all').checked;$('preview').disabled=$('download').disabled=!selected.size||exporting;}
 function render(){
- const list=visible();for(const key of ['month','card'])$(key+'-summary').innerHTML=summarizeTransactions(list,key).map(g=>{const favorite=key==='card'&&query?.favorite?.card===g.key?query.favorite:null;const brand=favorite?detectCardBrand(g.key):null;return favorite?`<div class="summary-favorite">${brand?`<img src="/assets/brands/${brand.id}.svg" alt="${e(brand.name)}">`:''}<span class="operator-data">${e(favorite.name)}<small>•••• ${e(g.key.slice(-4))} · ${g.count}</small></span><b>${money(g.total)}</b></div>`:`<p>${e(key==='card'?'•••• '+g.key.slice(-8):g.key)} · ${g.count} · <b>${money(g.total)}</b></p>`;}).join('');$('save-archive').disabled=!rows.length||loading;$('count').textContent=rows.length;$('total').textContent=money(rows.reduce((s,r)=>s+r.fare,0));$('operator-count').textContent=`${new Set(rows.map(r=>r.operator)).size} operator`;
+ const list=visible();for(const key of ['month','card'])$(key+'-summary').innerHTML=summarizeTransactions(list,key).map(g=>{const favorite=favoriteCards.find(item=>item.card===g.key);const brand=key==='card'?detectCardBrand(g.key):null;return key==='card'?`<div class="summary-favorite">${brand?`<img src="/assets/brands/${brand.id}.svg" alt="${e(brand.name)}">`:'<span class="summary-card-icon" aria-hidden="true">▣</span>'}<span class="operator-data">${e(favorite?.name||'•••• '+g.key.slice(-8))}</span><b>${money(g.total)}</b></div>`:`<p>${e(key==='card'?'•••• '+g.key.slice(-8):g.key)} · ${g.count} · <b>${money(g.total)}</b></p>`;}).join('');$('save-archive').disabled=!rows.length||loading;$('count').textContent=rows.length;$('total').textContent=money(rows.reduce((s,r)=>s+r.fare,0));$('operator-count').textContent=`${new Set(rows.map(r=>r.operator)).size} operator`;
  for(const op of ['all',...Object.keys(operators)])$('tab-'+op).textContent=rows.filter(r=>op==='all'||r.operator===op).length;
  $('source-status').innerHTML=statuses.map(s=>`<div class="source-chip ${s.status==='pending'?'pending':s.status!=='success'?'error-status':''}">${e(s.name)} · ${s.status==='pending'?e(s.message||'Menghubungkan…'):s.status==='success'?`${s.count} transaksi`:e(s.message)}${s.status==='error'?` <a href="${operators[s.source]?.url||operators.astra.url}" target="_blank" rel="noopener noreferrer">Situs resmi </a>`:''}</div>`).join('');
  const check=r=>`<input type="checkbox" data-select="${r.id}" ${selected.has(r.id)?'checked':''} aria-label="Pilih transaksi ${e(r.dateTime)}">`,badge=r=>`<span class="operator-label ${r.operator}"><img src="/assets/brands/${r.operator}.${r.operator==='jtd'?'svg':'png'}" alt="${e(operatorName(r.operator))}" width="90" height="30"></span>`,preview=r=>`${r.originalReceiptUrl?`<a class="row-preview" href="${e(r.originalReceiptUrl)}" target="_blank" rel="noopener noreferrer" aria-label="Struk asli operator">Struk asli</a>`:''}<button class="row-preview" data-preview="${r.id}" aria-label="Pratinjau transaksi">Lihat struk</button>`;
@@ -87,7 +87,7 @@ $('search-form').onsubmit=async event=>{
  let error=!/^\d{15,16}$/.test(q.card)?'Masukkan nomor kartu 15–16 digit.':!q.start||!q.end?'Lengkapi tanggal mulai dan akhir.':q.start.startsWith('0000')||q.end.startsWith('0000')?'Tahun tidak valid.':q.start>q.end?'Tanggal mulai harus sebelum tanggal akhir.':q.end>today()?'Tanggal akhir tidak boleh melewati hari ini.':'';
  let periods;try{periods=searchWindows(q.start,q.end);}catch{error=error||'Tanggal tidak valid.';}
  if(error){$('form-error').textContent=error;$('form-error').hidden=false;return;}
- archiveView=false;$('remove-archived').hidden=true;resetFilters();$('result-card').innerHTML='<option value="">Semua kartu</option>';trackEvent('toll_search_start');controller?.abort();controller=new AbortController();const active=controller;query={...q,favorite:chosenFavorite?.card===q.card?{...chosenFavorite}:null};rows=[];selected.clear();loading=true;
+ archiveView=false;$('remove-archived').hidden=true;resetFilters();$('result-card').innerHTML='<option value="">Semua kartu</option>';trackEvent('toll_search_start');controller?.abort();controller=new AbortController();const active=controller;query=q;rows=[];selected.clear();loading=true;
  const ops=$('operator').value==='all'?Object.keys(operators):[$('operator').value];statuses=ops.map(op=>({source:op,name:operatorName(op),status:'pending'}));
  $('results').hidden=false;$('query-summary').textContent=`Kartu •••• ${q.card.slice(-4)} · ${q.start} — ${q.end}`;$('retention-note').hidden=!ops.includes('astra')||(Date.parse(today())-Date.parse(q.start))/86400000<=30;$('search-button').disabled=true;render();$('results').scrollIntoView({behavior:'smooth',block:'start'});
  const jobs=periods.flatMap(period=>ops.map(operator=>({...period,operator})));let completed=0;const sourceTotals=new Map();
