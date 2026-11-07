@@ -1,0 +1,237 @@
+{
+  "source": "https://www.jsb.co.id/calculator",
+  "checkedAt": "2026-11-07T16:52:52.856Z",
+  "gates": [
+    {
+      "id": "jsb-1",
+      "name": "Kandeman",
+      "lat": -6.9327798,
+      "lon": 109.7599894,
+      "system": "semarang-batang"
+    },
+    {
+      "id": "jsb-2",
+      "name": "KIT Batang",
+      "lat": -6.9273428,
+      "lon": 109.9601734,
+      "system": "semarang-batang"
+    },
+    {
+      "id": "jsb-3",
+      "name": "Weleri",
+      "lat": -6.9737874,
+      "lon": 110.0585836,
+      "system": "semarang-batang"
+    },
+    {
+      "id": "jsb-4",
+      "name": "Kendal",
+      "lat": -6.9860075,
+      "lon": 110.1528794,
+      "system": "semarang-batang"
+    },
+    {
+      "id": "jsb-5",
+      "name": "Kaliwungu",
+      "lat": -6.9707044,
+      "lon": 110.2827305,
+      "system": "semarang-batang"
+    },
+    {
+      "id": "jsb-6",
+      "name": "Kalikangkung",
+      "lat": -6.9877007,
+      "lon": 110.3169608,
+      "system": "semarang-batang"
+    },
+    {
+      "id": "jsb-7",
+      "name": "Cikampek",
+      "lat": -6.440026637555539,
+      "lon": 107.47703828650147,
+      "system": null
+    },
+    {
+      "id": "jsb-8",
+      "name": "Cikampek Utama 1",
+      "lat": -6.432248362276873,
+      "lon": 107.44842280039668,
+      "system": null
+    },
+    {
+      "id": "jsb-9",
+      "name": "Cikampek Utama 2",
+      "lat": -6.4324511069338275,
+      "lon": 107.44836410164248,
+      "system": null
+    },
+    {
+      "id": "jsb-10",
+      "name": "Ujung Jaya Utama",
+      "lat": -6.69591128025168,
+      "lon": 108.10450681939365,
+      "system": null
+    },
+    {
+      "id": "jsb-11",
+      "name": "Kalijati",
+      "lat": -6.509165149115302,
+      "lon": 107.67884255609641,
+      "system": null
+    },
+    {
+      "id": "jsb-12",
+      "name": "Subang",
+      "lat": -6.5317716518304145,
+      "lon": 107.78394280484316,
+      "system": null
+    },
+    {
+      "id": "jsb-13",
+      "name": "Cikedung",
+      "lat": -6.619093426645543,
+      "lon": 108.0150813545325,
+      "system": null
+    },
+    {
+      "id": "jsb-14",
+      "name": "Kertajati",
+      "lat": -6.708244312893459,
+      "lon": 108.1695416133833,
+      "system": null
+    },
+    {
+      "id": "jsb-15",
+      "name": "Kertajati Utama",
+      "lat": -6.6938230452404825,
+      "lon": 108.17316933758133,
+      "system": null
+    },
+    {
+      "id": "jsb-16",
+      "name": "Sumberjaya",
+      "lat": -6.7047521440665205,
+      "lon": 108.31275687564326,
+      "system": null
+    },
+    {
+      "id": "jsb-17",
+      "name": "Pemalang",
+      "lat": -6.914408847263015,
+      "lon": 109.43376209529399,
+      "system": null
+    },
+    {
+      "id": "jsb-18",
+      "name": "Pekalongan",
+      "lat": -6.947250798070549,
+      "lon": 109.60320327758888,
+      "system": null
+    },
+    {
+      "id": "jsb-19",
+      "name": "Batang",
+      "lat": -6.941544300114264,
+      "lon": 109.69802891195621,
+      "system": null
+    },
+    {
+      "id": "jsb-20",
+      "name": "Palimanan 1",
+      "lat": -6.690045570991729,
+      "lon": 108.42677543163632,
+      "system": null
+    },
+    {
+      "id": "jsb-21",
+      "name": "Plumbon 1",
+      "lat": -6.702126291184666,
+      "lon": 108.48582647173953,
+      "system": null
+    },
+    {
+      "id": "jsb-22",
+      "name": "Ciperna Timur",
+      "lat": -6.766607532562754,
+      "lon": 108.52763490974749,
+      "system": null
+    },
+    {
+      "id": "jsb-23",
+      "name": "Kanci",
+      "lat": -6.799462776424014,
+      "lon": 108.62262582716178,
+      "system": null
+    },
+    {
+      "id": "jsb-24",
+      "name": "Brebes Barat",
+      "lat": -6.892544028099996,
+      "lon": 109.00822540528829,
+      "system": null
+    },
+    {
+      "id": "jsb-25",
+      "name": "Brebes Timur",
+      "lat": -6.89225436068154,
+      "lon": 109.06448561571143,
+      "system": null
+    },
+    {
+      "id": "jsb-26",
+      "name": "Tegal",
+      "lat": -6.929678774255543,
+      "lon": 109.14188078583621,
+      "system": null
+    },
+    {
+      "id": "jsb-27",
+      "name": "Ciledug 2",
+      "lat": -6.892486552786204,
+      "lon": 108.74809905004156,
+      "system": null
+    },
+    {
+      "id": "jsb-28",
+      "name": "Pejagan",
+      "lat": -6.895654132390812,
+      "lon": 108.88244607993542,
+      "system": null
+    },
+    {
+      "id": "jsb-29",
+      "name": "Palimanan 4",
+      "lat": -6.689957158113311,
+      "lon": 108.43092240820542,
+      "system": null
+    },
+    {
+      "id": "jsb-30",
+      "name": "Ciledug 1",
+      "lat": -6.888249893832924,
+      "lon": 108.7490904042047,
+      "system": null
+    },
+    {
+      "id": "jsb-31",
+      "name": "Palimanan 3",
+      "lat": -6.689394049528474,
+      "lon": 108.42999413792846,
+      "system": null
+    },
+    {
+      "id": "jsb-32",
+      "name": "Plumbon 2",
+      "lat": -6.698962043678845,
+      "lon": 108.48549358958535,
+      "system": null
+    },
+    {
+      "id": "jsb-33",
+      "name": "Ciperna Barat",
+      "lat": -6.760163971103528,
+      "lon": 108.5294212710684,
+      "system": null
+    }
+  ]
+}

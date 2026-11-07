@@ -1,13 +1,33 @@
-# Trip planner
+# Trip planner and toll network
 
-POST /api/trip accepts `action: places` with a 3–200 character `query`, or `action: route` with selected numeric `origin` and `destination` lat/lon in Indonesia. Uses TomTom Search and Routing, passenger cars only. Set `tomtom_api_key` (or `TOMTOM_API_KEY`) on Vercel; never expose it in the browser. Location requests use POST and private/no-store responses; addresses are not saved or sent to analytics.
+## Request boundary
+POST /api/trip accepts `action: places` with a 3–200 character query, or `action: route` with numeric origin/destination lat/lon in Indonesia. Passenger cars (Golongan I) only. Set `tomtom_api_key` or `TOMTOM_API_KEY` on Vercel, never in the browser. POST requests and private/no-store responses keep addresses out of URL logs. Addresses are not saved to history or analytics.
 
-TomTom tollRoad sections and instruction street names identify portions of the route; they are not individual payment gates. Do not infer gate names from signposts, or sum BPJT rows by fuzzy road-name matching. Current automatic pricing only covers an unambiguous continuous Jagorawi-only section using the BPJT tariff row. All other sections are explicitly unpriced, and any unpriced section prevents a complete total. This is not yet a nationwide automatic toll-cost calculator.
+## Pricing foundation
+`lib/toll-network.mjs` defines payment systems independently of route instructions. Aliases are exact after punctuation normalization; JORR 2 and Cinere–Jagorawi are not aliases for JORR/Jagorawi. BPJT prices are fetched for each calculation. Each component returns its system ID, method, fare, source, optional gate pair, and reason when unknown.
 
-Jagorawi open-system reference: https://investor.jasamarga.com/misc/AR/html/2024/963/ and Jasa Marga 2024 annual report. Tariff source is the existing public BPJT CSV; retrieved prices may lag effective rates. Extend coverage only after validating gate coordinates, billing-system boundaries, aliases, and direction against operator examples. Never charge integrated systems once per road name.
+- Open: Jagorawi, Depok–Antasari, Pondok Aren–Serpong.
+- Integrated open: JORR 1. Adjacent aliases are billed once per continuous traversal, not once per road name. Returning after another system is not globally deduplicated.
+- Closed: Semarang–Batang, restricted to the six enabled operator gates in `data/toll-gates.json`.
 
-Each location search makes one TomTom request; route calculation makes one Routing request. The per-instance 12-request/minute limit reduces accidental repeats, but is not a global quota or spending cap. Set account-side limits and monitor provider usage; the free allowance is shared by site visitors.
+Closed-system pricing requires both boundaries to match unique known gate locations. A gate must lie within 60 m of the route geometry, and within 2 km along the route of the tolled-section boundary. Ambiguous matches, unknown connectors, and unavailable directed tariff pairs return unknown. Never infer the reverse-direction fare. Multiple systems in a single closed section require reviewed connecting-junction data; they are not priced yet.
 
-Exit guidance (`TAKE_EXIT`, `MOTORWAY_EXIT_LEFT`, `MOTORWAY_EXIT_RIGHT`) names the next road, not the road at the instruction point. Non-toll exit destination names are shown separately; explicit toll-road transfers remain unpriced until supported. Other unknown road instructions continue to block totals. Regression covers Jagorawi to Pajajaran and transfers to Cijago.
+TomTom guidance gives the road *after* a maneuver. Exit context persists through final ramp turns until another motorway entrance. Explicit toll transfers remain included. This prevents Pajajaran at the end of Jagorawi from being priced as another toll.
 
-Exit context persists through the final turn off the ramp, until an explicit motorway/freeway/highway entrance. This covers the observed Botani/Pajajaran final TURN_RIGHT inside the tolled-section boundary. Explicitly named toll transfers remain part of the priced-road set.
+Unknown components stay unknown; the response total is null unless every component is priced. `knownSubtotal` excludes unknowns and is labeled **not the trip total**. A route without toll sections returns zero.
+
+## Data maintenance and provenance
+Run `node scripts/update-toll-gates.mjs` to refresh operator coordinates. Parsing and geographic bounds are validated before replacing the file. The imported catalogue includes 33 gates; only six belonging to JSB are enabled. The remaining coordinates are staged data, not claimed coverage. Review coordinate and name changes in git before deployment.
+
+Tariff source: https://bpjt.pu.go.id/info-tarif-dan-golongan/ (existing CSV parser).
+Payment rules:
+- Jagorawi: https://investor.jasamarga.com/misc/AR/html/2024/963/
+- Depok–Antasari: https://bpjt.pu.go.id/cukup-satu-kali-tapping-mulai-hari-ini-bayar-tol-depok-antasari-seksi-andara-sawangan-berlakukan-sistem-terbuka/
+- BSD, including 9,500 + 17,000 JORR integration: https://bsdtol.com/tarif
+- JORR integrated systems: https://investor-id.jasamarga.com/newsroom/LK_JSMR_31_Desember_2025.pdf
+- JSB gate coordinates: https://www.jsb.co.id/calculator
+
+## Limits
+This is not complete Indonesian network coverage. Serbaraja, Serpong–Cinere, Cijago, and cross-operator Trans-Java boundary mappings still need verified gate/junction data. No inferred flat fare from a single CSV row on an unverified road. No maximum fare substituted for a missing gate pair. No static price used when BPJT cannot be loaded.
+
+TomTom calls: one per location search, one per route. The per-instance 12-request/minute limit is not a global spending cap. Provider quotas are shared by site visitors. Fare retrieval time is not its effective date; check operator notices before travel.
