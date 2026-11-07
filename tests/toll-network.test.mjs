@@ -26,7 +26,7 @@ test('closed fare uses exact directed gate pair from operator coordinates',()=>{
  const points=[{latitude:-6.9737874,longitude:110.0585836},{latitude:-6.98,longitude:110.1},{latitude:-6.9860075,longitude:110.1528794}];
  const rows=[row('Semarang-Batang',21000,'Weleri','Kendal'),row('Semarang-Batang',22000,'Kendal','Weleri')];
  const section={startPointIndex:0,endPointIndex:2};
- assert.equal(priceTollSection(['Jalan Tol Batang Semarang'],rows,points,section)[0].fare,21000);
+ assert.equal(priceTollSection(['Jalan Exit Tol Weleri','Jalan Tol Batang Semarang'],rows,points,section)[0].fare,21000);
  assert.equal(priceTollSection(['Jalan Tol Batang Semarang'],rows,[...points].reverse(),section)[0].fare,22000);
  assert.equal(priceTollSection(['Jalan Tol Batang Semarang'],[],points,section)[0].fare,null);
  assert.equal(priceTollSection(['Jalan Tol Batang Semarang','Jalan Tol Baru'],rows,points,section)[0].fare,null);
