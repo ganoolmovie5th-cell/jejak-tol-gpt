@@ -1,6 +1,6 @@
 {
   "source": "https://www.jsb.co.id/calculator",
-  "checkedAt": "2026-11-07T16:52:52.856Z",
+  "checkedAt": "2026-11-07T17:06:41.423Z",
   "gates": [
     {
       "id": "jsb-1",
@@ -77,28 +77,28 @@
       "name": "Kalijati",
       "lat": -6.509165149115302,
       "lon": 107.67884255609641,
-      "system": null
+      "system": "cipali"
     },
     {
       "id": "jsb-12",
       "name": "Subang",
       "lat": -6.5317716518304145,
       "lon": 107.78394280484316,
-      "system": null
+      "system": "cipali"
     },
     {
       "id": "jsb-13",
       "name": "Cikedung",
       "lat": -6.619093426645543,
       "lon": 108.0150813545325,
-      "system": null
+      "system": "cipali"
     },
     {
       "id": "jsb-14",
       "name": "Kertajati",
       "lat": -6.708244312893459,
       "lon": 108.1695416133833,
-      "system": null
+      "system": "cipali"
     },
     {
       "id": "jsb-15",
@@ -112,7 +112,7 @@
       "name": "Sumberjaya",
       "lat": -6.7047521440665205,
       "lon": 108.31275687564326,
-      "system": null
+      "system": "cipali"
     },
     {
       "id": "jsb-17",
@@ -168,14 +168,14 @@
       "name": "Brebes Barat",
       "lat": -6.892544028099996,
       "lon": 109.00822540528829,
-      "system": null
+      "system": "pejagan-pemalang"
     },
     {
       "id": "jsb-25",
       "name": "Brebes Timur",
       "lat": -6.89225436068154,
       "lon": 109.06448561571143,
-      "system": null
+      "system": "pejagan-pemalang"
     },
     {
       "id": "jsb-26",

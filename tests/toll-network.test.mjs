@@ -35,3 +35,11 @@ test('sparse polyline does not match a gate far along a long segment',()=>{
  const points=[{latitude:-6.97,longitude:110},{latitude:-6.97,longitude:111}];
  const gate={id:'far',system:'s',name:'Far gate',lat:-6.97,lon:110.5};assert.equal(matchBoundaryGate(points,0,'s',[gate]),null);
 });
+test('new Cipali and Brebes gate pairs use the selected direction only',()=>{
+ const examples=[{system:'cipali',road:'Cikampek-Palimanan',entry:'Kalijati',exit:'Subang',points:[[-6.509165149115302,107.67884255609641],[-6.5317716518304145,107.78394280484316]],fare:12500},{system:'pejagan-pemalang',road:'Pejagan-Pemalang',entry:'Brebes Barat',exit:'Brebes Timur'}];
+ const c=examples[0],points=c.points.map(([latitude,longitude])=>({latitude,longitude}));
+ const result=priceTollSection(['Jalan Tol Cipali'],[row(c.road,c.fare,c.entry,c.exit)],points,{startPointIndex:0,endPointIndex:1});assert.equal(result[0].fare,12500);assert.equal(result[0].entry,'Kalijati');assert.equal(result[0].exit,'Subang');
+ assert.equal(priceTollSection(['Jalan Tol Cipali'],[row(c.road,c.fare,c.entry,c.exit)],[...points].reverse(),{startPointIndex:0,endPointIndex:1})[0].fare,null);
+ assert.equal(systemForRoad('Exit Tol Brebes Timur').id,'pejagan-pemalang');
+ assert.equal(price(['Prof. Dr. Ir. Sedyatmo'],[row('Prof.Dr.Ir.Soedijatmo',8500)])[0].fare,8500);
+});

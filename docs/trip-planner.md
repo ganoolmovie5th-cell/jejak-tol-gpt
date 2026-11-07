@@ -31,3 +31,8 @@ Payment rules:
 This is not complete Indonesian network coverage. Serbaraja, Serpong–Cinere, Cijago, and cross-operator Trans-Java boundary mappings still need verified gate/junction data. No inferred flat fare from a single CSV row on an unverified road. No maximum fare substituted for a missing gate pair. No static price used when BPJT cannot be loaded.
 
 TomTom calls: one per location search, one per route. The per-instance 12-request/minute limit is not a global spending cap. Provider quotas are shared by site visitors. Fare retrieval time is not its effective date; check operator notices before travel.
+
+## Coverage update (2026-11-08)
+Added Sedyatmo open-system pricing using the BPJT row, and closed-system gate pairs on Cipali (Kalijati, Subang, Cikedung, Kertajati, Sumberjaya) and Pejagan–Pemalang (Brebes Barat, Brebes Timur). Thirteen of the 33 imported gates are enabled. This does not enable entire Trans-Java through journeys: connecting-system boundaries remain unknown. Gate coordinates come from the JSB public calculator; tariffs continue to come from BPJT.
+
+Every priced/mapped component links to the tariff source and the applicable payment-rule or gate-coordinate source. `tariffFetchedAt` is set only after successful download and CSV validation. The UI formats it as yyyy-MM-dd HH:mm:ss WIB, explicitly distinct from the fare effective date (not available in this CSV; refer to the official source). Source failure produces no retrieval timestamp. Source links are HTTPS and restricted to official domains. No scheduled tariff-update service is implied: pricing fetches on each route calculation.

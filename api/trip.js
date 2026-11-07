@@ -1,5 +1,5 @@
 import {validPosition,tripSummary} from '../lib/trip-route.mjs';
-import {parseTariffs,TARIFF_CSV} from '../lib/toll-tariffs.mjs';
+import {fetchTripTariffs} from '../lib/toll-tariffs.mjs';
 const windows=new Map();
 export default async function handler(req,res){
  res.setHeader('Cache-Control','no-store, private');res.setHeader('Content-Type','application/json; charset=utf-8');
@@ -22,7 +22,7 @@ export default async function handler(req,res){
   const a=body.origin,b=body.destination;
   const data=await get(`/routing/1/calculateRoute/${a.lat},${a.lon}:${b.lat},${b.lon}/json`,{travelMode:'car',routeType:'fastest',traffic:'true',sectionType:'tollRoad',instructionsType:'coded',language:'id-ID'});
   if(!data.routes?.length)return send(422,{error:'Rute tidak ditemukan. Coba lokasi lain.'});
-  let tariffs=[];try{const r=await fetch(TARIFF_CSV,{signal:AbortSignal.timeout(8000)});if(r.ok){const csv=await r.text();if(csv.length<=3000000)tariffs=parseTariffs(csv);}}catch{}
-  return send(200,{...tripSummary(data.routes[0],tariffs),calculatedAt:new Date().toISOString(),tariffsAvailable:tariffs.length>0});
+  const tariffs=await fetchTripTariffs();
+  return send(200,{...tripSummary(data.routes[0],tariffs.rows),calculatedAt:new Date().toISOString(),tariffsAvailable:tariffs.rows.length>0,tariffFetchedAt:tariffs.fetchedAt});
  }catch(error){return send(error.status===429?429:502,{error:error.status===429?'Kuota layanan rute sedang terbatas. Coba lagi nanti.':[401,403].includes(error.status)?'Akses TomTom ditolak. Periksa izin Search dan Routing pada API key.':error.status===400?'Parameter layanan rute belum didukung.':'Rute belum dapat dimuat. Periksa lokasi atau coba lagi nanti.'});}
 }
