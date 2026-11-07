@@ -7,3 +7,5 @@ TomTom tollRoad sections and instruction street names identify portions of the r
 Jagorawi open-system reference: https://investor.jasamarga.com/misc/AR/html/2024/963/ and Jasa Marga 2024 annual report. Tariff source is the existing public BPJT CSV; retrieved prices may lag effective rates. Extend coverage only after validating gate coordinates, billing-system boundaries, aliases, and direction against operator examples. Never charge integrated systems once per road name.
 
 Each location search makes one TomTom request; route calculation makes one Routing request. The per-instance 12-request/minute limit reduces accidental repeats, but is not a global quota or spending cap. Set account-side limits and monitor provider usage; the free allowance is shared by site visitors.
+
+Exit guidance (`EXIT`, `EXIT_LEFT`, `EXIT_RIGHT`) names the next road, not the road at the instruction point. Non-toll exit destination names are shown separately; explicit toll-road transfers remain unpriced until supported. Other unknown road instructions continue to block totals. Regression covers Jagorawi to Pajajaran and transfers to Cijago.
