@@ -1,6 +1,6 @@
 {
   "source": "https://www.jsb.co.id/calculator",
-  "checkedAt": "2026-11-07T17:06:41.423Z",
+  "checkedAt": "2026-11-08T06:49:31.580Z",
   "gates": [
     {
       "id": "jsb-1",
@@ -119,21 +119,24 @@
       "name": "Pemalang",
       "lat": -6.914408847263015,
       "lon": 109.43376209529399,
-      "system": null
+      "tariffName": "SS Pemalang",
+      "system": "pemalang-batang"
     },
     {
       "id": "jsb-18",
       "name": "Pekalongan",
       "lat": -6.947250798070549,
       "lon": 109.60320327758888,
-      "system": null
+      "tariffName": "SS Pekalongan",
+      "system": "pemalang-batang"
     },
     {
       "id": "jsb-19",
       "name": "Batang",
       "lat": -6.941544300114264,
       "lon": 109.69802891195621,
-      "system": null
+      "tariffName": "SS Batang",
+      "system": "pemalang-batang"
     },
     {
       "id": "jsb-20",
@@ -147,14 +150,16 @@
       "name": "Plumbon 1",
       "lat": -6.702126291184666,
       "lon": 108.48582647173953,
-      "system": null
+      "tariffName": "Plumbon",
+      "system": "palikanci"
     },
     {
       "id": "jsb-22",
       "name": "Ciperna Timur",
       "lat": -6.766607532562754,
       "lon": 108.52763490974749,
-      "system": null
+      "tariffName": "Ciperna",
+      "system": "palikanci"
     },
     {
       "id": "jsb-23",
@@ -189,7 +194,8 @@
       "name": "Ciledug 2",
       "lat": -6.892486552786204,
       "lon": 108.74809905004156,
-      "system": null
+      "tariffName": "Ciledug",
+      "system": "kanci-pejagan"
     },
     {
       "id": "jsb-28",
@@ -210,7 +216,8 @@
       "name": "Ciledug 1",
       "lat": -6.888249893832924,
       "lon": 108.7490904042047,
-      "system": null
+      "tariffName": "Ciledug",
+      "system": "kanci-pejagan"
     },
     {
       "id": "jsb-31",
@@ -224,14 +231,16 @@
       "name": "Plumbon 2",
       "lat": -6.698962043678845,
       "lon": 108.48549358958535,
-      "system": null
+      "tariffName": "Plumbon",
+      "system": "palikanci"
     },
     {
       "id": "jsb-33",
       "name": "Ciperna Barat",
       "lat": -6.760163971103528,
       "lon": 108.5294212710684,
-      "system": null
+      "tariffName": "Ciperna",
+      "system": "palikanci"
     }
   ]
 }

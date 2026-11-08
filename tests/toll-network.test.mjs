@@ -24,10 +24,10 @@ test('gate matching rejects parallel misses and ambiguous gates',()=>{
 });
 test('closed fare uses exact directed gate pair from operator coordinates',()=>{
  const points=[{latitude:-6.9737874,longitude:110.0585836},{latitude:-6.98,longitude:110.1},{latitude:-6.9860075,longitude:110.1528794}];
- const rows=[row('Semarang-Batang',21000,'Weleri','Kendal'),row('Semarang-Batang',22000,'Kendal','Weleri')];
+ const rows=[row('Semarang-Batang',21000,'Weleri','Kendal'),row('Semarang-Batang',21000,'Kendal','Weleri')];
  const section={startPointIndex:0,endPointIndex:2};
  assert.equal(priceTollSection(['Jalan Exit Tol Weleri','Jalan Tol Batang Semarang'],rows,points,section)[0].fare,21000);
- assert.equal(priceTollSection(['Jalan Tol Batang Semarang'],rows,[...points].reverse(),section)[0].fare,22000);
+ assert.equal(priceTollSection(['Jalan Tol Batang Semarang'],rows,[...points].reverse(),section)[0].fare,21000);
  assert.equal(priceTollSection(['Jalan Tol Batang Semarang'],[],points,section)[0].fare,null);
  assert.equal(priceTollSection(['Jalan Tol Batang Semarang','Jalan Tol Baru'],rows,points,section)[0].fare,null);
 });
@@ -42,4 +42,41 @@ test('new Cipali and Brebes gate pairs use the selected direction only',()=>{
  assert.equal(priceTollSection(['Jalan Tol Cipali'],[row(c.road,c.fare,c.entry,c.exit)],[...points].reverse(),{startPointIndex:0,endPointIndex:1})[0].fare,null);
  assert.equal(systemForRoad('Exit Tol Brebes Timur').id,'pejagan-pemalang');
  assert.equal(price(['Prof. Dr. Ir. Sedyatmo'],[row('Prof.Dr.Ir.Soedijatmo',8500)])[0].fare,8500);
+});
+
+test('cross-system journey uses each concession boundary, not a maximum fare',()=>{
+ const names=['Cipali','Palikanci','Kanci Pejagan','Pejagan Pemalang','Pemalang Batang','Batang Semarang'];
+ const rows=[row('Cikampek-Palimanan',88500,'Subang','Palimanan'),row('Palimanan-Kanci',13500,'Palimanan','Kanci'),row('Kanci-Pejagan',31500,'Kanci','Pejagan'),row('Pejagan-Pemalang',66000,'Pejagan','Pemalang'),row('Pemalang-Batang',53000,'Pemalang/Sewaka','Pasekaran'),row('Semarang-Batang',76000,'Batang/Pasekaran','Weleri')];
+ const points=[{latitude:-6.5317716518304145,longitude:107.78394280484316},{latitude:-6.9737874,longitude:110.0585836}],section={startPointIndex:0,endPointIndex:1};
+ const charges=priceTollSection(names,rows,points,section);
+ assert.deepEqual(charges.map(c=>c.fare),[88500,13500,31500,66000,53000,76000]);
+ assert.equal(charges.reduce((s,c)=>s+c.fare,0),328500);
+ assert.ok(charges.every(c=>c.boundarySource));
+ const reverseRows=rows.map(r=>({...r,origin:r.destination,destination:r.origin}));
+ assert.deepEqual(priceTollSection([...names].reverse(),reverseRows,[...points].reverse(),section).map(c=>c.fare),[76000,53000,66000,31500,13500,88500]);
+ // An absent direction is not filled from the opposite journey.
+ assert.ok(priceTollSection([...names].reverse(),rows,[...points].reverse(),section).every(c=>c.fare===null));
+});
+
+test('east Java through sections use Klitik and Batas Barat, without skipping an unknown connection',()=>{
+ const names=['Semarang ABC','Semarang Solo','Solo Ngawi','Ngawi Kertosono','Kertosono Mojokerto','Surabaya Mojokerto'];
+ const rows=[row('Semarang Seksi A,B,C',6000),row('Semarang-Solo',92000,'Banyumanik','Kartasura'),row('Solo-Ngawi',163500,'Kartasura','Klitik'),row('Ngawi-Kertosono',102000,'Klitik','Kertosono'),row('Kertosono-Mojokerto',55000,'Batas Barat','Mojokerto')];
+ const charges=price(names,rows);assert.deepEqual(charges.map(c=>c.fare),[6000,92000,163500,102000,55000,null]);
+ assert.equal(charges[4].entry,'Batas Barat');
+ assert.equal(price(['Cipali','Ngawi Kertosono','Kertosono Mojokerto'],rows)[1].fare,null);
+ assert.equal(price(['Solo Ngawi','Unknown connector','Ngawi Kertosono','Kertosono Mojokerto'],rows)[2].fare,null);
+ assert.equal(price(['Solo Ngawi','Ngawi Kertosono','Solo Ngawi'],rows)[1].fare,null);
+});
+
+test('source disagreements, duplicate pairs and negative fares do not produce totals',()=>{
+ const names=['Semarang ABC','Semarang Solo','Solo Ngawi'];
+ const direct=row('Semarang-Solo',92000,'Banyumanik','Kartasura');
+ for(const rows of [[direct,{...direct,origin:'Kartasura',destination:'Banyumanik',fares:[93000]}],[direct,direct],[{...direct,fares:[-1]}]])assert.equal(price(names,rows)[1].fare,null);
+ assert.equal(price(['Serpong Balaraja'],[row('Serpong-Balaraja Seksi 1 (Serpong-SS Legok)',6000,'Serpong','SS CBD'),row('Serpong-Balaraja Seksi 1 (Serpong-SS Legok)',7000,'SS CBD','SS Legok')])[0].fare,null);
+});
+
+test('Kalikangkung source spelling is normalized for both travel directions',()=>{
+ const points=[{latitude:-6.9877007,longitude:110.3169608},{latitude:-6.9737874,longitude:110.0585836}];
+ const rows=[row('Semarang-Batang',68500,'Semarang/Kali Kangkung','Weleri'),row('Semarang-Batang',68500,'Weleri','Semarang/Kalikangkung')];
+ assert.equal(priceTollSection(['Batang Semarang'],rows,points,{startPointIndex:0,endPointIndex:1})[0].fare,68500);
 });
