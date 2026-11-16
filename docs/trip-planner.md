@@ -55,3 +55,13 @@ Serbaraja is recognized by name, but a route name alone cannot select its 6,000/
 Pending authoritative geometry: user agreed to register at https://sigi.pu.go.id/geoapi/ for **Gerbang Tol** and **Simpang Susun Tol**. Prefer GeoJSON or SHP including its CRS, identifiers, coordinates, road/gate names, and dataset date. Inspect the exported schema before writing an importer. Never reinterpret projected coordinates as latitude/longitude, auto-enable a fuzzy name match, or advertise full Trans-Java coverage merely because the road names are registered.
 
 Tests cover a six-system Subang–Weleri synthetic path, both directions with explicit rows, east-Java intermediate concessions, unknown connections, missing directions, source inconsistencies, and Kalikangkung spellings. Synthetic tests are not substitutes for live named-place routes.
+
+## PU GeoJSON integration (2026-11-16)
+
+User-provided exports contain 658 gate points and 1,338 interchange features (both LineString and MultiLineString). The importer validates CRS, numeric Indonesian coordinates, geometry types and unique source identifiers before writing. Only exact `Operasi` status is eligible. It retains SHA-256 input fingerprints, import time and counts; the import timestamp does not assert source freshness.
+
+Run `node scripts/import-pu-toll-data.mjs '<gate GeoJSON>' '<interchange GeoJSON>'`. It fetches BPJT rows for exact reviewed name matching. Current output has 72 tariff-matched gate points and 277 operating interchange features on recognized systems. Unmatched gates are recorded in the artifact, not silently enabled. Original exports remain untouched. No personal source metadata is retained.
+
+Gate matching combines these points with existing operator coordinates. Multiple lanes can share an explicitly mapped tariff name; different tariff boundaries remain ambiguous. PU ramps can supplement missing road-name guidance only when at least two route samples show 60 metres of aligned overlap within 15 metres. They cannot establish all intervening mainline concessions. Unknown connections continue to block a complete total.
+
+All Serbaraja gates in this export are marked Konstruksi. Its zone prices are therefore still unavailable. Road-centreline geometry and reviewed current zone/payment boundaries remain necessary for complete Trans-Java and Serbaraja coverage; importing a nationwide gate file alone is not proof of full journey coverage.
