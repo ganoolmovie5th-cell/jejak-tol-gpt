@@ -117,3 +117,7 @@ Added the open Jakarta–Tangerang payment system with exact aliases and four pu
 Run `node scripts/audit-toll-coverage.mjs` for catalogue/mapping gaps. It fails when BPJT cannot be loaded rather than reporting empty data as complete coverage. Counts describe registered systems and source roads, not the percentage of journeys that can be priced.
 
 Validation: 72 automated tests and the production build passed. Named-place production checks are tracked separately from these unit checks.
+
+## Cijago (2026-11-17)
+
+Cinere–Jagorawi now has its own open payment system, distinct from Jagorawi. Exact aliases and three BIG mainline features added. BPJT's live Golongan I row returned Rp15,000. Tests cover separate charges when traversing Cijago and Jagorawi, unavailable data, and inconsistent source rows. 73 tests and build pass. This does not establish every connecting closed-system boundary or all named-place journeys.

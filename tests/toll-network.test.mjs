@@ -8,7 +8,7 @@ test('open systems price independently; adjacent JORR aliases pay once',()=>{
  assert.equal(price(['Depok-Antasari'],[row('Depok-Antasari',13500)])[0].fare,13500);
 });
 test('unknown roads, conflicting tariffs and lookalikes never imply free travel',()=>{
- assert.equal(systemForRoad('JORR 2'),undefined);assert.equal(systemForRoad('Cinere Jagorawi'),undefined);
+ assert.equal(systemForRoad('JORR 2'),undefined);assert.equal(systemForRoad('Cinere Jagorawi').id,'cijago');
  assert.equal(price(['Jalan Tol Baru'],[])[0].fare,null);
  assert.equal(price(['JORR'],[row('JORR S',17000),row('JORR NON S',18000)])[0].fare,null);
  assert.equal(price(['Jagorawi'],[])[0].fare,null);
@@ -87,4 +87,11 @@ test('Jakarta Tangerang open tariff follows source, rejects missing or conflicti
  assert.equal(price(['Janger'],[])[0].fare,null);
  assert.equal(price(['Janger'],[...rows,row('Jakarta-Tangerang',9000,'Other','Other')])[0].fare,null);
  assert.equal(systemForRoad('Tangerang Merak'),undefined);
+});
+
+test('Cijago and Jagorawi are distinct open charges, never substring aliases',()=>{
+ const rows=[row('Cinere-Jagorawi',15000),row('Jakarta-Bogor-Ciawi',7500)];
+ assert.deepEqual(price(['Cijago','Jagorawi'],rows).map(c=>c.fare),[15000,7500]);
+ assert.equal(price(['Cijago'],[])[0].fare,null);
+ assert.equal(price(['Cijago'],[...rows,row('Cinere-Jagorawi',16000,'Other')])[0].fare,null);
 });
