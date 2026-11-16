@@ -109,3 +109,11 @@ Production checks on deployed commit `7497e2f`, 2026-11-16:
 Directions take different traffic-dependent routes; unequal totals are expected. These are observed calculations, not guaranteed future prices/routes. The Weleri journey was exercised through the actual place-selection UI, including a 390 px mobile viewport. Desktop 1366 px and mobile source links wrap without horizontal overflow; ID/EN rendering checked, with no browser console errors/warnings. No raw route trace returned even when the former diagnostic header was supplied.
 
 Validation: 71 automated tests pass and production build passes. No physical drive or every national origin/destination pair was checked. Unmapped corridors and unavailable/inconsistent tariff pairs remain explicit limitations, not zero-cost roads.
+
+## Jakarta–Tangerang (2026-11-17)
+
+Added the open Jakarta–Tangerang payment system with exact aliases and four public BIG mainline features. Prices remain fetched from BPJT: the live Golongan I row returned Rp8,500 during verification. Consecutive aliases bill once; absent, duplicate or conflicting rows remain unknown. This does not enable Tangerang–Merak or its closed-system connections.
+
+Run `node scripts/audit-toll-coverage.mjs` for catalogue/mapping gaps. It fails when BPJT cannot be loaded rather than reporting empty data as complete coverage. Counts describe registered systems and source roads, not the percentage of journeys that can be priced.
+
+Validation: 72 automated tests and the production build passed. Named-place production checks are tracked separately from these unit checks.

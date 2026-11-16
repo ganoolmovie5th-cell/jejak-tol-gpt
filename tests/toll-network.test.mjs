@@ -80,3 +80,11 @@ test('Kalikangkung source spelling is normalized for both travel directions',()=
  const rows=[row('Semarang-Batang',68500,'Semarang/Kali Kangkung','Weleri'),row('Semarang-Batang',68500,'Weleri','Semarang/Kalikangkung')];
  assert.equal(priceTollSection(['Batang Semarang'],rows,points,{startPointIndex:0,endPointIndex:1})[0].fare,68500);
 });
+
+test('Jakarta Tangerang open tariff follows source, rejects missing or conflicting data',()=>{
+ const rows=[row('Jakarta-Tangerang',8500,'SS Tomang','Cikupa')];
+ assert.equal(price(['Jakarta Tangerang','Tangerang Jakarta'],rows)[0].fare,8500);
+ assert.equal(price(['Janger'],[])[0].fare,null);
+ assert.equal(price(['Janger'],[...rows,row('Jakarta-Tangerang',9000,'Other','Other')])[0].fare,null);
+ assert.equal(systemForRoad('Tangerang Merak'),undefined);
+});
