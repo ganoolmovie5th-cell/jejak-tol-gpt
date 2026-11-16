@@ -33,3 +33,10 @@ test('new eastern gate pairs price exact directed rows',()=>{
  assert.ok(data.gates.every(g=>g.system!=='serbaraja'));
  assert.equal(data.files[0].features,658);assert.equal(data.files[1].features,1338);
 });
+test('overlapping carriageways emit one traversal and preserve an actual return',()=>{
+ const features=[{system:'a',paths:[[[110,-7],[110.003,-7]]]},{system:'a',paths:[[[110,-7.00001],[110.003,-7.00001]]]},{system:'b',paths:[[[110.003,-7],[110.006,-7]]]}];
+ const points=Array.from({length:61},(_,i)=>({longitude:110+i*0.0001,latitude:-7}));
+ assert.deepEqual(junctionEvents(points,{startPointIndex:0,endPointIndex:60},features).map(e=>e.system),['a','b']);
+ const returnTrip=[...points,...points.slice(0,-1).reverse()];
+ assert.deepEqual(junctionEvents(returnTrip,{startPointIndex:0,endPointIndex:returnTrip.length-1},features).map(e=>e.system),['a','b','a']);
+});
