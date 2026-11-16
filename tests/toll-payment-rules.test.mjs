@@ -31,3 +31,18 @@ test('Serbaraja prices traversed zones in both directions without enabling Indus
  assert.ok(!data.gates.some(g=>g.name==='GT INDUSTRI'));
  assert.ok(data.gates.filter(g=>g.system==='serbaraja').every(g=>g.originalStatus==='Konstruksi'&&g.statusSource));
 });
+
+test('Waru logical boundary follows the mapped mainline, not an enlarged gate radius',()=>{
+ const rows=[row('Waru (Terbuka)','WRR/Warugunung',8500),row('WRR/Warugunung (Tertutup)','Mojokerto',35000),row('Mojokerto','WRR / Warugunung',35000)];
+ const points=[{latitude:-7.43,longitude:112.45},point('GT WARUGUNUNG'),{latitude:-7.34598,longitude:112.72162}];
+ assert.equal(price(['Kertosono Mojokerto','Surabaya Mojokerto'],rows,points)[1].fare,43500);
+ assert.equal(price(['Kertosono Mojokerto','Surabaya Mojokerto'],rows,[...points.slice(0,2),{latitude:-7.34,longitude:112.72162}])[1].fare,null);
+});
+test('Surabaya city open zone and Serpong–Cinere connections use source rows',()=>{
+ const city=[row('Dupak','Waru',6000,'Surabaya-Gempol')],p=[point('GT KOTA SATELIT'),point('GT WARU 6')];
+ assert.equal(price(['Surabaya Gempol','Surabaya Mojokerto'],city,p)[0].fare,6000);
+ assert.equal(price(['Surabaya Mojokerto','Surabaya Gempol'],city,[...p].reverse())[1].fare,6000);
+ const rows=[row('Junction Serpong','Cinere',18500,'Serpong-Cinere Seksi 1 dan 2'),row('Cinere','Junction Serpong',18500,'Serpong-Cinere Seksi 1 dan 2')];
+ assert.equal(price(['Jakarta Serpong','Serpong Cinere','Depok Antasari'],rows,[])[1].fare,18500);
+ assert.equal(price(['Depok Antasari','Cinere Serpong','Jakarta Serpong'],rows,[])[1].fare,18500);
+});
