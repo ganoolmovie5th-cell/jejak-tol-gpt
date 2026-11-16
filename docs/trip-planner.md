@@ -125,3 +125,6 @@ Cinere–Jagorawi now has its own open payment system, distinct from Jagorawi. E
 ## Recurring travel budget (2026-11-17)
 
 Route results include a collapsed monthly budget. Weekday is default; weekend and both are available. National holidays are excluded by default, collective leave is included. The 2026 calendar follows the linked Setneg publication; unsupported years are explicitly rejected. Budget assumes one one-way trip per selected day at the calculated route fare, not a return journey or holiday discount. Incomplete fares cannot produce a total. Month defaults to the current Jakarta month. ID/EN copy included. Calendar tests cover weekend holidays, opt-in inclusion, collective leave and invalid months.
+
+## Corrected feature placement
+The user clarified that day selection belongs to receipt search, not trip budgeting. The recurring-budget UI and module have been removed. Receipt search now filters returned transactions by all/weekday/weekend/national holiday; default is all. Weekday/weekend follow calendar days and may overlap national holidays. Holiday filtering currently covers 2026 only, excludes collective leave, and states that limitation in the form. Selection is cleared when the filter changes so downloads do not retain hidden selected receipts.
