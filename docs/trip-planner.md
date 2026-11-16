@@ -10,7 +10,7 @@ POST /api/trip accepts `action: places` with a 3–200 character query, or `acti
 - Integrated open: JORR 1. Adjacent aliases are billed once per continuous traversal, not once per road name. Returning after another system is not globally deduplicated.
 - Closed: mapped directed pairs and adjacent concession boundaries along the Trans-Java corridor; see the current coverage below.
 
-Closed-system pricing requires both boundaries to match either unique known gate locations or an explicitly mapped adjacent concession. A gate must lie within 60 m of the route geometry, and within 2 km along the route of the tolled-section boundary. Ambiguous matches, unknown connectors, and unavailable directed tariff pairs return unknown. Never infer the reverse-direction fare. Conflicting reverse prices, duplicates, and negative fares are rejected. Only directly adjacent named systems may use a logical connection; unknown intermediate roads are never skipped. Logical boundaries use the UI labels “Awal ruas” and “Akhir ruas”, not physical payment gates.
+Closed-system pricing requires both boundaries to match either unique known gate locations or an explicitly mapped adjacent concession. A gate must lie within 60 m of the route geometry, and within 2 km along the route of the tolled-section boundary. Ambiguous matches, unknown connectors, and unavailable directed tariff pairs return unknown. Never infer the reverse-direction fare for directed closed-system pairs. Reviewed open-zone rules can apply in both directions, as documented below. Conflicting reverse prices, duplicates, and negative fares are rejected. Only directly adjacent named systems may use a logical connection; unknown intermediate roads are never skipped. Logical boundaries use the UI labels “Awal ruas” and “Akhir ruas”, not physical payment gates.
 
 TomTom guidance gives the road *after* a maneuver. Exit context persists through final ramp turns until another motorway entrance. Explicit toll transfers remain included. This prevents Pajajaran at the end of Jagorawi from being priced as another toll.
 
@@ -28,7 +28,7 @@ Payment rules:
 - JSB gate coordinates: https://www.jsb.co.id/calculator
 
 ## Limits
-This is not complete Indonesian network coverage. Serbaraja zone identification, Serpong–Cinere, Cijago, most eastern entry/exit gate coordinates, and mixed open/closed Surabaya connections still need verified gate/junction data. No inferred flat fare from a single CSV row on an unverified road. No maximum fare substituted for a missing gate pair. No static price used when BPJT cannot be loaded.
+This is not complete Indonesian network coverage. Jakarta–Cikampek zone pricing, Cijago, unregistered corridors and some entry/exit pairs remain outside verified coverage. Kanci–Pejagan reverse rows are absent from the current BPJT feed; those journeys remain incomplete. These include remaining implementation/mapping scope as well as source-data gaps, not solely external data blockers. No inferred flat fare from a single CSV row on an unverified road. No maximum fare substituted for a missing gate pair. No static price used when BPJT cannot be loaded.
 
 TomTom calls: one per location search, one per route. The per-instance 12-request/minute limit is not a global spending cap. Provider quotas are shared by site visitors. Fare retrieval time is not its effective date; check operator notices before travel.
 
@@ -37,7 +37,7 @@ Added Sedyatmo open-system pricing using the BPJT row, and closed-system gate pa
 
 Every priced/mapped component links to the tariff source and the applicable payment-rule or gate-coordinate source. `tariffFetchedAt` is set only after successful download and CSV validation. The UI formats it as yyyy-MM-dd HH:mm:ss WIB, explicitly distinct from the fare effective date (not available in this CSV; refer to the official source). Source failure produces no retrieval timestamp. Source links are HTTPS and restricted to official domains. No scheduled tariff-update service is implied: pricing fetches on each route calculation.
 
-## Current connection update (2026-11-08)
+## Earlier connection update (2026-11-08)
 
 Thirteen explicit, bidirectional logical connections now cover Cikampek/Cikopo, Palimanan, Kanci, Pejagan, Pemalang/Sewaka, Pasekaran, Kalikangkung/Krapyak, Banyumanik, Kartasura, Klitik, Kertosono/Batas Barat, Mojokerto, and Grati. Prices still require an exact directed BPJT row. Mapping a connection does not assert that every journey through it is priced. Jakarta–Cikampek zone endpoints and Surabaya–Mojokerto/Gempol mixed payment sections deliberately do not receive guessed through fares.
 
@@ -50,27 +50,27 @@ Sources for the connection review:
 - Kertosono–Mojokerto western boundary: https://binamarga.pu.go.id/balai-jateng-diy/berita/akhir-tahun-244-kilometer-jalan-tol-trans-jawa-beroperasi-ini-rinciannya
 - Serbaraja zones: https://serbaraja.sinarmasland.com/info-layanan/tariff
 
-Serbaraja is recognized by name, but a route name alone cannot select its 6,000/7,000 zones or establish whether both were traversed. It remains unpriced until the relevant boundary geometry is reviewed.
+At this stage Serbaraja was recognized by name but remained unpriced pending zone geometry. The 2026-11-16 update below supersedes that limitation.
 
-Pending authoritative geometry: user agreed to register at https://sigi.pu.go.id/geoapi/ for **Gerbang Tol** and **Simpang Susun Tol**. Prefer GeoJSON or SHP including its CRS, identifiers, coordinates, road/gate names, and dataset date. Inspect the exported schema before writing an importer. Never reinterpret projected coordinates as latitude/longitude, auto-enable a fuzzy name match, or advertise full Trans-Java coverage merely because the road names are registered.
+Earlier geometry request (now fulfilled): user agreed to register at https://sigi.pu.go.id/geoapi/ for **Gerbang Tol** and **Simpang Susun Tol**. Prefer GeoJSON or SHP including its CRS, identifiers, coordinates, road/gate names, and dataset date. Inspect the exported schema before writing an importer. Never reinterpret projected coordinates as latitude/longitude, auto-enable a fuzzy name match, or advertise full Trans-Java coverage merely because the road names are registered.
 
 Tests cover a six-system Subang–Weleri synthetic path, both directions with explicit rows, east-Java intermediate concessions, unknown connections, missing directions, source inconsistencies, and Kalikangkung spellings. Synthetic tests are not substitutes for live named-place routes.
 
 ## PU GeoJSON integration (2026-11-16)
 
-User-provided exports contain 658 gate points and 1,338 interchange features (both LineString and MultiLineString). The importer validates CRS, numeric Indonesian coordinates, geometry types and unique source identifiers before writing. Only exact `Operasi` status is eligible. It retains SHA-256 input fingerprints, import time and counts; the import timestamp does not assert source freshness.
+User-provided exports contain 658 gate points and 1,338 interchange features (both LineString and MultiLineString). The importer validates CRS, numeric Indonesian coordinates, geometry types and unique source identifiers before writing. Exact `Operasi` status is eligible by default; four individually reviewed Serbaraja gate overrides are described below. It retains SHA-256 input fingerprints, import time and counts; the import timestamp does not assert source freshness.
 
-Run `node scripts/import-pu-toll-data.mjs '<gate GeoJSON>' '<interchange GeoJSON>'`. It fetches BPJT rows for exact reviewed name matching. Current output has 72 tariff-matched gate points and 277 operating interchange features on recognized systems. Unmatched gates are recorded in the artifact, not silently enabled. Original exports remain untouched. No personal source metadata is retained.
+Run `node scripts/import-pu-toll-data.mjs '<gate GeoJSON>' '<interchange GeoJSON>'`. It fetches BPJT rows for exact reviewed name matching. Current output has 91 tariff-matched gate points and 277 operating interchange features on recognized systems. Unmatched gates are recorded in the artifact, not silently enabled. Original exports remain untouched. No personal source metadata is retained.
 
 Gate matching combines these points with existing operator coordinates. Multiple lanes can share an explicitly mapped tariff name; different tariff boundaries remain ambiguous. PU ramps can supplement missing road-name guidance only when at least two route samples show 60 metres of aligned overlap within 15 metres. They cannot establish all intervening mainline concessions. Unknown connections continue to block a complete total.
 
-All Serbaraja gates in this export are marked Konstruksi. Its zone prices are therefore still unavailable. Road-centreline geometry and reviewed current zone/payment boundaries remain necessary for complete Trans-Java and Serbaraja coverage; importing a nationwide gate file alone is not proof of full journey coverage.
+Serbaraja gates in the original export are marked Konstruksi. The reviewed overrides below enable only the four gates confirmed by the operator’s operating-zone announcement; GT Industri remains excluded. Importing a nationwide gate file alone is not proof of full journey coverage.
 
 ### Mainline supplement and production checks
 
 `node scripts/update-toll-mainlines.mjs` retrieves public PU geometry hosted by BIG:
 https://kspservices.big.go.id/satupeta/rest/services/PUBLIK/SARANA_PRASARANA/MapServer/14
-The snapshot contains 66 operating features across 21 recognized systems, with source year **2022**. It supplies geometry only, never tariffs. The query requests WGS84 and at most approximately 2 m simplification, rejects truncated/error responses and invalid coordinates, and records retrieval time. UI source links explicitly label the map year.
+The snapshot contains 68 operating features across 22 recognized systems, with source year **2022**. It supplies geometry only, never tariffs. The query requests WGS84 and at most approximately 2 m simplification, rejects truncated/error responses and invalid coordinates, and records retrieval time. UI source links explicitly label the map year.
 
 A spatial grid selects nearby segments. A road event needs 60 m of aligned overlap within 15 m; a competing system within 3 m of the best match is ambiguous. Adjacent duplicate carriageways collapse into one event; actual A–B–A traversals remain distinct. Geometry takes precedence over stale turn-instruction names for systems it identifies. Unrecognized instruction names remain in the calculation and block completeness.
 
@@ -81,4 +81,31 @@ Production checks after commit 2443d03:
 - GT Madiun to GT Caruban: 10,000 (gate-coordinate check, not a named-place test).
 - Cibubur Junction to Gramedia Botani: 7,500.
 
-65 automated tests and the production build pass. These checks do not establish full nationwide coverage. Serbaraja current zone geometry/status and mixed payment connections around Surabaya remain unresolved. No visual browser regression check was performed for the added source links.
+These earlier checks predate the payment-rule fixes below and do not establish full nationwide coverage.
+
+
+## Payment-rule fixes and production verification (2026-11-16)
+
+- Serbaraja: two reviewed zones, Serpong–SS CBD and SS CBD–SS Legok. Both directions use the operator-confirmed zone rule; prices still come from BPJT. Exact source IDs 62–65 (GT Legok and CBD 1/2/3) have a recorded status override in `data/pu-status-overrides.json`; identity changes fail the import. GT Industri is not enabled.
+- Surabaya–Mojokerto: combine the Waru–WRR open component with the exact WRR–Mojokerto closed pair when the route actually crosses Warugunung. A logical Waru endpoint must match the official mainline within 30 m and be within 1 km of its eastern endpoint. Physical gate tolerance remains 60 m. Closed-only trips do not receive the extra open charge.
+- Surabaya–Gempol: separate Dupak–Waru open zone, directed Waru–Porong closed pricing, and the southern open zones. Do not sum intermediate closed-pair fares when a direct pair applies.
+- Serpong–Cinere: directed Golongan I pricing and reviewed Serpong/Cinere connections. Normalize WRR and Kalikangkung tariff aliases without merging Waru's separate open boundary. JORR W2 Utara/Selatan and Boyolali–Kartosuro guidance aliases resolve to their mapped systems.
+- Route geometry rejects reversed section boundaries, nonnumeric/nonfinite points and coordinates outside Indonesia. Unknown pairs still return no complete total. Temporary route-geometry diagnostics were removed from the API.
+
+Additional primary sources:
+- Serbaraja operating zones, effective 2024-11-03, explicitly both directions: https://www.bsdcity.com/news-events/mulai-3-november-diberlakukan-tarif-baru-tol-serbaraja/
+- Current operator tariff tables, including SUMO and Serpong–Cinere: https://investor.jasamarga.com/newsroom/PT_Jasa_Marga_(Persero)_Tbk_30_September_2026_(1).pdf
+- Dupak–Waru open-system classification (historical classification only; current prices use BPJT): https://investor.jasamarga.com/newsroom/628574-JasaMargaTbk_Billingual_30Sep2016.pdf
+
+Production checks on deployed commit `7497e2f`, 2026-11-16:
+
+| Named-place route | Complete toll total (Golongan I) |
+| --- | ---: |
+| Stasiun Weleri to Chipmunks Indonesia Tunjungan Plaza 5 | Rp530,500 |
+| Tunjungan Plaza area to Stasiun Weleri | Rp536,500 |
+| AEON BSD City to Treasury Office Tower | Rp47,500 |
+| Treasury Office Tower to AEON BSD City | Rp32,500 |
+
+Directions take different traffic-dependent routes; unequal totals are expected. These are observed calculations, not guaranteed future prices/routes. The Weleri journey was exercised through the actual place-selection UI, including a 390 px mobile viewport. Desktop 1366 px and mobile source links wrap without horizontal overflow; ID/EN rendering checked, with no browser console errors/warnings. No raw route trace returned even when the former diagnostic header was supplied.
+
+Validation: 71 automated tests pass and production build passes. No physical drive or every national origin/destination pair was checked. Unmapped corridors and unavailable/inconsistent tariff pairs remain explicit limitations, not zero-cost roads.
