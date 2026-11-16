@@ -1,3 +1,4 @@
+import {receiptDayMatches} from './lib/trip-calendar.mjs';
 import {setupTripPlanner} from './lib/trip-planner.mjs';
 import {fetchedTime,tariffPage} from './lib/tariff-display.mjs';
 import {ARCHIVE_KEY,readArchive,saveArchive,deleteArchive,filterTransactions,summarizeTransactions} from './lib/local-archive.mjs';
@@ -59,7 +60,8 @@ $('favorite-form').onsubmit=event=>{event.preventDefault();try{favoriteCards=sav
 $('clear-favorites').onclick=()=>{try{clearFavorites(localStorage);favoriteCards=[];renderFavorites();$('favorite-message').textContent='Semua kartu favorit dihapus.';}catch{$('favorite-message').textContent='Penyimpanan tidak dapat diakses. Hapus data situs lewat pengaturan browser.';}};
 window.addEventListener('storage',event=>{if(event.key===null||event.key==='jejaktol.favorite-cards.v1')loadFavorites();});
 loadFavorites();
-const visible=()=>filterTransactions(rows,{operator:filter,text:$('result-search').value,card:$('result-card').value,month:$('result-month').value,min:$('result-min').value,max:$('result-max').value}).sort((a,b)=>$('sort').value==='asc'?a.dateTime.localeCompare(b.dateTime):b.dateTime.localeCompare(a.dateTime));
+const visible=()=>filterTransactions(rows.filter(r=>receiptDayMatches(r.dateTime,$('receipt-day').value)),{operator:filter,text:$('result-search').value,card:$('result-card').value,month:$('result-month').value,min:$('result-min').value,max:$('result-max').value}).sort((a,b)=>$('sort').value==='asc'?a.dateTime.localeCompare(b.dateTime):b.dateTime.localeCompare(a.dateTime));
+$('receipt-day').onchange=()=>{selected.clear();render();};
 function selection(){const list=visible();$('selected-count').textContent=`${selected.size} dipilih`;$('select-all').checked=!!list.length&&list.every(r=>selected.has(r.id));$('select-all').indeterminate=list.some(r=>selected.has(r.id))&&!$('select-all').checked;$('preview').disabled=$('download').disabled=!selected.size||exporting;}
 function render(){
  const list=visible();for(const key of ['month','card'])$(key+'-summary').innerHTML=summarizeTransactions(list,key).map(g=>{const favorite=favoriteCards.find(item=>item.card===g.key);const brand=key==='card'?detectCardBrand(g.key):null;return key==='card'?`<div class="summary-favorite">${brand?`<img src="/assets/brands/${brand.id}.svg" alt="${e(brand.name)}">`:'<span class="summary-card-icon" aria-hidden="true">▣</span>'}<span class="operator-data">${e(favorite?.name||'•••• '+g.key.slice(-8))}</span><b>${money(g.total)}</b></div>`:`<p>${e(key==='card'?'•••• '+g.key.slice(-8):g.key)} · ${g.count} · <b>${money(g.total)}</b></p>`;}).join('');$('save-archive').disabled=!rows.length||loading;$('count').textContent=rows.length;$('total').textContent=money(rows.reduce((s,r)=>s+r.fare,0));$('operator-count').textContent=`${new Set(rows.map(r=>r.operator)).size} operator`;
