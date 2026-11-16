@@ -24,3 +24,8 @@ test('real Cibubur to Botani guidance keeps Pajajaran outside the Jagorawi fare'
  assert.equal(tripSummary(sample,tariffs).total,7500);assert.deepEqual(tripSummary(sample,tariffs).tolls[0].exitRoads,['Jalan Raya Pajajaran']);
  sample.guidance.instructions.push({street:'Unknown motorway',maneuver:'ENTER_MOTORWAY',pointIndex:443});assert.equal(tripSummary(sample,tariffs).total,null);
 });
+
+test('rejects reversed toll bounds and malformed route coordinates',()=>{
+ const bad=structuredClone(route);bad.sections[0].startPointIndex=2;bad.sections[0].endPointIndex=0;assert.throws(()=>tripSummary(bad,tariffs));
+ for(const coordinate of [NaN,Infinity,'-6',90]){const invalid=structuredClone(route);invalid.legs[0].points[0].latitude=coordinate;assert.throws(()=>tripSummary(invalid,tariffs));}
+});

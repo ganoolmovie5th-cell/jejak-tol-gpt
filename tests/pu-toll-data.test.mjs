@@ -30,7 +30,7 @@ test('new eastern gate pairs price exact directed rows',()=>{
  const points=gates.map(g=>({latitude:g.lat,longitude:g.lon}));
  const rows=[{road:'Ngawi-Kertosono',origin:'IC Madiun',destination:'IC Caruban',fares:[10000]}];
  assert.equal(priceTollSection(['Ngawi Kertosono'],rows,points,{startPointIndex:0,endPointIndex:1})[0].fare,10000);
- assert.ok(data.gates.every(g=>g.system!=='serbaraja'));
+ assert.equal(data.gates.filter(g=>g.system==='serbaraja').length,4);
  assert.equal(data.files[0].features,658);assert.equal(data.files[1].features,1338);
 });
 test('overlapping carriageways emit one traversal and preserve an actual return',()=>{
