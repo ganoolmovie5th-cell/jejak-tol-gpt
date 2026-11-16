@@ -60,7 +60,8 @@ $('favorite-form').onsubmit=event=>{event.preventDefault();try{favoriteCards=sav
 $('clear-favorites').onclick=()=>{try{clearFavorites(localStorage);favoriteCards=[];renderFavorites();$('favorite-message').textContent='Semua kartu favorit dihapus.';}catch{$('favorite-message').textContent='Penyimpanan tidak dapat diakses. Hapus data situs lewat pengaturan browser.';}};
 window.addEventListener('storage',event=>{if(event.key===null||event.key==='jejaktol.favorite-cards.v1')loadFavorites();});
 loadFavorites();
-const visible=()=>filterTransactions(rows.filter(r=>receiptDayMatches(r.dateTime,$('receipt-day').value)),{operator:filter,text:$('result-search').value,card:$('result-card').value,month:$('result-month').value,min:$('result-min').value,max:$('result-max').value}).sort((a,b)=>$('sort').value==='asc'?a.dateTime.localeCompare(b.dateTime):b.dateTime.localeCompare(a.dateTime));
+const checkedValues=id=>[...document.querySelectorAll('#'+id+' input:checked')].map(el=>el.value);
+const visible=()=>filterTransactions(rows.filter(r=>checkedValues('receipt-day').length===3||checkedValues('receipt-day').some(day=>receiptDayMatches(r.dateTime,day))),{operator:filter,text:$('result-search').value,card:$('result-card').value,month:$('result-month').value,min:$('result-min').value,max:$('result-max').value}).sort((a,b)=>$('sort').value==='asc'?a.dateTime.localeCompare(b.dateTime):b.dateTime.localeCompare(a.dateTime));
 $('receipt-day').onchange=()=>{selected.clear();render();};
 function selection(){const list=visible();$('selected-count').textContent=`${selected.size} dipilih`;$('select-all').checked=!!list.length&&list.every(r=>selected.has(r.id));$('select-all').indeterminate=list.some(r=>selected.has(r.id))&&!$('select-all').checked;$('preview').disabled=$('download').disabled=!selected.size||exporting;}
 function render(){
@@ -88,10 +89,11 @@ $('search-form').onsubmit=async event=>{
  event.preventDefault();$('form-error').hidden=true;
  const q={card:$('card').value.replace(/\D/g,''),start:$('start').value,end:$('end').value};
  let error=!/^\d{15,16}$/.test(q.card)?'Masukkan nomor kartu 15–16 digit.':!q.start||!q.end?'Lengkapi tanggal mulai dan akhir.':q.start.startsWith('0000')||q.end.startsWith('0000')?'Tahun tidak valid.':q.start>q.end?'Tanggal mulai harus sebelum tanggal akhir.':q.end>today()?'Tanggal akhir tidak boleh melewati hari ini.':'';
+ const ops=checkedValues('receipt-operators');if(!ops.length)error='Pilih minimal satu operator.';if(!checkedValues('receipt-day').length)error='Pilih minimal satu hari transaksi.';
  let periods;try{periods=searchWindows(q.start,q.end);}catch{error=error||'Tanggal tidak valid.';}
  if(error){$('form-error').textContent=error;$('form-error').hidden=false;return;}
  archiveView=false;$('remove-archived').hidden=true;resetFilters();$('result-card').innerHTML='<option value="">Semua kartu</option>';trackEvent('toll_search_start');controller?.abort();controller=new AbortController();const active=controller;query=q;rows=[];selected.clear();loading=true;
- const ops=$('operator').value==='all'?Object.keys(operators):[$('operator').value];statuses=ops.map(op=>({source:op,name:operatorName(op),status:'pending'}));
+ statuses=ops.map(op=>({source:op,name:operatorName(op),status:'pending'}));
  $('results').hidden=false;$('query-summary').textContent=`Kartu •••• ${q.card.slice(-4)} · ${q.start} — ${q.end}`;$('retention-note').hidden=!ops.includes('astra')||(Date.parse(today())-Date.parse(q.start))/86400000<=30;$('search-button').disabled=true;render();$('results').scrollIntoView({behavior:'smooth',block:'start'});
  const jobs=periods.flatMap(period=>ops.map(operator=>({...period,operator})));let completed=0;const sourceTotals=new Map();
  $('search-progress').hidden=false;$('progress-bar').max=jobs.length;$('progress-bar').value=0;$('stop-search').disabled=false;
