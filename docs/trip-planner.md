@@ -65,3 +65,20 @@ Run `node scripts/import-pu-toll-data.mjs '<gate GeoJSON>' '<interchange GeoJSON
 Gate matching combines these points with existing operator coordinates. Multiple lanes can share an explicitly mapped tariff name; different tariff boundaries remain ambiguous. PU ramps can supplement missing road-name guidance only when at least two route samples show 60 metres of aligned overlap within 15 metres. They cannot establish all intervening mainline concessions. Unknown connections continue to block a complete total.
 
 All Serbaraja gates in this export are marked Konstruksi. Its zone prices are therefore still unavailable. Road-centreline geometry and reviewed current zone/payment boundaries remain necessary for complete Trans-Java and Serbaraja coverage; importing a nationwide gate file alone is not proof of full journey coverage.
+
+### Mainline supplement and production checks
+
+`node scripts/update-toll-mainlines.mjs` retrieves public PU geometry hosted by BIG:
+https://kspservices.big.go.id/satupeta/rest/services/PUBLIK/SARANA_PRASARANA/MapServer/14
+The snapshot contains 66 operating features across 21 recognized systems, with source year **2022**. It supplies geometry only, never tariffs. The query requests WGS84 and at most approximately 2 m simplification, rejects truncated/error responses and invalid coordinates, and records retrieval time. UI source links explicitly label the map year.
+
+A spatial grid selects nearby segments. A road event needs 60 m of aligned overlap within 15 m; a competing system within 3 m of the best match is ambiguous. Adjacent duplicate carriageways collapse into one event; actual A–B–A traversals remain distinct. Geometry takes precedence over stale turn-instruction names for systems it identifies. Unrecognized instruction names remain in the calculation and block completeness.
+
+Production checks after commit 2443d03:
+- Alun Alun Kabupaten Subang (Jalan RA Wangsa Ghofarana) to Stasiun Weleri: 328,500, six priced concessions.
+- Weleri to Subang: reverse Kanci–Pejagan row unavailable; no complete total.
+- Weleri to Tunjungan Plaza: six known charges total 487,000; Surabaya–Mojokerto final exit still unknown, so total remains null.
+- GT Madiun to GT Caruban: 10,000 (gate-coordinate check, not a named-place test).
+- Cibubur Junction to Gramedia Botani: 7,500.
+
+65 automated tests and the production build pass. These checks do not establish full nationwide coverage. Serbaraja current zone geometry/status and mixed payment connections around Surabaya remain unresolved. No visual browser regression check was performed for the added source links.
