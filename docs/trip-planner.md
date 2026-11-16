@@ -121,3 +121,7 @@ Validation: 72 automated tests and the production build passed. Named-place prod
 ## Cijago (2026-11-17)
 
 Cinere–Jagorawi now has its own open payment system, distinct from Jagorawi. Exact aliases and three BIG mainline features added. BPJT's live Golongan I row returned Rp15,000. Tests cover separate charges when traversing Cijago and Jagorawi, unavailable data, and inconsistent source rows. 73 tests and build pass. This does not establish every connecting closed-system boundary or all named-place journeys.
+
+## Recurring travel budget (2026-11-17)
+
+Route results include a collapsed monthly budget. Weekday is default; weekend and both are available. National holidays are excluded by default, collective leave is included. The 2026 calendar follows the linked Setneg publication; unsupported years are explicitly rejected. Budget assumes one one-way trip per selected day at the calculated route fare, not a return journey or holiday discount. Incomplete fares cannot produce a total. Month defaults to the current Jakarta month. ID/EN copy included. Calendar tests cover weekend holidays, opt-in inclusion, collective leave and invalid months.

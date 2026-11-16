@@ -1,0 +1,3 @@
+import {test} from 'node:test';import assert from 'node:assert/strict';import {travelDays} from '../lib/trip-calendar.mjs';
+test('weekday excludes national holidays by default, not collective leave',()=>{const d=travelDays('2026-12');assert.equal(d.dates.length,22);assert(d.dates.includes('2026-12-24'));assert(!d.dates.includes('2026-12-25'));assert.equal(travelDays('2026-12','weekday',false).dates.length,23);});
+test('weekends and both do not double subtract weekend holidays',()=>{assert.equal(travelDays('2026-03','weekend').dates.length,7);assert.equal(travelDays('2026-03','both').dates.length,28);assert.throws(()=>travelDays('2027-01'));assert.throws(()=>travelDays('2026-13'));});
