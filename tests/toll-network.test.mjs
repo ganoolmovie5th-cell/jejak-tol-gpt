@@ -95,3 +95,13 @@ test('Cijago and Jagorawi are distinct open charges, never substring aliases',()
  assert.equal(price(['Cijago'],[])[0].fare,null);
  assert.equal(price(['Cijago'],[...rows,row('Cinere-Jagorawi',16000,'Other')])[0].fare,null);
 });
+
+test('Pandaan Malang prices verified physical gate pairs in both directions',async()=>{
+ const {default:data}=await import('../data/pu-toll-network.json',{with:{type:'json'}});
+ const gates=['Purwodadi','Malang'].map(name=>data.gates.find(g=>g.system==='pandaan-malang'&&g.tariffName===name));
+ assert(gates.every(Boolean));const points=gates.map(g=>({latitude:g.lat,longitude:g.lon})),section={startPointIndex:0,endPointIndex:1};
+ const rows=[row('Pandaan-Malang',23000,'Purwodadi','Malang'),row('Pandaan-Malang',23000,'Malang','Purwodadi')];
+ for(const path of [points,[...points].reverse()])assert.equal(priceTollSection(['Pandaan Malang'],rows,path,section)[0].fare,23000);
+ assert.equal(priceTollSection(['Pandaan Malang'],[],points,section)[0].fare,null);
+ assert.equal(systemForRoad('Gempol Pandaan').id,'gempol-pandaan');
+});

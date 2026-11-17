@@ -128,3 +128,6 @@ Route results include a collapsed monthly budget. Weekday is default; weekend an
 
 ## Corrected feature placement
 The user clarified that day selection belongs to receipt search, not trip budgeting. The recurring-budget UI and module have been removed. Receipt search now filters returned transactions by all/weekday/weekend/national holiday; default is all. Weekday/weekend follow calendar days and may overlap national holidays. Holiday filtering currently covers 2026 only, excludes collective leave, and states that limitation in the form. Selection is cleared when the filter changes so downloads do not retain hidden selected receipts.
+
+## East Java gate coverage (2026-11-17)
+Added Gempol–Pandaan and Pandaan–Malang directed tariff systems, exact road aliases, their Pandaan connection, six matched PU gate points and four BIG mainline features. Operator confirmation of the connection: https://www.jmtransjawatol.co.id/id/tentang-kami/profil/lini-bisnis-jtt/ruas-tol-pandaan-malang?category_id=5&id=38 . Current import totals: 97 gate points, 322 interchange features, 79 mainline features. Gempol IC/JC connections to other systems still require specific mapping; this addition does not claim complete Surabaya–Malang journeys. 75 tests and build pass, including Purwodadi–Malang physical gate matching both ways and missing tariff rejection.
