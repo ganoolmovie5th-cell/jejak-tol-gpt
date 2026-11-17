@@ -103,3 +103,6 @@
 :root:not([data-theme=dark]) :is(.step-number,#card-hint,.date-shortcuts>span,.form-consent,.operator-tile-copy>p,.soon-label,.guide-section article>span,#trip-form>.tariff-note){color:#4b6345;opacity:1}
 [data-theme=dark] :is(.step-number,.guide-section article>span){color:#4b6345}
 [data-theme=dark] :is(.date-shortcuts>span,.soon-label){color:#b8cbb8}
+
+.ticket-label{color:#4b6345}
+:root:not([data-theme=dark]) .encrypted-note{color:#4b6345}
