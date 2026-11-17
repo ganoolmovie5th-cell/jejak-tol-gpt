@@ -105,3 +105,19 @@ test('Pandaan Malang prices verified physical gate pairs in both directions',asy
  assert.equal(priceTollSection(['Pandaan Malang'],[],points,section)[0].fare,null);
  assert.equal(systemForRoad('Gempol Pandaan').id,'gempol-pandaan');
 });
+
+test('Pandaan connection prices the shared boundary in both directions without skipping unknown roads',async()=>{
+ const {default:data}=await import('../data/pu-toll-network.json',{with:{type:'json'}});
+ const gate=data.gates.find(g=>g.system==='pandaan-malang'&&g.tariffName==='Malang');
+ const points=[{latitude:-7.7,longitude:112.7},{latitude:gate.lat,longitude:gate.lon}],section={startPointIndex:0,endPointIndex:1};
+ const rows=[row('Pandaan-Malang',38000,'Pandaan','Malang'),row('Pandaan-Malang',38000,'Malang','Pandaan')];
+ assert.equal(priceTollSection(['Gempol Pandaan','Pandaan Malang'],rows,points,section)[1].fare,38000);
+ assert.equal(priceTollSection(['Malang Pandaan','Pandaan Gempol'],rows,[...points].reverse(),section)[0].fare,38000);
+ assert.equal(priceTollSection(['Gempol Pandaan','Unknown connector','Pandaan Malang'],rows,points,section)[2].fare,null);
+ assert.equal(priceTollSection(['Gempol Pandaan','Pandaan Malang'],[],points,section)[1].fare,null);
+});
+
+test('Pandaan Malang exit guidance resolves only explicit road aliases',()=>{
+ for(const name of ['Purwodadi','Lawang','Singosari','Pakis','Malang'])assert.equal(systemForRoad('Jalan Exit Tol '+name).id,'pandaan-malang');
+ assert.equal(systemForRoad('Jalan Raya Purwodadi'),undefined);
+});

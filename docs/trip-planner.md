@@ -134,3 +134,6 @@ Added Gempol–Pandaan and Pandaan–Malang directed tariff systems, exact road 
 
 ## Follow-up review
 Navigation now follows the actual page order: receipt search, route planner, tariff catalogue, operator information. Gempol 2/3 are present in the PU export but are not automatically assigned to Gempol IC/JC: the distinct BPJT tariff boundaries require a verified identity match. No additional fare coverage is claimed from this review.
+
+## Pandaan exit guidance regression
+Production gate-coordinate requests exposed `Jalan Exit Tol Purwodadi` as unmapped. Added explicit exit aliases for the five mapped Pandaan–Malang gates; ordinary local road names remain unknown. Added bidirectional Pandaan connection and unknown-intermediate-road tests. Gate-coordinate production tests still produced multiple tolled sections and incomplete totals; they are not evidence of complete named-place routes. 77 tests and build pass.
