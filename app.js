@@ -62,6 +62,7 @@ window.addEventListener('storage',event=>{if(event.key===null||event.key==='jeja
 loadFavorites();
 const checkedValues=id=>[...document.querySelectorAll('#'+id+' input:checked')].map(el=>el.value);
 const visible=()=>filterTransactions(rows.filter(r=>checkedValues('receipt-day').length===3||checkedValues('receipt-day').some(day=>receiptDayMatches(r.dateTime,day))),{operator:filter,text:$('result-search').value,card:$('result-card').value,month:$('result-month').value,min:$('result-min').value,max:$('result-max').value}).sort((a,b)=>$('sort').value==='asc'?a.dateTime.localeCompare(b.dateTime):b.dateTime.localeCompare(a.dateTime));
+document.querySelectorAll('[data-check-group]').forEach(button=>button.onclick=()=>{const group=$(button.dataset.checkGroup);group.querySelectorAll('input[type=checkbox]').forEach(input=>input.checked=button.dataset.checkValue==='all');group.dispatchEvent(new Event('change',{bubbles:true}));});
 $('receipt-day').onchange=()=>{selected.clear();render();};
 function selection(){const list=visible();$('selected-count').textContent=`${selected.size} dipilih`;$('select-all').checked=!!list.length&&list.every(r=>selected.has(r.id));$('select-all').indeterminate=list.some(r=>selected.has(r.id))&&!$('select-all').checked;$('preview').disabled=$('download').disabled=!selected.size||exporting;}
 function render(){
