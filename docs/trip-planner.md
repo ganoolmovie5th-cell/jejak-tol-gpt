@@ -137,3 +137,10 @@ Navigation now follows the actual page order: receipt search, route planner, tar
 
 ## Pandaan exit guidance regression
 Production gate-coordinate requests exposed `Jalan Exit Tol Purwodadi` as unmapped. Added explicit exit aliases for the five mapped Pandaan–Malang gates; ordinary local road names remain unknown. Added bidirectional Pandaan connection and unknown-intermediate-road tests. Gate-coordinate production tests still produced multiple tolled sections and incomplete totals; they are not evidence of complete named-place routes. 77 tests and build pass.
+
+## Verification and Tangerang–Merak groundwork (2026-11-18)
+Production named-place check: Cibubur Junction (Jalan Taman Bunga) to Gramedia Botani Square Bogor returns Rp7,500. Kebun Raya Purwodadi Pasuruan to Malang Town Square still returns an incomplete estimate: TomTom reports two toll sections; the first matches the same Purwodadi gate at both ends, and the second cannot match the exit. Do not merge sections or increase gate tolerance without route evidence.
+
+Registered Tangerang–Merak separately as a closed payment system, with explicit aliases and two official BIG mainline features. Payment classification source: https://jdih.pu.go.id/internal/assets/assets/produk/KepmenPUPR/2025/02/2025kmpu176.pdf . Live prices continue to come from BPJT. This is recognition groundwork, NOT newly complete journey coverage: the original user-supplied gate/interchange GeoJSON files are no longer present on disk, and existing imported data contain no Tangerang–Merak gates. Re-import the originals before enabling complete pricing; never substitute Jakarta–Tangerang's open fare.
+
+Malformed routes with missing or fewer than two geometry points per leg now fail validation instead of returning a zero estimate. Regression tests cover these cases and the separate closed-system mapping.

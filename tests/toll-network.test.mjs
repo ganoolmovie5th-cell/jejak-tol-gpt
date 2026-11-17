@@ -86,7 +86,7 @@ test('Jakarta Tangerang open tariff follows source, rejects missing or conflicti
  assert.equal(price(['Jakarta Tangerang','Tangerang Jakarta'],rows)[0].fare,8500);
  assert.equal(price(['Janger'],[])[0].fare,null);
  assert.equal(price(['Janger'],[...rows,row('Jakarta-Tangerang',9000,'Other','Other')])[0].fare,null);
- assert.equal(systemForRoad('Tangerang Merak'),undefined);
+ assert.notEqual(systemForRoad('Tangerang Merak').id,'jakarta-tangerang');
 });
 
 test('Cijago and Jagorawi are distinct open charges, never substring aliases',()=>{
@@ -120,4 +120,11 @@ test('Pandaan connection prices the shared boundary in both directions without s
 test('Pandaan Malang exit guidance resolves only explicit road aliases',()=>{
  for(const name of ['Purwodadi','Lawang','Singosari','Pakis','Malang'])assert.equal(systemForRoad('Jalan Exit Tol '+name).id,'pandaan-malang');
  assert.equal(systemForRoad('Jalan Raya Purwodadi'),undefined);
+});
+
+test('Tangerang Merak is a closed system and cannot price without verified gates',()=>{
+ assert.equal(systemForRoad('Jalan Tol Tangerang - Merak').id,'tangerang-merak');
+ assert.equal(systemForRoad('Jalan Exit Tol Serang Timur').id,'tangerang-merak');
+ assert.equal(price(['Tangerang Merak'],[row('Tangerang-Merak',58000,'Cikupa','Merak')])[0].fare,null);
+ assert.equal(systemForRoad('Tangerang Merak Baru'),undefined);
 });

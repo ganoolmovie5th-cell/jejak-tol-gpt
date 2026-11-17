@@ -29,3 +29,7 @@ test('rejects reversed toll bounds and malformed route coordinates',()=>{
  const bad=structuredClone(route);bad.sections[0].startPointIndex=2;bad.sections[0].endPointIndex=0;assert.throws(()=>tripSummary(bad,tariffs));
  for(const coordinate of [NaN,Infinity,'-6',90]){const invalid=structuredClone(route);invalid.legs[0].points[0].latitude=coordinate;assert.throws(()=>tripSummary(invalid,tariffs));}
 });
+
+test('empty or missing route geometry never produces a zero toll estimate',()=>{
+ for(const legs of [[],[{}],[null],[{points:[]}],[{points:[{latitude:-6,longitude:106}]}]])assert.throws(()=>tripSummary({...route,legs,sections:[]},tariffs),/Invalid route geometry/);
+});
