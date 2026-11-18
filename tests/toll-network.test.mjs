@@ -128,3 +128,13 @@ test('Tangerang Merak is a closed system and cannot price without verified gates
  assert.equal(price(['Tangerang Merak'],[row('Tangerang-Merak',58000,'Cikupa','Merak')])[0].fare,null);
  assert.equal(systemForRoad('Tangerang Merak Baru'),undefined);
 });
+
+test('Singosari long access uses official approach geometry without widening plaza tolerance',async()=>{
+ const {default:data}=await import('../data/pu-toll-network.json',{with:{type:'json'}});
+ const gate=data.gates.find(g=>g.system==='pandaan-malang'&&g.tariffName==='Singosari');
+ const path=data.junctions.find(j=>j.id==='pu-914').paths[0].map(([longitude,latitude])=>({longitude,latitude}));
+ assert.equal(matchBoundaryGate(path,0,'pandaan-malang',[gate])?.tariffName,'Singosari');
+ assert.equal(matchBoundaryGate(path,path.length-1,'pandaan-malang',[gate])?.tariffName,'Singosari');
+ const reversed=[...path].reverse();assert.equal(matchBoundaryGate(reversed,0,'pandaan-malang',[gate])?.tariffName,'Singosari');
+ assert.equal(matchBoundaryGate(path,0,'pandaan-malang',[{...gate,lat:gate.lat+.002}]),null);
+});
