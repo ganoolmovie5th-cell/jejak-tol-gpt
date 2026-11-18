@@ -143,3 +143,25 @@ test('repeated plaza crossings remain separate payment journeys',()=>{
  const gate={lat:-7,lon:110},points=[109.998,110.002,110.004,110.002,109.998].map(longitude=>({longitude,latitude:-7}));
  assert.equal(gatePassages(points,0,points.length-1,gate),2);
 });
+
+test('public PU Tangerang Merak gates price directed pairs and keep unknown fares unknown',async()=>{
+ const {default:data}=await import('../data/pu-public-toll-gates.json',{with:{type:'json'}});
+ const from=data.gates.find(g=>g.tariffName==='Cikupa'),to=data.gates.find(g=>g.tariffName==='Merak');
+ const points=[from,to].map(g=>({latitude:g.lat,longitude:g.lon})),section={startPointIndex:0,endPointIndex:1};
+ const rows=[row('Tangerang-Merak',58000,'Cikupa','Merak'),row('Tangerang-Merak',58000,'Merak','Cikupa')];
+ assert.equal(priceTollSection(['Tangerang Merak'],rows,points,section)[0].fare,58000);
+ assert.equal(priceTollSection(['Tangerang Merak'],rows,[...points].reverse(),section)[0].fare,58000);
+ assert.equal(priceTollSection(['Tangerang Merak'],[],points,section)[0].fare,null);
+ assert.equal(priceTollSection(['Tangerang Merak'],[...rows,row('Tangerang-Merak',59000,'Cikupa','Merak')],points,section)[0].fare,null);
+ assert.equal(data.gates.length,15);assert.equal(new Set(data.gates.map(g=>g.tariffName)).size,10);
+});
+
+test('Jakarta Tangerang connection requires physically crossing Cikupa and charges both systems',async()=>{
+ const {default:data}=await import('../data/pu-public-toll-gates.json',{with:{type:'json'}});
+ const a=data.gates.find(g=>g.tariffName==='Cikupa'),b=data.gates.find(g=>g.tariffName==='Merak');
+ const points=[a,b].map(g=>({latitude:g.lat,longitude:g.lon})),section={startPointIndex:0,endPointIndex:1};
+ const rows=[row('Jakarta-Tangerang',8500,'SS Tomang','Cikupa'),row('Tangerang-Merak',58000,'Cikupa','Merak'),row('Tangerang-Merak',58000,'Merak','Cikupa')];
+ assert.deepEqual(priceTollSection(['Jakarta Tangerang','Tangerang Merak'],rows,points,section).map(c=>c.fare),[8500,58000]);
+ assert.deepEqual(priceTollSection(['Tangerang Merak','Jakarta Tangerang'],rows,[...points].reverse(),section).map(c=>c.fare),[58000,8500]);
+ assert.equal(priceTollSection(['Jakarta Tangerang','Tangerang Merak'],rows,points.map(p=>({...p,latitude:p.latitude+.01})),section)[1].fare,null);
+});

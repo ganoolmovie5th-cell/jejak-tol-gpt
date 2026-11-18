@@ -1,5 +1,5 @@
 import {test} from 'node:test';import assert from 'node:assert/strict';
-import {readPuFeatures} from '../lib/pu-toll-data.mjs';
+import {readPuFeatures,mapTangerangMerakGates} from '../lib/pu-toll-data.mjs';
 import {junctionEvents,continuousTollGap} from '../lib/pu-route-geometry.mjs';
 import {matchBoundaryGate,priceTollSection} from '../lib/toll-network.mjs';
 import data from '../data/pu-toll-network.json' with {type:'json'};
@@ -49,4 +49,16 @@ test('toll gaps need continuous unambiguous mapped geometry, including between s
  assert.equal(continuousTollGap(points,0,1,'a',[...features,{system:'b',paths:features[0].paths}]),false);
  assert.equal(continuousTollGap(points,0,1,'a',[{system:'a',paths:[[[110,-7],[110.001,-7]],[[110.004,-7],[110.005,-7]]]}]),false);
  assert.equal(continuousTollGap([points[0],{longitude:110.02,latitude:-7}],0,1,'a',[{system:'a',paths:[[[110,-7],[110.02,-7]]]}]),false);
+});
+
+test('public Tangerang Merak gate import requires exact corridor, tariff identity and valid geometry',()=>{
+ const f={id:165,properties:{nama:'GT CIKUPA',ruas:'Tangerang - Merak',status:'Operasi'},geometry:{type:'Point',coordinates:[106.52,-6.22]}};
+ const rows=[{road:'Tangerang-Merak',origin:'Cikupa',destination:'Merak'}];
+ assert.equal(mapTangerangMerakGates(collection([f]),rows).gates[0].tariffName,'Cikupa');
+ assert.equal(mapTangerangMerakGates(collection([{...f,properties:{...f.properties,nama:'GT CIKUPA BARU'}}]),rows).gates.length,0);
+ assert.equal(mapTangerangMerakGates(collection([{...f,properties:{...f.properties,status:'Konstruksi'}}]),rows).gates.length,0);
+ assert.throws(()=>mapTangerangMerakGates(collection([f]),[]));
+ assert.throws(()=>mapTangerangMerakGates(collection([{...f,properties:{...f.properties,ruas:'Other'}}]),rows));
+ assert.throws(()=>mapTangerangMerakGates(collection([f,f]),rows));
+ assert.throws(()=>mapTangerangMerakGates(collection([{...f,geometry:{type:'Point',coordinates:[500000,9000000]}}]),rows));
 });

@@ -1,0 +1,149 @@
+{
+  "source": "https://sigi.pu.go.id/serverpu/rest/services/Hosted/Gerbang_Tol_(all)_Point/FeatureServer/0",
+  "retrievedAt": "2026-11-18T04:17:41.865Z",
+  "sha256": "71f963a3278d4efb92c0cd843fdb779e71d2597b246879e6e4a607fb15a8dd3b",
+  "sourceFeatures": 16,
+  "gates": [
+    {
+      "id": "pu-public-165",
+      "name": "GT CIKUPA",
+      "tariffName": "Cikupa",
+      "system": "tangerang-merak",
+      "lon": 106.52370452261982,
+      "lat": -6.205478235994131,
+      "source": "https://sigi.pu.go.id/serverpu/rest/services/Hosted/Gerbang_Tol_(all)_Point/FeatureServer/0"
+    },
+    {
+      "id": "pu-public-166",
+      "name": "GT CIKUPA",
+      "tariffName": "Cikupa",
+      "system": "tangerang-merak",
+      "lon": 106.52261570193309,
+      "lat": -6.205634519357421,
+      "source": "https://sigi.pu.go.id/serverpu/rest/services/Hosted/Gerbang_Tol_(all)_Point/FeatureServer/0"
+    },
+    {
+      "id": "pu-public-167",
+      "name": "GT CIKUPA 3",
+      "tariffName": "Cikupa",
+      "system": "tangerang-merak",
+      "lon": 106.52151594372638,
+      "lat": -6.2044422284991105,
+      "source": "https://sigi.pu.go.id/serverpu/rest/services/Hosted/Gerbang_Tol_(all)_Point/FeatureServer/0"
+    },
+    {
+      "id": "pu-public-168",
+      "name": "GT CIKUPA 2",
+      "tariffName": "Cikupa",
+      "system": "tangerang-merak",
+      "lon": 106.52080717432132,
+      "lat": -6.20509286883579,
+      "source": "https://sigi.pu.go.id/serverpu/rest/services/Hosted/Gerbang_Tol_(all)_Point/FeatureServer/0"
+    },
+    {
+      "id": "pu-public-169",
+      "name": "GT BALARAJA TIMUR",
+      "tariffName": "Balaraja Timur",
+      "system": "tangerang-merak",
+      "lon": 106.48506563670516,
+      "lat": -6.20420056507641,
+      "source": "https://sigi.pu.go.id/serverpu/rest/services/Hosted/Gerbang_Tol_(all)_Point/FeatureServer/0"
+    },
+    {
+      "id": "pu-public-170",
+      "name": "GT BALARAJA BARAT",
+      "tariffName": "Balaraja Barat",
+      "system": "tangerang-merak",
+      "lon": 106.4591023265656,
+      "lat": -6.200011815314258,
+      "source": "https://sigi.pu.go.id/serverpu/rest/services/Hosted/Gerbang_Tol_(all)_Point/FeatureServer/0"
+    },
+    {
+      "id": "pu-public-171",
+      "name": "GT CIKANDE",
+      "tariffName": "Cikande",
+      "system": "tangerang-merak",
+      "lon": 106.34396776772809,
+      "lat": -6.175277306696459,
+      "source": "https://sigi.pu.go.id/serverpu/rest/services/Hosted/Gerbang_Tol_(all)_Point/FeatureServer/0"
+    },
+    {
+      "id": "pu-public-172",
+      "name": "GT CIUJUNG",
+      "tariffName": "Ciujung",
+      "system": "tangerang-merak",
+      "lon": 106.2864917600058,
+      "lat": -6.141359762670448,
+      "source": "https://sigi.pu.go.id/serverpu/rest/services/Hosted/Gerbang_Tol_(all)_Point/FeatureServer/0"
+    },
+    {
+      "id": "pu-public-173",
+      "name": "GT SERANG TIMUR",
+      "tariffName": "Serang Timur",
+      "system": "tangerang-merak",
+      "lon": 106.18296836869513,
+      "lat": -6.116150815537962,
+      "source": "https://sigi.pu.go.id/serverpu/rest/services/Hosted/Gerbang_Tol_(all)_Point/FeatureServer/0"
+    },
+    {
+      "id": "pu-public-174",
+      "name": "GT CILEGON TIMUR",
+      "tariffName": "Cilegon Timur",
+      "system": "tangerang-merak",
+      "lon": 106.08903917300262,
+      "lat": -6.023257720408087,
+      "source": "https://sigi.pu.go.id/serverpu/rest/services/Hosted/Gerbang_Tol_(all)_Point/FeatureServer/0"
+    },
+    {
+      "id": "pu-public-175",
+      "name": "GT SERANG BARAT",
+      "tariffName": "Serang Barat",
+      "system": "tangerang-merak",
+      "lon": 106.13609593209401,
+      "lat": -6.0907018238203285,
+      "source": "https://sigi.pu.go.id/serverpu/rest/services/Hosted/Gerbang_Tol_(all)_Point/FeatureServer/0"
+    },
+    {
+      "id": "pu-public-177",
+      "name": "GT CILEGON BARAT",
+      "tariffName": "Cilegon Barat",
+      "system": "tangerang-merak",
+      "lon": 106.03341739450816,
+      "lat": -5.983787821823008,
+      "source": "https://sigi.pu.go.id/serverpu/rest/services/Hosted/Gerbang_Tol_(all)_Point/FeatureServer/0"
+    },
+    {
+      "id": "pu-public-178",
+      "name": "GT CILEGON BARAT 1",
+      "tariffName": "Cilegon Barat",
+      "system": "tangerang-merak",
+      "lon": 106.03316663897235,
+      "lat": -5.984453719351919,
+      "source": "https://sigi.pu.go.id/serverpu/rest/services/Hosted/Gerbang_Tol_(all)_Point/FeatureServer/0"
+    },
+    {
+      "id": "pu-public-179",
+      "name": "GT MERAK",
+      "tariffName": "Merak",
+      "system": "tangerang-merak",
+      "lon": 106.00864586512475,
+      "lat": -5.973074850145852,
+      "source": "https://sigi.pu.go.id/serverpu/rest/services/Hosted/Gerbang_Tol_(all)_Point/FeatureServer/0"
+    },
+    {
+      "id": "pu-public-180",
+      "name": "GT CIKUPA 3",
+      "tariffName": "Cikupa",
+      "system": "tangerang-merak",
+      "lon": 106.52090240556943,
+      "lat": -6.205722710434788,
+      "source": "https://sigi.pu.go.id/serverpu/rest/services/Hosted/Gerbang_Tol_(all)_Point/FeatureServer/0"
+    }
+  ],
+  "unmapped": [
+    {
+      "id": 176,
+      "name": "GT CIUJUNG ON RAMP"
+    }
+  ]
+}
