@@ -4,6 +4,8 @@ import {fetchTripTariffs} from '../lib/toll-tariffs.mjs';
 test('source links only allow official HTTPS origins and escape labels',()=>{
  assert.equal(officialLink('javascript:alert(1)','test'),'');assert.equal(officialLink('https://evil.test','test'),'');assert.equal(officialLink('https://user:password@bpjt.pu.go.id','test'),'');
  assert.match(officialLink('https://bpjt.pu.go.id/info-tarif-dan-golongan/','<source>'),/&lt;source&gt;/);
+ assert.match(officialLink('https://jdih.pu.go.id/internal/assets/assets/produk/KepmenPUPR/2025/02/2025kmpu176.pdf','Ketentuan tarif'),/href=/);
+ assert.equal(officialLink('https://jdih.pu.go.id.evil.test/document','test'),'');
 });
 test('fare metadata separates retrieval timestamp from effective date',()=>{
  const html=tariffProvenance({tariffsAvailable:true,tariffFetchedAt:'2026-11-08T00:00:00Z'});assert.match(html,/2026-11-08 07:00:00 WIB/);assert.match(html,/bukan tanggal berlaku/);
