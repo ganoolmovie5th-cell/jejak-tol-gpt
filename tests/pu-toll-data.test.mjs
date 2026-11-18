@@ -62,3 +62,15 @@ test('public Tangerang Merak gate import requires exact corridor, tariff identit
  assert.throws(()=>mapTangerangMerakGates(collection([f,f]),rows));
  assert.throws(()=>mapTangerangMerakGates(collection([{...f,geometry:{type:'Point',coordinates:[500000,9000000]}}]),rows));
 });
+
+
+test('official Karawaci geometry identifies ramps without joining the public-road detour',async()=>{
+ const {default:fixture}=await import('./fixtures/karawaci-exit.json',{with:{type:'json'}});
+ const {default:source}=await import('../data/pu-karawaci-junction.json',{with:{type:'json'}});
+ assert.equal(source.sourceRecords,5);assert.equal(source.junctions[0].originalStatus.trim(),'');
+ assert.equal(continuousTollGap(fixture.points,0,fixture.gapEnd,'jakarta-tangerang'),false);
+ const events=junctionEvents(fixture.points,{startPointIndex:fixture.gapEnd,endPointIndex:fixture.points.length-1});
+ assert.deepEqual(events.map(e=>e.system),['jakarta-tangerang']);
+ const displaced=fixture.points.map(p=>({...p,latitude:p.latitude+.02}));
+ assert.deepEqual(junctionEvents(displaced,{startPointIndex:fixture.gapEnd,endPointIndex:displaced.length-1}),[]);
+});

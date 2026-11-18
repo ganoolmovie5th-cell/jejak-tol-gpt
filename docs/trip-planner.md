@@ -175,3 +175,10 @@ Temporary fixed-route diagnostic output was removed. Local verification: 88 test
 The follow-up re-entry regression now covers an explicit motorway/ramp entry followed by another exit in the second section. This is a real second traversal and retains both payments; checking only the last maneuver would incorrectly mark it ambiguous. ENTRANCE_RAMP also resets exit classification when it has no street name. Validation: 89 tests and production build pass.
 
 Karawaci remains unresolved: the captured public-place route passes near multiple PU gate points, including a nearby parallel carriageway. Point proximity cannot establish payment direction or ramp continuity. Do not resolve this by treating all repeated road names as a single charge or by declaring Jalan Diponegoro a toll road. Needed evidence: current, directed ramp geometry and payment boundaries for the Karawaci interchange.
+
+
+### User-supplied Jakarta–Tangerang geometry
+
+The filtered SIGI export contains all 5 of 5 records (offset 0), including Karawaci objectid 704 with 23 paths. Its operational-status field is blank. The Karawaci geometry is retained separately with the source file SHA-256 and original status; it provides spatial matching, not evidence of a new toll payment. Kunciran, Tangerang, Kembangan and Karang Tengah Barat are not assigned wholesale to Jakarta–Tangerang because interchange geometry can span concessions. Existing nationwide geometry is preserved.
+
+The captured Merak–Supermal route leaves mapped Karawaci geometry between the two toll-tagged sections (up to roughly 267 metres away at sampled points), then returns to mapped ramps. The continuous-gap check correctly rejects merging these sections. Regression fixture covers both ramp recognition and rejection of the intervening detour. The payment count and local-road guidance remain unresolved; this dataset alone must not force a complete price. 90 tests and build pass.
