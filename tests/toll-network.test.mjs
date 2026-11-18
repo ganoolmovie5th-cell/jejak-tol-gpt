@@ -126,6 +126,8 @@ test('Tangerang Merak is a closed system and cannot price without verified gates
  assert.equal(systemForRoad('Jalan Tol Tangerang - Merak').id,'tangerang-merak');
  assert.equal(systemForRoad('Jalan Exit Tol Serang Timur').id,'tangerang-merak');
  assert.equal(systemForRoad('Jalan Akses Tol Cilegon Timur').id,'tangerang-merak');
+ assert.equal(systemForRoad('Jalan Akses Tol Serang Barat').id,'tangerang-merak');
+ assert.equal(systemForRoad('Jalan Raya Serang Barat'),undefined);
  assert.equal(systemForRoad('Jalan Raya Cilegon Timur'),undefined);
  assert.equal(price(['Tangerang Merak'],[row('Tangerang-Merak',58000,'Cikupa','Merak')])[0].fare,null);
  assert.equal(systemForRoad('Tangerang Merak Baru'),undefined);
