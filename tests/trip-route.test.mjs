@@ -33,3 +33,14 @@ test('rejects reversed toll bounds and malformed route coordinates',()=>{
 test('empty or missing route geometry never produces a zero toll estimate',()=>{
  for(const legs of [[],[{}],[null],[{points:[]}],[{points:[{latitude:-6,longitude:106}]}]])assert.throws(()=>tripSummary({...route,legs,sections:[]},tariffs),/Invalid route geometry/);
 });
+
+test('verified Purwodadi ramp fragments join into one charge; public-road gaps do not',async()=>{
+ const {default:data}=await import('../data/pu-toll-network.json',{with:{type:'json'}});
+ const path=id=>data.junctions.find(j=>j.id===id).paths[0].map(([longitude,latitude])=>({longitude,latitude}));
+ const points=[...path('pu-922'),...path('pu-897').slice(1),...path('pu-914')];
+ const sample={summary:{lengthInMeters:25000,travelTimeInSeconds:1800},legs:[{points}],guidance:{instructions:[{pointIndex:0,street:'Jalan Tol Pandaan Malang'},{pointIndex:28,street:'Jalan Tol Pandaan Malang'}]},sections:[{sectionType:'TOLL_ROAD',startPointIndex:0,endPointIndex:23},{sectionType:'TOLL_ROAD',startPointIndex:28,endPointIndex:points.length-1}]};
+ const prices=[{road:'Pandaan-Malang',origin:'Purwodadi',destination:'Singosari',fares:[15000]},{road:'Pandaan-Malang',origin:'Singosari',destination:'Purwodadi',fares:[15000]}];
+ const result=tripSummary(sample,prices);assert.equal(result.total,15000);assert.equal(result.tolls.length,1);
+ const detour=structuredClone(sample);detour.legs[0].points[25].longitude+=.003;assert.equal(tripSummary(detour,prices).total,null);
+ const reverse=structuredClone(sample),last=points.length-1;reverse.legs[0].points.reverse();reverse.sections=sample.sections.map(s=>({...s,startPointIndex:last-s.endPointIndex,endPointIndex:last-s.startPointIndex})).reverse();reverse.guidance.instructions=reverse.sections.map(s=>({pointIndex:s.startPointIndex,street:'Jalan Tol Pandaan Malang'}));assert.equal(tripSummary(reverse,prices).total,15000);
+});

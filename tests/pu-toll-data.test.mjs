@@ -1,6 +1,6 @@
 import {test} from 'node:test';import assert from 'node:assert/strict';
 import {readPuFeatures} from '../lib/pu-toll-data.mjs';
-import {junctionEvents} from '../lib/pu-route-geometry.mjs';
+import {junctionEvents,continuousTollGap} from '../lib/pu-route-geometry.mjs';
 import {matchBoundaryGate,priceTollSection} from '../lib/toll-network.mjs';
 import data from '../data/pu-toll-network.json' with {type:'json'};
 const feature=(id,status='Operasi')=>({id,properties:{status},geometry:{type:'Point',coordinates:[110,-7]}});
@@ -39,4 +39,14 @@ test('overlapping carriageways emit one traversal and preserve an actual return'
  assert.deepEqual(junctionEvents(points,{startPointIndex:0,endPointIndex:60},features).map(e=>e.system),['a','b']);
  const returnTrip=[...points,...points.slice(0,-1).reverse()];
  assert.deepEqual(junctionEvents(returnTrip,{startPointIndex:0,endPointIndex:returnTrip.length-1},features).map(e=>e.system),['a','b','a']);
+});
+
+test('toll gaps need continuous unambiguous mapped geometry, including between sparse points',()=>{
+ const points=[{longitude:110,latitude:-7},{longitude:110.005,latitude:-7}];
+ const features=[{system:'a',paths:[[[110,-7],[110.005,-7]]]}];
+ assert.equal(continuousTollGap(points,0,1,'a',features),true);
+ assert.equal(continuousTollGap(points,0,1,'b',features),false);
+ assert.equal(continuousTollGap(points,0,1,'a',[...features,{system:'b',paths:features[0].paths}]),false);
+ assert.equal(continuousTollGap(points,0,1,'a',[{system:'a',paths:[[[110,-7],[110.001,-7]],[[110.004,-7],[110.005,-7]]]}]),false);
+ assert.equal(continuousTollGap([points[0],{longitude:110.02,latitude:-7}],0,1,'a',[{system:'a',paths:[[[110,-7],[110.02,-7]]]}]),false);
 });

@@ -1,5 +1,5 @@
 import {test} from 'node:test';import assert from 'node:assert/strict';
-import {priceTollSection,systemForRoad,matchBoundaryGate} from '../lib/toll-network.mjs';
+import {priceTollSection,systemForRoad,matchBoundaryGate,gatePassages} from '../lib/toll-network.mjs';
 const row=(road,fare,origin='',destination='')=>({road,origin,destination,fares:[fare]});
 const price=(names,rows)=>priceTollSection(names,rows,[],{});
 test('open systems price independently; adjacent JORR aliases pay once',()=>{
@@ -137,4 +137,9 @@ test('Singosari long access uses official approach geometry without widening pla
  assert.equal(matchBoundaryGate(path,path.length-1,'pandaan-malang',[gate])?.tariffName,'Singosari');
  const reversed=[...path].reverse();assert.equal(matchBoundaryGate(reversed,0,'pandaan-malang',[gate])?.tariffName,'Singosari');
  assert.equal(matchBoundaryGate(path,0,'pandaan-malang',[{...gate,lat:gate.lat+.002}]),null);
+});
+
+test('repeated plaza crossings remain separate payment journeys',()=>{
+ const gate={lat:-7,lon:110},points=[109.998,110.002,110.004,110.002,109.998].map(longitude=>({longitude,latitude:-7}));
+ assert.equal(gatePassages(points,0,points.length-1,gate),2);
 });
