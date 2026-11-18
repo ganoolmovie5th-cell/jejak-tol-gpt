@@ -163,3 +163,10 @@ Production named-place coordinates from the app's own search, verified on `e4a3e
 - Time Zone Mall of Serang to Mississippi Cilegon Center Mall: Rp13,000, Serang Timur–Cilegon Timur. Reverse also Rp13,000.
 
 Limitation observed: Merak to Supermal Karawaci still produces separate Jakarta–Tangerang exit-ramp sections and unrecognized local Jalan Diponegoro guidance. Total remains unavailable; the partial subtotal includes a repeated open-system component and is not a reliable trip total. Do not globally deduplicate open systems: real exit/re-entry journeys can legitimately pay twice. The earlier imported junction dataset contains no Karawaci paths. This requires verified approach geometry or upstream maneuver evidence before merging. 86 automated tests and production build pass; verified examples do not establish all origin/destination combinations.
+
+
+### Reverse Merak–Karawaci verification (2026-11-18)
+
+A live TomTom trace for the public places Pelabuhan Penyeberangan Merak and Supermal Karawaci included a real exit at Serang Barat and re-entry at Serang Timur. These closed-system trips must remain separate. Near Karawaci, a later toll-tagged fragment follows exit maneuvers without a new motorway-entry instruction and includes Jalan Diponegoro. Its second Jakarta–Tangerang payment is unresolved, not a confirmed additional Rp8,500. The calculator now excludes that unresolved charge from the known subtotal and keeps the total unavailable; it does not silently deduplicate genuine re-entry payments. Named and unnamed motorway entry/exit maneuvers update classification alike.
+
+Temporary fixed-route diagnostic output was removed. Local verification: 88 tests pass and production build succeeds. Remaining: authoritative Karawaci ramp/payment continuity mapping; the reverse journey is not yet fully priced.

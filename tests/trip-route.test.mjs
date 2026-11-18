@@ -44,3 +44,25 @@ test('verified Purwodadi ramp fragments join into one charge; public-road gaps d
  const detour=structuredClone(sample);detour.legs[0].points[25].longitude+=.003;assert.equal(tripSummary(detour,prices).total,null);
  const reverse=structuredClone(sample),last=points.length-1;reverse.legs[0].points.reverse();reverse.sections=sample.sections.map(s=>({...s,startPointIndex:last-s.endPointIndex,endPointIndex:last-s.startPointIndex})).reverse();reverse.guidance.instructions=reverse.sections.map(s=>({pointIndex:s.startPointIndex,street:'Jalan Tol Pandaan Malang'}));assert.equal(tripSummary(reverse,prices).total,15000);
 });
+
+
+test('unnamed exit and entry maneuvers still update road classification',()=>{
+ const sample=structuredClone(route);
+ sample.guidance.instructions.push({pointIndex:1,maneuver:'TAKE_EXIT'},{pointIndex:1,street:'Jalan lokal'});
+ assert.equal(tripSummary(sample,tariffs).total,7500);
+ sample.guidance.instructions.splice(2,0,{pointIndex:1,maneuver:'ENTER_MOTORWAY'});
+ assert.equal(tripSummary(sample,tariffs).total,null);
+});
+
+test('split exit sections do not claim an unverified second open-system payment',()=>{
+ const sample=structuredClone(route);
+ sample.legs[0].points=Array.from({length:8},()=>({latitude:-6,longitude:106}));
+ sample.sections=[{sectionType:'TOLL_ROAD',startPointIndex:0,endPointIndex:3},{sectionType:'TOLL_ROAD',startPointIndex:5,endPointIndex:7}];
+ sample.guidance.instructions=[{pointIndex:0,street:'Jalan Tol Jagorawi'},{pointIndex:2,maneuver:'TAKE_EXIT'},{pointIndex:5,street:'Jalan Tol Jagorawi'}];
+ const result=tripSummary(sample,tariffs);
+ assert.equal(result.total,null);assert.equal(result.knownSubtotal,7500);assert.match(result.tolls[1].charges[0].reason,/Pembayaran ulang/);
+ for(const maneuver of ['ENTER_MOTORWAY','ENTRANCE_RAMP']){
+  const reentry=structuredClone(sample);reentry.guidance.instructions[2].maneuver=maneuver;
+  assert.equal(tripSummary(reentry,tariffs).total,15000);
+ }
+});
