@@ -64,5 +64,16 @@ test('split exit sections do not claim an unverified second open-system payment'
  for(const maneuver of ['ENTER_MOTORWAY','ENTRANCE_RAMP']){
   const reentry=structuredClone(sample);reentry.guidance.instructions[2].maneuver=maneuver;
   assert.equal(tripSummary(reentry,tariffs).total,15000);
+  reentry.guidance.instructions.push({pointIndex:6,maneuver:'TAKE_EXIT',street:'Jalan lokal'});
+  assert.equal(tripSummary(reentry,tariffs).total,15000);
+  assert.deepEqual(tripSummary(reentry,tariffs).tolls[1].exitRoads,['Jalan lokal']);
  }
+});
+
+
+test('entrance ramp ends an earlier exit state even without a street name',()=>{
+ const sample=structuredClone(route);
+ sample.guidance.instructions.push({pointIndex:1,maneuver:'TAKE_EXIT'},{pointIndex:1,maneuver:'ENTRANCE_RAMP'},{pointIndex:1,street:'Unknown highway'});
+ assert.equal(tripSummary(sample,tariffs).total,null);
+ assert.deepEqual(tripSummary(sample,tariffs).tolls[0].exitRoads,[]);
 });
