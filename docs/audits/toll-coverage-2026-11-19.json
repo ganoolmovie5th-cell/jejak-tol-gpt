@@ -1,0 +1,727 @@
+{
+  "checkedAt": "2026-11-19T10:09:18.671Z",
+  "scope": "Catalogue and mapping audit; not proof of journey pricing coverage. Missing reverse rows are evidence gaps, not permission to copy fares.",
+  "sourceRoads": 88,
+  "registeredSystems": 28,
+  "unregisteredRoads": [
+    "Cawang-Tomang-Pluit (CTC)",
+    "Cawang-Tj. Priok-Ancol Timur-Jembatan Tiga/Pluit",
+    "Bogor Ring Road Seksi I-IIIA (Sentul Selatan-Simpang Semplak)",
+    "Bekasi-Cawang-Kampung Melayu",
+    "Kunciran-Serpong",
+    "Cimanggis-Cibitung Seksi 1 -2A",
+    "Cimanggis-Cibitung Seksi 2B",
+    "Cengkareng-Batu Ceper-Kunciran",
+    "Cibitung-Cilincing Seksi 1",
+    "Cibitung - Cilincing Seksi 2 &3",
+    "Cibitung - Cilincing Seksi 4",
+    "6 (Enam) Ruas Dalam Kota Jakarta Seksi A (Kelapa Gading-Pulo Gebang)",
+    "Kamal-Teluk Naga-Rajeg Seksi 1",
+    "Jalan Akses Tol KM 1+842 Sebagai Bagian Dari Jalan Tol Jakarta Cikampek",
+    "SS KIT Batang pada Jalan Tol Batang-Semarang",
+    "Padalarang-Cileunyi",
+    "Surabaya-Gresik",
+    "Cikampek-Padalarang",
+    "Simpang Susun Waru-Bandara Juanda",
+    "Soreang-Pasir Koja",
+    "Ciawi-Sukabumi",
+    "Krian–Legundi–Bunder–Manyar (Krian–Legundi–Bunder)",
+    "Serang-Panimbang Seksi 1 (Serang-Rangkasbitung)",
+    "Cileunyi-Sumedang-Dawuan 1,2,3",
+    "Cileunyi-Sumedang-Dawuan 4,5,6",
+    "Semarang-Demak Seksi 2 (Sayung-Demak)",
+    "Solo-Yogyakarta-NYIA Kulon Progo",
+    "Solo - Yogyakarta - NYIA Kulon Progo Seksi 1 (Kartasura - Purwomartani) Segmen Klaten-Prambanan",
+    "Belawan-Medan-Tanjung Morawa",
+    "Palembang-Indralaya",
+    "Medan-Binjai",
+    "Medan-Kualanamu-Tebingtinggi",
+    "Bakauheni-Terbanggi Besar",
+    "Terbanggi Besar-Pematang Panggang-Kayu Agung",
+    "Kayuagung-Palembang-Betung (Kayuagung -Kramasan)",
+    "Sigli-Banda Aceh Seksi 2-4 dan 5-6",
+    "Pekanbaru-Dumai",
+    "Binjai-Langsa Seksi 1 (Binjai-Stabat) dan Seksi 2 (Stabat-Tanjung Pura)",
+    "Binjai-Langsa Seksi Tanjung Pura-Pangkalan Brandan",
+    "Lubuklinggau-Curup-Bengkulu (Bengkulu-Taba Penanjung)",
+    "Pekanbaru-Bangkinang-Payakumbuh-Bukittinggi-Padang Panjang-Lubuk Alung-Padang (Pekanbaru-Bangkinang-XIII Koto Kampar)",
+    "Pekanbaru-Bangkinang-Payakumbuh-Bukittinggi-Padang Panjang-Lubuk Alung-Padang (Sicincin-Padang)",
+    "Simpang Indralaya-Muara Enim (Simpang Indralaya-Prabumulih)",
+    "Indrapura-Kisaran Seksi 1",
+    "Indrapura-Kisaran Seksi 2",
+    "Kuala Tanjung-Tebing Tinggi-Parapat seksi 1&2",
+    "Kuala Tanjung-Tebing Tinggi-Parapat seksi 3&4",
+    "Kuala Tanjung-Tebing Tinggi-Parapat seksi 2 (Kuala Tanjung-IC Indrapura",
+    "Kuala Tanjung-Tebing Tinggi-Parapat Sebagian Seksi 4 (Segmen Sinaksak-Simpang Panei)",
+    "Betung (Sp. Sekayu)-Tempino-Jambi Seksi 3 (Bayung Lencir-Simpang Ness",
+    "Ujung Pandang Seksi 1 -3",
+    "Makassar Seksi IV",
+    "Manado-Bitung",
+    "Nusa Dua-Ngurah Rai-Benoa (Bali Mandara)",
+    "Balikpapan-Samarinda"
+  ],
+  "systems": [
+    {
+      "id": "tangerang-merak",
+      "type": "closed",
+      "tariffRows": 108,
+      "gatePoints": 15,
+      "gatePointsBySource": {
+        "pu": 0,
+        "publicPu": 15,
+        "operator": 0
+      },
+      "mainlineFeatures": 2,
+      "directedPairs": 108,
+      "missingReversePairs": [
+        {
+          "road": "Tangerang-Merak",
+          "origin": "Cilegon Barat",
+          "destination": "Cilegon Timur"
+        },
+        {
+          "road": "Tangerang-Merak",
+          "origin": "Cielgon Timur",
+          "destination": "Cilegon Barat"
+        }
+      ],
+      "invalidOrDuplicatePairs": []
+    },
+    {
+      "id": "cijago",
+      "type": "open",
+      "tariffRows": 1,
+      "gatePoints": 0,
+      "gatePointsBySource": {
+        "pu": 0,
+        "publicPu": 0,
+        "operator": 0
+      },
+      "mainlineFeatures": 3
+    },
+    {
+      "id": "jakarta-tangerang",
+      "type": "open",
+      "tariffRows": 1,
+      "gatePoints": 0,
+      "gatePointsBySource": {
+        "pu": 0,
+        "publicPu": 0,
+        "operator": 0
+      },
+      "mainlineFeatures": 4
+    },
+    {
+      "id": "serbaraja",
+      "type": "zoned",
+      "tariffRows": 2,
+      "gatePoints": 4,
+      "gatePointsBySource": {
+        "pu": 4,
+        "publicPu": 0,
+        "operator": 0
+      },
+      "mainlineFeatures": 2
+    },
+    {
+      "id": "sedyatmo",
+      "type": "open",
+      "tariffRows": 1,
+      "gatePoints": 0,
+      "gatePointsBySource": {
+        "pu": 0,
+        "publicPu": 0,
+        "operator": 0
+      },
+      "mainlineFeatures": 4
+    },
+    {
+      "id": "cipali",
+      "type": "closed",
+      "tariffRows": 70,
+      "gatePoints": 14,
+      "gatePointsBySource": {
+        "pu": 9,
+        "publicPu": 0,
+        "operator": 5
+      },
+      "mainlineFeatures": 2,
+      "directedPairs": 70,
+      "missingReversePairs": [],
+      "invalidOrDuplicatePairs": []
+    },
+    {
+      "id": "pejagan-pemalang",
+      "type": "closed",
+      "tariffRows": 20,
+      "gatePoints": 6,
+      "gatePointsBySource": {
+        "pu": 4,
+        "publicPu": 0,
+        "operator": 2
+      },
+      "mainlineFeatures": 2,
+      "directedPairs": 20,
+      "missingReversePairs": [],
+      "invalidOrDuplicatePairs": []
+    },
+    {
+      "id": "jagorawi",
+      "type": "open",
+      "tariffRows": 1,
+      "gatePoints": 0,
+      "gatePointsBySource": {
+        "pu": 0,
+        "publicPu": 0,
+        "operator": 0
+      },
+      "mainlineFeatures": 4
+    },
+    {
+      "id": "desari",
+      "type": "open",
+      "tariffRows": 1,
+      "gatePoints": 0,
+      "gatePointsBySource": {
+        "pu": 0,
+        "publicPu": 0,
+        "operator": 0
+      },
+      "mainlineFeatures": 3
+    },
+    {
+      "id": "bsd",
+      "type": "open",
+      "tariffRows": 1,
+      "gatePoints": 0,
+      "gatePointsBySource": {
+        "pu": 0,
+        "publicPu": 0,
+        "operator": 0
+      },
+      "mainlineFeatures": 3
+    },
+    {
+      "id": "jorr",
+      "type": "open",
+      "tariffRows": 6,
+      "gatePoints": 0,
+      "gatePointsBySource": {
+        "pu": 0,
+        "publicPu": 0,
+        "operator": 0
+      },
+      "mainlineFeatures": 13
+    },
+    {
+      "id": "semarang-batang",
+      "type": "closed",
+      "tariffRows": 42,
+      "gatePoints": 11,
+      "gatePointsBySource": {
+        "pu": 5,
+        "publicPu": 0,
+        "operator": 6
+      },
+      "mainlineFeatures": 3,
+      "directedPairs": 42,
+      "missingReversePairs": [],
+      "invalidOrDuplicatePairs": []
+    },
+    {
+      "id": "gempol-pandaan",
+      "type": "closed",
+      "tariffRows": 12,
+      "gatePoints": 1,
+      "gatePointsBySource": {
+        "pu": 1,
+        "publicPu": 0,
+        "operator": 0
+      },
+      "mainlineFeatures": 2,
+      "directedPairs": 12,
+      "missingReversePairs": [],
+      "invalidOrDuplicatePairs": []
+    },
+    {
+      "id": "pandaan-malang",
+      "type": "closed",
+      "tariffRows": 30,
+      "gatePoints": 5,
+      "gatePointsBySource": {
+        "pu": 5,
+        "publicPu": 0,
+        "operator": 0
+      },
+      "mainlineFeatures": 2,
+      "directedPairs": 30,
+      "missingReversePairs": [],
+      "invalidOrDuplicatePairs": []
+    },
+    {
+      "id": "serpong-cinere",
+      "type": "closed",
+      "tariffRows": 6,
+      "gatePoints": 0,
+      "gatePointsBySource": {
+        "pu": 0,
+        "publicPu": 0,
+        "operator": 0
+      },
+      "mainlineFeatures": 2,
+      "directedPairs": 6,
+      "missingReversePairs": [],
+      "invalidOrDuplicatePairs": []
+    },
+    {
+      "id": "jakarta-cikampek",
+      "type": "closed",
+      "tariffRows": 4,
+      "gatePoints": 6,
+      "gatePointsBySource": {
+        "pu": 6,
+        "publicPu": 0,
+        "operator": 0
+      },
+      "mainlineFeatures": 3,
+      "directedPairs": 4,
+      "missingReversePairs": [
+        {
+          "road": "Jakarta-Cikampek dan Jakarta -Cikampek II Elevated",
+          "origin": "Pondok Gede Barat/Timur",
+          "destination": "Jakarta IC"
+        },
+        {
+          "road": "Jakarta-Cikampek dan Jakarta -Cikampek II Elevated",
+          "origin": "Cikunir",
+          "destination": "Jakarta IC"
+        },
+        {
+          "road": "Jakarta-Cikampek dan Jakarta -Cikampek II Elevated",
+          "origin": "Cibatu",
+          "destination": "Jakarta IC"
+        },
+        {
+          "road": "Jakarta-Cikampek dan Jakarta -Cikampek II Elevated",
+          "origin": "Karawang Timur",
+          "destination": "Jakarta IC"
+        }
+      ],
+      "invalidOrDuplicatePairs": []
+    },
+    {
+      "id": "palikanci",
+      "type": "closed",
+      "tariffRows": 12,
+      "gatePoints": 11,
+      "gatePointsBySource": {
+        "pu": 7,
+        "publicPu": 0,
+        "operator": 4
+      },
+      "mainlineFeatures": 2,
+      "directedPairs": 12,
+      "missingReversePairs": [],
+      "invalidOrDuplicatePairs": []
+    },
+    {
+      "id": "kanci-pejagan",
+      "type": "closed",
+      "tariffRows": 3,
+      "gatePoints": 2,
+      "gatePointsBySource": {
+        "pu": 0,
+        "publicPu": 0,
+        "operator": 2
+      },
+      "mainlineFeatures": 2,
+      "directedPairs": 3,
+      "missingReversePairs": [
+        {
+          "road": "Kanci-Pejagan",
+          "origin": "Pejagan",
+          "destination": "Kanci"
+        },
+        {
+          "road": "Kanci-Pejagan",
+          "origin": "Ciledug",
+          "destination": "Kanci"
+        },
+        {
+          "road": "Kanci-Pejagan",
+          "origin": "Pejagan",
+          "destination": "Ciledug"
+        }
+      ],
+      "invalidOrDuplicatePairs": []
+    },
+    {
+      "id": "pemalang-batang",
+      "type": "closed",
+      "tariffRows": 20,
+      "gatePoints": 5,
+      "gatePointsBySource": {
+        "pu": 2,
+        "publicPu": 0,
+        "operator": 3
+      },
+      "mainlineFeatures": 2,
+      "directedPairs": 20,
+      "missingReversePairs": [],
+      "invalidOrDuplicatePairs": []
+    },
+    {
+      "id": "semarang-abc",
+      "type": "open",
+      "tariffRows": 1,
+      "gatePoints": 0,
+      "gatePointsBySource": {
+        "pu": 0,
+        "publicPu": 0,
+        "operator": 0
+      },
+      "mainlineFeatures": 0
+    },
+    {
+      "id": "semarang-solo",
+      "type": "closed",
+      "tariffRows": 30,
+      "gatePoints": 5,
+      "gatePointsBySource": {
+        "pu": 5,
+        "publicPu": 0,
+        "operator": 0
+      },
+      "mainlineFeatures": 2,
+      "directedPairs": 30,
+      "missingReversePairs": [],
+      "invalidOrDuplicatePairs": []
+    },
+    {
+      "id": "solo-ngawi",
+      "type": "closed",
+      "tariffRows": 90,
+      "gatePoints": 8,
+      "gatePointsBySource": {
+        "pu": 8,
+        "publicPu": 0,
+        "operator": 0
+      },
+      "mainlineFeatures": 3,
+      "directedPairs": 90,
+      "missingReversePairs": [],
+      "invalidOrDuplicatePairs": []
+    },
+    {
+      "id": "ngawi-kertosono",
+      "type": "closed",
+      "tariffRows": 20,
+      "gatePoints": 3,
+      "gatePointsBySource": {
+        "pu": 3,
+        "publicPu": 0,
+        "operator": 0
+      },
+      "mainlineFeatures": 2,
+      "directedPairs": 20,
+      "missingReversePairs": [],
+      "invalidOrDuplicatePairs": []
+    },
+    {
+      "id": "kertosono-mojokerto",
+      "type": "closed",
+      "tariffRows": 20,
+      "gatePoints": 3,
+      "gatePointsBySource": {
+        "pu": 3,
+        "publicPu": 0,
+        "operator": 0
+      },
+      "mainlineFeatures": 2,
+      "directedPairs": 20,
+      "missingReversePairs": [],
+      "invalidOrDuplicatePairs": []
+    },
+    {
+      "id": "surabaya-mojokerto",
+      "type": "mixed",
+      "tariffRows": 22,
+      "gatePoints": 9,
+      "gatePointsBySource": {
+        "pu": 9,
+        "publicPu": 0,
+        "operator": 0
+      },
+      "mainlineFeatures": 3
+    },
+    {
+      "id": "surabaya-gempol",
+      "type": "mixed",
+      "tariffRows": 9,
+      "gatePoints": 19,
+      "gatePointsBySource": {
+        "pu": 19,
+        "publicPu": 0,
+        "operator": 0
+      },
+      "mainlineFeatures": 4
+    },
+    {
+      "id": "gempol-pasuruan",
+      "type": "closed",
+      "tariffRows": 20,
+      "gatePoints": 4,
+      "gatePointsBySource": {
+        "pu": 4,
+        "publicPu": 0,
+        "operator": 0
+      },
+      "mainlineFeatures": 3,
+      "directedPairs": 20,
+      "missingReversePairs": [],
+      "invalidOrDuplicatePairs": []
+    },
+    {
+      "id": "pasuruan-probolinggo",
+      "type": "closed",
+      "tariffRows": 12,
+      "gatePoints": 3,
+      "gatePointsBySource": {
+        "pu": 3,
+        "publicPu": 0,
+        "operator": 0
+      },
+      "mainlineFeatures": 2,
+      "directedPairs": 12,
+      "missingReversePairs": [
+        {
+          "road": "Pasuruan-Probolinggo Seksi I - IVA",
+          "origin": "Probolinggo Timur",
+          "destination": "Grati"
+        },
+        {
+          "road": "Pasuruan-Probolinggo Seksi I - IVA",
+          "origin": "Gending",
+          "destination": "Grati"
+        },
+        {
+          "road": "Pasuruan-Probolinggo Seksi I - IVA",
+          "origin": "Probolinggo Timur",
+          "destination": "Tongas"
+        },
+        {
+          "road": "Pasuruan-Probolinggo Seksi I - IVA",
+          "origin": "Gending",
+          "destination": "Tongas"
+        },
+        {
+          "road": "Pasuruan-Probolinggo Seksi I - IVA",
+          "origin": "Probolinggo Timur",
+          "destination": "Probolinggo Barat"
+        },
+        {
+          "road": "Pasuruan-Probolinggo Seksi I - IVA",
+          "origin": "Gending",
+          "destination": "Probolinggo Barat"
+        }
+      ],
+      "invalidOrDuplicatePairs": []
+    }
+  ],
+  "unmappedGates": [
+    {
+      "id": 132,
+      "road": "Surabaya - Mojokerto",
+      "name": "GT PENOMPO"
+    },
+    {
+      "id": 271,
+      "road": "Gempol - Pandaan",
+      "name": "GT GEMPOL 3"
+    },
+    {
+      "id": 272,
+      "road": "Gempol - Pandaan",
+      "name": "GT GEMPOL 2"
+    },
+    {
+      "id": 579,
+      "road": "Jakarta - Cikampek",
+      "name": "GT HALIM 2"
+    },
+    {
+      "id": 580,
+      "road": "Jakarta - Cikampek",
+      "name": "GT HALIM"
+    },
+    {
+      "id": 581,
+      "road": "Jakarta - Cikampek",
+      "name": "GT HALIM UTAMA"
+    },
+    {
+      "id": 582,
+      "road": "Jakarta - Cikampek",
+      "name": "GT PONDOK GEDE BARAT 2"
+    },
+    {
+      "id": 583,
+      "road": "Jakarta - Cikampek",
+      "name": "GT PONDOK GEDE BARAT"
+    },
+    {
+      "id": 584,
+      "road": "Jakarta - Cikampek",
+      "name": "GT PONDOK GEDE TIMUR 1"
+    },
+    {
+      "id": 585,
+      "road": "Jakarta - Cikampek",
+      "name": "GT PONDOK GEDE TIMUR 2"
+    },
+    {
+      "id": 589,
+      "road": "Jakarta - Cikampek",
+      "name": "GT BEKASI BARAT 2"
+    },
+    {
+      "id": 590,
+      "road": "Jakarta - Cikampek",
+      "name": "GT BEKASI BARAT"
+    },
+    {
+      "id": 591,
+      "road": "Jakarta - Cikampek",
+      "name": "GT BEKASI BARAT 1"
+    },
+    {
+      "id": 592,
+      "road": "Jakarta - Cikampek",
+      "name": "GT BEKASI TIMUR 2"
+    },
+    {
+      "id": 593,
+      "road": "Jakarta - Cikampek",
+      "name": "GT BEKASI TIMUR 1"
+    },
+    {
+      "id": 594,
+      "road": "Jakarta - Cikampek",
+      "name": "GT TAMBUN"
+    },
+    {
+      "id": 595,
+      "road": "Jakarta - Cikampek",
+      "name": "GT CIBITUNG 2"
+    },
+    {
+      "id": 596,
+      "road": "Jakarta - Cikampek",
+      "name": "GT CIBITUNG"
+    },
+    {
+      "id": 597,
+      "road": "Jakarta - Cikampek",
+      "name": "GT CIBITUNG 1"
+    },
+    {
+      "id": 598,
+      "road": "Jakarta - Cikampek",
+      "name": "GT CIKARANG UTARA"
+    },
+    {
+      "id": 599,
+      "road": "Jakarta - Cikampek",
+      "name": "GT CIKARANG UTAMA"
+    },
+    {
+      "id": 600,
+      "road": "Jakarta - Cikampek",
+      "name": "GT CIKARANG BARAT"
+    },
+    {
+      "id": 601,
+      "road": "Jakarta - Cikampek",
+      "name": "GT CIKARANG BARAT 2"
+    },
+    {
+      "id": 602,
+      "road": "Jakarta - Cikampek",
+      "name": "GT CIKARANG BARAT 1"
+    },
+    {
+      "id": 603,
+      "road": "Jakarta - Cikampek",
+      "name": "GT CIKARANG BARAT 5"
+    },
+    {
+      "id": 604,
+      "road": "Jakarta - Cikampek",
+      "name": "GT CIKARANG BARAT 3"
+    },
+    {
+      "id": 606,
+      "road": "Jakarta - Cikampek",
+      "name": "GT CIKARANG TIMUR"
+    },
+    {
+      "id": 607,
+      "road": "Jakarta - Cikampek",
+      "name": "GT KARAWANG BARAT"
+    },
+    {
+      "id": 608,
+      "road": "Jakarta - Cikampek",
+      "name": "GT KARAWANG BARAT 1"
+    },
+    {
+      "id": 609,
+      "road": "Jakarta - Cikampek",
+      "name": "GT KARAWANG BARAT 2"
+    },
+    {
+      "id": 612,
+      "road": "Jakarta - Cikampek",
+      "name": "GT KALIHURIP UTAMA 4"
+    },
+    {
+      "id": 613,
+      "road": "Jakarta - Cikampek",
+      "name": "GT KALIHURIP 4"
+    },
+    {
+      "id": 614,
+      "road": "Jakarta - Cikampek",
+      "name": "GT KALIHURIP 2"
+    },
+    {
+      "id": 615,
+      "road": "Jakarta - Cikampek",
+      "name": "GT KALIHURIP 1"
+    },
+    {
+      "id": 616,
+      "road": "Jakarta - Cikampek",
+      "name": "GT KALIHURIP 3"
+    },
+    {
+      "id": 646,
+      "road": "Jakarta - Cikampek",
+      "name": "GT CIKAMPEK"
+    },
+    {
+      "id": 652,
+      "road": "Ngawi - Kertosono",
+      "name": "GT WILANGAN"
+    },
+    {
+      "id": 653,
+      "road": "Pejagan - Pemalang",
+      "name": "GT CILEDUG"
+    },
+    {
+      "id": 176,
+      "name": "GT CIUJUNG ON RAMP"
+    }
+  ]
+}
