@@ -182,3 +182,10 @@ Karawaci remains unresolved: the captured public-place route passes near multipl
 The filtered SIGI export contains all 5 of 5 records (offset 0), including Karawaci objectid 704 with 23 paths. Its operational-status field is blank. The Karawaci geometry is retained separately with the source file SHA-256 and original status; it provides spatial matching, not evidence of a new toll payment. Kunciran, Tangerang, Kembangan and Karang Tengah Barat are not assigned wholesale to Jakarta–Tangerang because interchange geometry can span concessions. Existing nationwide geometry is preserved.
 
 The captured Merak–Supermal route leaves mapped Karawaci geometry between the two toll-tagged sections (up to roughly 267 metres away at sampled points), then returns to mapped ramps. The continuous-gap check correctly rejects merging these sections. Regression fixture covers both ramp recognition and rejection of the intervening detour. The payment count and local-road guidance remain unresolved; this dataset alone must not force a complete price. 90 tests and build pass.
+
+
+### Karawaci local-road classification (2026-11-19)
+
+The final Jalan Diponegoro guidance on a Jakarta–Tangerang section is classified as an exit destination only when its maneuver lies within 15 m of the supplied Karawaci geometry and is not a motorway/ramp entry. A matching street name elsewhere or an unknown road is not exempted. LMAN's 6 February 2026 Taman Sari Karawaci document identifies Boulevard Diponegoro as the local destination corridor separated from the KM 21 exit: https://file.lman.id/file/view/s3-portal-lman/PUBLIC-FILE/2026/02/07/b7K-dokumen-seleksi-pemilihan-mitra-kspd-taman-sari-karawaci---panitia-seleksi.pdf . The spatial/guidance interpretation is an application rule, not an operator payment confirmation.
+
+The second Jakarta–Tangerang payment remains unresolved. Historical 2017 integration notices distinguish entry-paid and exit-paid gates, but do not establish current gate identities/directions for this trace. Do not remove the repeat-payment safeguard based on this classification. 91 automated tests and build pass.

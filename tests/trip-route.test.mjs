@@ -77,3 +77,15 @@ test('entrance ramp ends an earlier exit state even without a street name',()=>{
  assert.equal(tripSummary(sample,tariffs).total,null);
  assert.deepEqual(tripSummary(sample,tariffs).tolls[0].exitRoads,[]);
 });
+
+
+test('Karawaci local exit guidance is not an extra toll system; other roads remain unresolved',async()=>{
+ const {default:fixture}=await import('./fixtures/karawaci-exit.json',{with:{type:'json'}});
+ const sample={summary:{lengthInMeters:1000,travelTimeInSeconds:100},legs:[{points:fixture.points}],sections:[{sectionType:'TOLL_ROAD',startPointIndex:44,endPointIndex:91}],guidance:{instructions:[{pointIndex:44,street:'Jalan Tol Jakarta - Tangerang',maneuver:'TURN_LEFT'},{pointIndex:82,street:'Jalan Diponegoro',maneuver:'KEEP_RIGHT'}]}};
+ const prices=[{road:'Jakarta-Tangerang',fares:[8500]}];
+ const result=tripSummary(sample,prices);
+ assert.deepEqual(result.tolls[0].exitRoads,['Jalan Diponegoro']);assert.equal(result.tolls[0].charges.length,1);
+ sample.guidance.instructions[1].street='Unknown road';assert.equal(tripSummary(sample,prices).total,null);
+ sample.guidance.instructions[1].street='Jalan Diponegoro';sample.guidance.instructions[1].maneuver='ENTER_MOTORWAY';assert.equal(tripSummary(sample,prices).total,null);
+ sample.guidance.instructions[1].maneuver='KEEP_RIGHT';sample.legs[0].points=fixture.points.map(p=>({...p,latitude:p.latitude+.02}));assert.equal(tripSummary(sample,prices).total,null);
+});
