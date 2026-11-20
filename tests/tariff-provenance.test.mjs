@@ -15,6 +15,6 @@ test('retrieval time is only produced after valid source data',async()=>{
  const original=global.fetch;try{
  global.fetch=async()=>({ok:true,text:async()=>',No.,Tol Trans,Ruas,Panjang Jalan Tol,Besaran Tarif,,Golongan,,\n,,,,,Asal,Tujuan,I,II & III,IV & V\n,1,Jawa,Road,10,A,B,"Rp 7,500","Rp 10,000",-'});
  const result=await fetchTripTariffs();assert.equal(result.rows[0].fares[0],7500);assert.ok(Number.isFinite(Date.parse(result.fetchedAt)));
- global.fetch=async()=>({ok:true,text:async()=>'<html>bad source</html>'});assert.deepEqual(await fetchTripTariffs(),{rows:[],fetchedAt:null});
+ global.fetch=async()=>({ok:true,text:async()=>'<html>bad source</html>'});assert.deepEqual(await fetchTripTariffs(),{rows:[],fetchedAt:null,sources:[{source:'https://bpjt.pu.go.id/info-tarif-dan-golongan/',fetchedAt:null},{source:'https://www.ctptollways.co.id/tarif',fetchedAt:null}]});
  }finally{global.fetch=original;}
 });

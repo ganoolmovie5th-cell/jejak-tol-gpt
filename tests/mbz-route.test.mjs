@@ -25,6 +25,8 @@ test('Japek zone uses live source price and rejects absent or contradictory rows
  assert.equal(tripSummary(fixture,tariffs.filter((_,i)=>i!==1)).total,null);
  const conflict=[...tariffs,row(tariffs[1].road,'Jakarta IC','Cikampek',29000)];assert.equal(tripSummary(fixture,conflict).total,null);
 });
-test('zone mapping does not invent the reverse fare',()=>{
- const c=priceTollSection(['Cipali','Jakarta Cikampek','Wiyoto Wiyono'],tariffs,fixture.legs[0].points,{startPointIndex:297,endPointIndex:2361}).find(c=>c.systemId==='jakarta-cikampek');assert.equal(c.entry,'Cikampek');assert.equal(c.exit,'Jakarta IC');assert.equal(c.fare,null);
+test('full reverse Japek traversal uses published open zone IV',()=>{
+ const c=priceTollSection(['Cipali','Jakarta Cikampek','Wiyoto Wiyono'],tariffs,fixture.legs[0].points,{startPointIndex:297,endPointIndex:2361}).find(c=>c.systemId==='jakarta-cikampek');assert.equal(c.entry,'Cikampek');assert.equal(c.exit,'Jakarta IC');assert.equal(c.fare,27000);
+ const conflict=[...tariffs,row(tariffs[1].road,'Cikampek','Jakarta IC',29000)];
+ const price=priceTollSection(['Cipali','Jakarta Cikampek','Wiyoto Wiyono'],conflict,fixture.legs[0].points,{startPointIndex:297,endPointIndex:2361}).find(c=>c.systemId==='jakarta-cikampek');assert.equal(price.fare,null);
 });

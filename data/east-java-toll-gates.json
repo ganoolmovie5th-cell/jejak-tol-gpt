@@ -1,0 +1,134 @@
+{
+  "source": "https://sigi.pu.go.id/serverpu/rest/services/Hosted/Gerbang_Tol_(all)_Point/FeatureServer/0",
+  "sha256": "ae6a5a7b2bf23ac1de11583d5dc3b71d8ac055dabd36935e2374c883889596ab",
+  "checkedAt": "2026-11-20",
+  "note": "Operating PU points matched to explicit BPJT tariff names. Margomulyo and Dupak are not assigned a different tariff/concession by proximity.",
+  "gates": [
+    {
+      "id": "pu-east-113",
+      "name": "GT TANDES BARAT",
+      "tariffName": "Tandes",
+      "system": "surabaya-gresik",
+      "lon": 112.67808584734092,
+      "lat": -7.238689096849275,
+      "source": "https://sigi.pu.go.id/serverpu/rest/services/Hosted/Gerbang_Tol_(all)_Point/FeatureServer/0"
+    },
+    {
+      "id": "pu-east-114",
+      "name": "GT TANDES TIMUR 2",
+      "tariffName": "Tandes",
+      "system": "surabaya-gresik",
+      "lon": 112.68437070278519,
+      "lat": -7.240457854850355,
+      "source": "https://sigi.pu.go.id/serverpu/rest/services/Hosted/Gerbang_Tol_(all)_Point/FeatureServer/0"
+    },
+    {
+      "id": "pu-east-115",
+      "name": "GT TANDES TIMUR 1",
+      "tariffName": "Tandes",
+      "system": "surabaya-gresik",
+      "lon": 112.68441090074897,
+      "lat": -7.2410465881505806,
+      "source": "https://sigi.pu.go.id/serverpu/rest/services/Hosted/Gerbang_Tol_(all)_Point/FeatureServer/0"
+    },
+    {
+      "id": "pu-east-116",
+      "name": "GT ROMOKALISARI",
+      "tariffName": "Romo Kalisari",
+      "system": "surabaya-gresik",
+      "lon": 112.64595864981649,
+      "lat": -7.201960340841199,
+      "source": "https://sigi.pu.go.id/serverpu/rest/services/Hosted/Gerbang_Tol_(all)_Point/FeatureServer/0"
+    },
+    {
+      "id": "pu-east-117",
+      "name": "GT KEBOMAS",
+      "tariffName": "Kebomas",
+      "system": "surabaya-gresik",
+      "lon": 112.5969732568876,
+      "lat": -7.162248632373375,
+      "source": "https://sigi.pu.go.id/serverpu/rest/services/Hosted/Gerbang_Tol_(all)_Point/FeatureServer/0"
+    },
+    {
+      "id": "pu-east-118",
+      "name": "GT MANYAR",
+      "tariffName": "Manyar",
+      "system": "surabaya-gresik",
+      "lon": 112.60392000219034,
+      "lat": -7.127987747668402,
+      "source": "https://sigi.pu.go.id/serverpu/rest/services/Hosted/Gerbang_Tol_(all)_Point/FeatureServer/0"
+    },
+    {
+      "id": "pu-east-119",
+      "name": "GT SATELIT TANDES TIMUR 1",
+      "tariffName": "Tandes",
+      "system": "surabaya-gresik",
+      "lon": 112.6849828072904,
+      "lat": -7.241323646929835,
+      "source": "https://sigi.pu.go.id/serverpu/rest/services/Hosted/Gerbang_Tol_(all)_Point/FeatureServer/0"
+    },
+    {
+      "id": "pu-east-422",
+      "name": "GT ENTRANCE CERME",
+      "tariffName": "Cerme",
+      "system": "klbm",
+      "lon": 112.57516435946,
+      "lat": -7.2167760054609955,
+      "source": "https://sigi.pu.go.id/serverpu/rest/services/Hosted/Gerbang_Tol_(all)_Point/FeatureServer/0"
+    },
+    {
+      "id": "pu-east-419",
+      "name": "GT LEBANI GRESIK",
+      "tariffName": "Lebani Gresik",
+      "system": "klbm",
+      "lon": 112.54489873908852,
+      "lat": -7.3893171142621705,
+      "source": "https://sigi.pu.go.id/serverpu/rest/services/Hosted/Gerbang_Tol_(all)_Point/FeatureServer/0"
+    },
+    {
+      "id": "pu-east-420",
+      "name": "GT EXIT BELAHANREJO",
+      "tariffName": "Belahanrejo",
+      "system": "klbm",
+      "lon": 112.53424750399456,
+      "lat": -7.3298035412620015,
+      "source": "https://sigi.pu.go.id/serverpu/rest/services/Hosted/Gerbang_Tol_(all)_Point/FeatureServer/0"
+    },
+    {
+      "id": "pu-east-421",
+      "name": "GT ENTRANCE BELAHANREJO",
+      "tariffName": "Belahanrejo",
+      "system": "klbm",
+      "lon": 112.53364802809328,
+      "lat": -7.329206051221345,
+      "source": "https://sigi.pu.go.id/serverpu/rest/services/Hosted/Gerbang_Tol_(all)_Point/FeatureServer/0"
+    },
+    {
+      "id": "pu-east-423",
+      "name": "GT EXIT CERME",
+      "tariffName": "Cerme",
+      "system": "klbm",
+      "lon": 112.57434368973527,
+      "lat": -7.216608942398546,
+      "source": "https://sigi.pu.go.id/serverpu/rest/services/Hosted/Gerbang_Tol_(all)_Point/FeatureServer/0"
+    },
+    {
+      "id": "pu-east-424",
+      "name": "GT ENTRANCE BUNDER",
+      "tariffName": "Bunder",
+      "system": "klbm",
+      "lon": 112.59553040136939,
+      "lat": -7.171743087334588,
+      "source": "https://sigi.pu.go.id/serverpu/rest/services/Hosted/Gerbang_Tol_(all)_Point/FeatureServer/0"
+    },
+    {
+      "id": "pu-east-425",
+      "name": "GT EXIT BUNDER",
+      "tariffName": "Bunder",
+      "system": "klbm",
+      "lon": 112.59497250498275,
+      "lat": -7.171807240087902,
+      "source": "https://sigi.pu.go.id/serverpu/rest/services/Hosted/Gerbang_Tol_(all)_Point/FeatureServer/0"
+    }
+  ]
+}

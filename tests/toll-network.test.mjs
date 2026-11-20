@@ -176,7 +176,7 @@ test('Jakarta inner ring aliases share one payment, without swallowing other con
  const result=price(['Jalan Tol Insinyur Wiyoto Wiyono','Tol Wiyoto Wiyono','Cawang Tomang Pluit'],rows);
  assert.equal(result.length,1);assert.equal(result[0].fare,11000);
  assert.equal(systemForRoad('6 Ruas Dalam Kota Jakarta'),undefined);
- assert.equal(systemForRoad('Jalan Tol Cibitung Cilincing'),undefined);
+ assert.equal(systemForRoad('Jalan Tol Cibitung Cilincing').id,'cibitung-cilincing');
  assert.equal(price(['Wiyoto Wiyono'],[])[0].fare,null);
  assert.equal(price(['Wiyoto Wiyono'],[rows[0],{...rows[1],fares:[12000]}])[0].fare,null);
  const repeat=price(['Wiyoto Wiyono','Jalan Tol Jagorawi','Wiyoto Wiyono'],[...rows,row('Jakarta-Bogor-Ciawi',7500)]);

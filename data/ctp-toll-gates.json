@@ -1,0 +1,79 @@
+{
+  "source": "https://sigi.pu.go.id/serverpu/rest/services/Hosted/Gerbang_Tol_(all)_Point/FeatureServer/0",
+  "sha256": "ae6a5a7b2bf23ac1de11583d5dc3b71d8ac055dabd36935e2374c883889596ab",
+  "checkedAt": "2026-11-20",
+  "operationSource": "https://www.ctptollways.co.id/tarif",
+  "note": "PU coordinates matched by exact gate name to current operator tariff table. Gabus/Tambelang and Semper are not equated without evidence.",
+  "gates": [
+    {
+      "id": "pu-ctp-181",
+      "name": "GT MARUNDA",
+      "tariffName": "Marunda",
+      "system": "cibitung-cilincing",
+      "lon": 106.97651227330346,
+      "lat": -6.116771676833945,
+      "source": "https://sigi.pu.go.id/serverpu/rest/services/Hosted/Gerbang_Tol_(all)_Point/FeatureServer/0",
+      "sourceStatus": "Konstruksi"
+    },
+    {
+      "id": "pu-ctp-182",
+      "name": "GT CIBITUNG 1",
+      "tariffName": "Cibitung 1",
+      "system": "cibitung-cilincing",
+      "lon": 107.08347731476628,
+      "lat": -6.28712868903365,
+      "source": "https://sigi.pu.go.id/serverpu/rest/services/Hosted/Gerbang_Tol_(all)_Point/FeatureServer/0",
+      "sourceStatus": "Operasi"
+    },
+    {
+      "id": "pu-ctp-183",
+      "name": "GT CIBITUNG 3",
+      "tariffName": "Cibitung 3",
+      "system": "cibitung-cilincing",
+      "lon": 107.0752153923882,
+      "lat": -6.283034229783461,
+      "source": "https://sigi.pu.go.id/serverpu/rest/services/Hosted/Gerbang_Tol_(all)_Point/FeatureServer/0",
+      "sourceStatus": "Operasi"
+    },
+    {
+      "id": "pu-ctp-184",
+      "name": "GT TARUMAJAYA",
+      "tariffName": "Tarumajaya",
+      "system": "cibitung-cilincing",
+      "lon": 106.99104927930853,
+      "lat": -6.108288467113126,
+      "source": "https://sigi.pu.go.id/serverpu/rest/services/Hosted/Gerbang_Tol_(all)_Point/FeatureServer/0",
+      "sourceStatus": "Konstruksi"
+    },
+    {
+      "id": "pu-ctp-186",
+      "name": "GT TELAGA ASIH",
+      "tariffName": "Telaga Asih",
+      "system": "cibitung-cilincing",
+      "lon": 107.0968717675403,
+      "lat": -6.269547960578361,
+      "source": "https://sigi.pu.go.id/serverpu/rest/services/Hosted/Gerbang_Tol_(all)_Point/FeatureServer/0",
+      "sourceStatus": "Operasi"
+    },
+    {
+      "id": "pu-ctp-188",
+      "name": "GT CIBITUNG 2",
+      "tariffName": "Cibitung 2",
+      "system": "cibitung-cilincing",
+      "lon": 107.08540623783774,
+      "lat": -6.2858861883895925,
+      "source": "https://sigi.pu.go.id/serverpu/rest/services/Hosted/Gerbang_Tol_(all)_Point/FeatureServer/0",
+      "sourceStatus": "Operasi"
+    },
+    {
+      "id": "pu-ctp-192",
+      "name": "GT CIBITUNG 4",
+      "tariffName": "Cibitung 4",
+      "system": "cibitung-cilincing",
+      "lon": 107.08103808842336,
+      "lat": -6.285495735861769,
+      "source": "https://sigi.pu.go.id/serverpu/rest/services/Hosted/Gerbang_Tol_(all)_Point/FeatureServer/0",
+      "sourceStatus": "Operasi"
+    }
+  ]
+}
