@@ -1,0 +1,315 @@
+{
+  "source": "https://www.ctptollways.co.id/tarif",
+  "checkedAt": "2026-11-20T03:58:46.807Z",
+  "scope": "Research snapshot only; not used as live pricing or proof of gate geometry",
+  "rows": [
+    {
+      "origin": "Cibitung 1",
+      "destination": "Telaga Asih",
+      "fares": [
+        6500,
+        9500,
+        9500,
+        13000,
+        13000
+      ]
+    },
+    {
+      "origin": "Cibitung 1",
+      "destination": "Gabus",
+      "fares": [
+        26500,
+        39500,
+        39500,
+        53000,
+        53000
+      ]
+    },
+    {
+      "origin": "Cibitung 1",
+      "destination": "Tarumajaya",
+      "fares": [
+        55000,
+        67500,
+        67500,
+        73500,
+        73500
+      ]
+    },
+    {
+      "origin": "Cibitung 1",
+      "destination": "Marunda",
+      "fares": [
+        69500,
+        79000,
+        79000,
+        80000,
+        80000
+      ]
+    },
+    {
+      "origin": "Cibitung 3",
+      "destination": "Telaga Asih",
+      "fares": [
+        6500,
+        9500,
+        9500,
+        13000,
+        13000
+      ]
+    },
+    {
+      "origin": "Cibitung 3",
+      "destination": "Gabus",
+      "fares": [
+        26500,
+        39500,
+        39500,
+        53000,
+        53000
+      ]
+    },
+    {
+      "origin": "Cibitung 3",
+      "destination": "Tarumajaya",
+      "fares": [
+        55000,
+        67500,
+        67500,
+        73500,
+        73500
+      ]
+    },
+    {
+      "origin": "Cibitung 3",
+      "destination": "Marunda",
+      "fares": [
+        69500,
+        79000,
+        79000,
+        80000,
+        80000
+      ]
+    },
+    {
+      "origin": "Telaga Asih",
+      "destination": "Cibitung 2",
+      "fares": [
+        6500,
+        9500,
+        9500,
+        13000,
+        13000
+      ]
+    },
+    {
+      "origin": "Telaga Asih",
+      "destination": "Cibitung 4",
+      "fares": [
+        6500,
+        9500,
+        9500,
+        13000,
+        13000
+      ]
+    },
+    {
+      "origin": "Telaga Asih",
+      "destination": "Gabus",
+      "fares": [
+        20000,
+        30000,
+        30000,
+        40000,
+        40000
+      ]
+    },
+    {
+      "origin": "Telaga Asih",
+      "destination": "Tarumajaya",
+      "fares": [
+        48500,
+        66000,
+        66000,
+        71000,
+        71000
+      ]
+    },
+    {
+      "origin": "Telaga Asih",
+      "destination": "Marunda",
+      "fares": [
+        63000,
+        72000,
+        72000,
+        77500,
+        77500
+      ]
+    },
+    {
+      "origin": "Gabus",
+      "destination": "Cibitung 2",
+      "fares": [
+        26500,
+        39500,
+        39500,
+        53000,
+        53000
+      ]
+    },
+    {
+      "origin": "Gabus",
+      "destination": "Cibitung 4",
+      "fares": [
+        26500,
+        39500,
+        39500,
+        53000,
+        53000
+      ]
+    },
+    {
+      "origin": "Gabus",
+      "destination": "Telaga Asih",
+      "fares": [
+        20000,
+        30000,
+        30000,
+        40000,
+        40000
+      ]
+    },
+    {
+      "origin": "Gabus",
+      "destination": "Tarumajaya",
+      "fares": [
+        28500,
+        43000,
+        43000,
+        57000,
+        57000
+      ]
+    },
+    {
+      "origin": "Gabus",
+      "destination": "Marunda",
+      "fares": [
+        43000,
+        58000,
+        58000,
+        66000,
+        66000
+      ]
+    },
+    {
+      "origin": "Tarumajaya",
+      "destination": "Cibitung 2",
+      "fares": [
+        55000,
+        67500,
+        67500,
+        73500,
+        73500
+      ]
+    },
+    {
+      "origin": "Tarumajaya",
+      "destination": "Cibitung 4",
+      "fares": [
+        55000,
+        67500,
+        67500,
+        73500,
+        73500
+      ]
+    },
+    {
+      "origin": "Tarumajaya",
+      "destination": "Telaga Asih",
+      "fares": [
+        48500,
+        66000,
+        66000,
+        71000,
+        71000
+      ]
+    },
+    {
+      "origin": "Tarumajaya",
+      "destination": "Gabus",
+      "fares": [
+        28500,
+        43000,
+        43000,
+        57000,
+        57000
+      ]
+    },
+    {
+      "origin": "Tarumajaya",
+      "destination": "Marunda",
+      "fares": [
+        14500,
+        21500,
+        21500,
+        29000,
+        29000
+      ]
+    },
+    {
+      "origin": "Marunda",
+      "destination": "Cibitung 2",
+      "fares": [
+        69500,
+        79000,
+        79000,
+        80000,
+        80000
+      ]
+    },
+    {
+      "origin": "Marunda",
+      "destination": "Cibitung 4",
+      "fares": [
+        69500,
+        79000,
+        79000,
+        80000,
+        80000
+      ]
+    },
+    {
+      "origin": "Marunda",
+      "destination": "Telaga Asih",
+      "fares": [
+        63000,
+        72000,
+        72000,
+        77500,
+        77500
+      ]
+    },
+    {
+      "origin": "Marunda",
+      "destination": "Gabus",
+      "fares": [
+        43000,
+        58000,
+        58000,
+        66000,
+        66000
+      ]
+    },
+    {
+      "origin": "Marunda",
+      "destination": "Tarumajaya",
+      "fares": [
+        14500,
+        21500,
+        21500,
+        29000,
+        29000
+      ]
+    }
+  ]
+}

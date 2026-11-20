@@ -169,3 +169,16 @@ test('Jakarta Tangerang connection requires physically crossing Cikupa and charg
  assert.deepEqual(priceTollSection(['Tangerang Merak','Jakarta Tangerang'],rows,[...points].reverse(),section).map(c=>c.fare),[58000,8500]);
  assert.equal(priceTollSection(['Jakarta Tangerang','Tangerang Merak'],rows,points.map(p=>({...p,latitude:p.latitude+.01})),section)[1].fare,null);
 });
+
+
+test('Jakarta inner ring aliases share one payment, without swallowing other concessions',()=>{
+ const rows=[row('Cawang-Tomang-Pluit (CTC)',11000,'Cawang','Pluit'),row('Cawang-Tj. Priok-Ancol Timur-Jembatan Tiga/Pluit',11000,'Cawang','Jembatan Tiga/Pluit')];
+ const result=price(['Jalan Tol Insinyur Wiyoto Wiyono','Tol Wiyoto Wiyono','Cawang Tomang Pluit'],rows);
+ assert.equal(result.length,1);assert.equal(result[0].fare,11000);
+ assert.equal(systemForRoad('6 Ruas Dalam Kota Jakarta'),undefined);
+ assert.equal(systemForRoad('Jalan Tol Cibitung Cilincing'),undefined);
+ assert.equal(price(['Wiyoto Wiyono'],[])[0].fare,null);
+ assert.equal(price(['Wiyoto Wiyono'],[rows[0],{...rows[1],fares:[12000]}])[0].fare,null);
+ const repeat=price(['Wiyoto Wiyono','Jalan Tol Jagorawi','Wiyoto Wiyono'],[...rows,row('Jakarta-Bogor-Ciawi',7500)]);
+ assert.deepEqual(repeat.map(c=>c.fare),[11000,7500,11000]);
+});
