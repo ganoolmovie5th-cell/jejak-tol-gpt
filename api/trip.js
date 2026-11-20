@@ -13,14 +13,14 @@ export default async function handler(req,res){
  const now=Date.now();for(const [k,v] of windows)if(v.until<now)windows.delete(k);
  const ip=String(req.headers['x-forwarded-for']||req.socket?.remoteAddress||'local').split(',')[0];const limit=windows.get(ip)||{until:now+60000,count:0};
  if(limit.count>=12){res.setHeader('Retry-After','60');return send(429,{error:'Terlalu banyak pencarian. Coba lagi dalam satu menit.'});}limit.count++;windows.set(ip,limit);
- const get=async(path,params)=>{const url=new URL(path,'https://api.tomtom.com');url.search=new URLSearchParams({...params,key});const r=await fetch(url,{signal:AbortSignal.timeout(15000)});if(!r.ok){const error=Error();error.status=r.status;console.warn('TomTom request failed',r.status);throw error;}return r.json();};
+ const get=async(path,params)=>{const url=new URL(path,'https://api.tomtom.com');url.searchParams.set('key',key);for(const [name,value] of Object.entries(params))for(const item of Array.isArray(value)?value:[value])url.searchParams.append(name,item);const r=await fetch(url,{signal:AbortSignal.timeout(15000)});if(!r.ok){const error=Error();error.status=r.status;console.warn('TomTom request failed',r.status);throw error;}return r.json();};
  try{
   if(body.action==='places'){
    const data=await get(`/search/2/search/${encodeURIComponent(body.query.trim())}.json`,{countrySet:'ID',limit:'5',language:'id-ID'});
    return send(200,{places:(data.results||[]).filter(p=>p.address?.countryCode==='ID'&&validPosition(p.position)).map(p=>({name:[p.poi?.name,p.address?.freeformAddress].filter(Boolean).join(' · '),position:p.position}))});
   }
   const a=body.origin,b=body.destination;
-  const data=await get(`/routing/1/calculateRoute/${a.lat},${a.lon}:${b.lat},${b.lon}/json`,{travelMode:'car',routeType:'fastest',traffic:'true',sectionType:'toll',instructionsType:'coded',language:'id-ID'});
+  const data=await get(`/routing/1/calculateRoute/${a.lat},${a.lon}:${b.lat},${b.lon}/json`,{travelMode:'car',routeType:'fastest',traffic:'true',sectionType:['toll','motorway'],instructionsType:'coded',language:'id-ID'});
   if(!data.routes?.length)return send(422,{error:'Rute tidak ditemukan. Coba lokasi lain.'});
   if(body.audit==='gambir-cirebon'&&a.lat===-6.1762&&a.lon===106.8306&&b.lat===-6.718318&&b.lon===108.549785)return send(200,{route:data.routes[0]});
   const tariffs=await fetchTripTariffs();
