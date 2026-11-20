@@ -1,0 +1,140 @@
+{
+  "deploymentCommit": "60346faa75a54a7ce60accb454610bcc3644657d",
+  "places": [
+    "Kantor Kepala Desa Srijaya, Tambun Utara",
+    "Marunda Center, Tarumajaya"
+  ],
+  "routes": [
+    {
+      "origin": {
+        "lat": -6.182,
+        "lon": 107.0664
+      },
+      "destination": {
+        "lat": -6.096211,
+        "lon": 106.98356
+      },
+      "status": 200,
+      "distance": 20041,
+      "duration": 1281,
+      "tolls": [
+        {
+          "names": [
+            "Jalan Tol Cibitung - Cilincing",
+            "Jalan Akses Tol Tarumajaya"
+          ],
+          "exitRoads": [],
+          "charges": [
+            {
+              "systemId": "cibitung-cilincing",
+              "name": "Cibitung–Cilincing",
+              "names": [
+                "Cibitung Cilincing"
+              ],
+              "type": "closed",
+              "fare": 28500,
+              "entry": "GT GABUS",
+              "exit": "GT TARUMAJAYA",
+              "reason": null,
+              "geometrySource": "https://sigi.pu.go.id/serverpu/rest/services/Hosted/Gerbang_Tol_(all)_Point/FeatureServer/0",
+              "mainlineSource": "https://kspservices.big.go.id/satupeta/rest/services/PUBLIK/SARANA_PRASARANA/MapServer/14",
+              "boundarySource": null,
+              "source": "https://www.ctptollways.co.id/tarif",
+              "ruleSource": "https://www.ctptollways.co.id/tarif"
+            }
+          ],
+          "fare": 28500,
+          "start": {
+            "latitude": -6.19068,
+            "longitude": 107.06685
+          },
+          "end": {
+            "latitude": -6.10391,
+            "longitude": 106.9901
+          }
+        }
+      ],
+      "total": 28500,
+      "knownSubtotal": 28500,
+      "calculatedAt": "2026-11-20T18:10:42.615Z",
+      "tariffsAvailable": true,
+      "tariffFetchedAt": "2026-11-20T18:10:41.096Z",
+      "tariffSources": [
+        {
+          "source": "https://bpjt.pu.go.id/info-tarif-dan-golongan/",
+          "fetchedAt": "2026-11-20T18:10:41.096Z"
+        },
+        {
+          "source": "https://www.ctptollways.co.id/tarif",
+          "fetchedAt": "2026-11-20T18:10:42.574Z"
+        }
+      ]
+    },
+    {
+      "origin": {
+        "lat": -6.096211,
+        "lon": 106.98356
+      },
+      "destination": {
+        "lat": -6.182,
+        "lon": 107.0664
+      },
+      "status": 200,
+      "distance": 19856,
+      "duration": 1355,
+      "tolls": [
+        {
+          "names": [
+            "Jalan Tol Cibitung - Cilincing"
+          ],
+          "exitRoads": [
+            "Jalan Raya Gabus - Sriamur"
+          ],
+          "charges": [
+            {
+              "systemId": "cibitung-cilincing",
+              "name": "Cibitung–Cilincing",
+              "names": [
+                "Cibitung Cilincing"
+              ],
+              "type": "closed",
+              "fare": 28500,
+              "entry": "GT TARUMAJAYA",
+              "exit": "GT GABUS",
+              "reason": null,
+              "geometrySource": "https://sigi.pu.go.id/serverpu/rest/services/Hosted/Gerbang_Tol_(all)_Point/FeatureServer/0",
+              "mainlineSource": "https://kspservices.big.go.id/satupeta/rest/services/PUBLIK/SARANA_PRASARANA/MapServer/14",
+              "boundarySource": null,
+              "source": "https://www.ctptollways.co.id/tarif",
+              "ruleSource": "https://www.ctptollways.co.id/tarif"
+            }
+          ],
+          "fare": 28500,
+          "start": {
+            "latitude": -6.10393,
+            "longitude": 106.99018
+          },
+          "end": {
+            "latitude": -6.19064,
+            "longitude": 107.06694
+          }
+        }
+      ],
+      "total": 28500,
+      "knownSubtotal": 28500,
+      "calculatedAt": "2026-11-20T18:10:45.156Z",
+      "tariffsAvailable": true,
+      "tariffFetchedAt": "2026-11-20T18:10:45.152Z",
+      "tariffSources": [
+        {
+          "source": "https://bpjt.pu.go.id/info-tarif-dan-golongan/",
+          "fetchedAt": "2026-11-20T18:10:45.152Z"
+        },
+        {
+          "source": "https://www.ctptollways.co.id/tarif",
+          "fetchedAt": "2026-11-20T18:10:43.655Z"
+        }
+      ]
+    }
+  ]
+}
