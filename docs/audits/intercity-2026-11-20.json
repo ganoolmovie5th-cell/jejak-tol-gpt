@@ -1,0 +1,861 @@
+{
+  "deploymentCommit": "38f45f051a5d9461764a9e8f3703825aae3f1a18",
+  "selected": [
+    {
+      "name": "Loket Pembatalan Stasiun Gambir · Jalan Medan Merdeka Timur 1, Kelurahan DKI Jakarta, Kecamatan Jakarta, DKI Jakarta 10110",
+      "position": {
+        "lat": -6.1762,
+        "lon": 106.8306
+      }
+    },
+    {
+      "name": "Ibox - CSB Mall Cirebon · Jalan Doktor Cipto Mangunkusumo 59, Kecamatan Kota Cirebon, Jawa Barat 45131",
+      "position": {
+        "lat": -6.718318,
+        "lon": 108.549785
+      }
+    },
+    {
+      "name": "Shaburi & Kintan Buffet Paragon Mall Semarang · Jalan Pemuda, Kelurahan Semarang Tengah, Kecamatan Semarang, Jawa Tengah 50132",
+      "position": {
+        "lat": -6.9791,
+        "lon": 110.41595
+      }
+    },
+    {
+      "name": "Chipmunks Indonesia Tunjungan Plaza 5 · Jalan Jenderal Basuki Rahmat, Kecamatan Surabaya, Jawa Timur 60261",
+      "position": {
+        "lat": -7.261568,
+        "lon": 112.739691
+      }
+    }
+  ],
+  "routes": [
+    {
+      "origin": "Loket Pembatalan Stasiun Gambir · Jalan Medan Merdeka Timur 1, Kelurahan DKI Jakarta, Kecamatan Jakarta, DKI Jakarta 10110",
+      "destination": "Ibox - CSB Mall Cirebon · Jalan Doktor Cipto Mangunkusumo 59, Kecamatan Kota Cirebon, Jawa Barat 45131",
+      "status": 200,
+      "distance": 215836,
+      "duration": 11624,
+      "tolls": [
+        {
+          "names": [
+            "Jalan Tol Insinyur Wiyoto Wiyono",
+            "Jalan Tol Jakarta - Cikampek",
+            "Jalan Layang MBZ Sheikh Mohamed Bin Zayed",
+            "Jalan Tol Cikampek - Palimanan"
+          ],
+          "exitRoads": [
+            "Jalan Otto Iskandardinata"
+          ],
+          "charges": [
+            {
+              "systemId": "dalam-kota-jakarta",
+              "name": "Dalam Kota Jakarta terintegrasi",
+              "names": [
+                "Jalan Tol Insinyur Wiyoto Wiyono"
+              ],
+              "type": "open",
+              "fare": 11000,
+              "entry": null,
+              "exit": null,
+              "reason": null,
+              "geometrySource": "https://sigi.pu.go.id/geoapi/",
+              "mainlineSource": "https://kspservices.big.go.id/satupeta/rest/services/PUBLIK/SARANA_PRASARANA/MapServer/14",
+              "boundarySource": null,
+              "source": "https://bpjt.pu.go.id/info-tarif-dan-golongan/",
+              "ruleSource": "https://investor.jasamarga.com/misc/AR/html/2024/961/"
+            },
+            {
+              "systemId": "jakarta-cikampek",
+              "name": "Jakarta–Cikampek",
+              "names": [
+                "Jakarta Cikampek"
+              ],
+              "type": "closed",
+              "fare": 27000,
+              "entry": "Jakarta IC",
+              "exit": "Cikampek",
+              "reason": null,
+              "geometrySource": "https://sigi.pu.go.id/geoapi/",
+              "mainlineSource": "https://kspservices.big.go.id/satupeta/rest/services/PUBLIK/SARANA_PRASARANA/MapServer/14",
+              "boundarySource": "https://www.jmtransjawatol.co.id/id/layanan/jalan-tol/jaringan-jalan-tol-jtt",
+              "source": "https://bpjt.pu.go.id/info-tarif-dan-golongan/",
+              "ruleSource": "https://investor.jasamarga.com/misc/AR/html/2024/961/"
+            },
+            {
+              "systemId": "cipali",
+              "name": "Cikopo–Palimanan (Cipali)",
+              "names": [
+                "Cipali"
+              ],
+              "type": "closed",
+              "fare": 132000,
+              "entry": "Cikopo",
+              "exit": "Palimanan",
+              "reason": null,
+              "geometrySource": "https://sigi.pu.go.id/geoapi/",
+              "mainlineSource": "https://kspservices.big.go.id/satupeta/rest/services/PUBLIK/SARANA_PRASARANA/MapServer/14",
+              "boundarySource": "https://www.jmtransjawatol.co.id/id/layanan/jalan-tol/jaringan-jalan-tol-jtt",
+              "source": "https://bpjt.pu.go.id/info-tarif-dan-golongan/",
+              "ruleSource": "https://www.jsb.co.id/calculator"
+            },
+            {
+              "systemId": "palikanci",
+              "name": "Palimanan–Kanci",
+              "names": [
+                "Palimanan Kanci"
+              ],
+              "type": "closed",
+              "fare": 3000,
+              "entry": "Palimanan",
+              "exit": "Plumbon 2",
+              "reason": null,
+              "geometrySource": "https://sigi.pu.go.id/geoapi/",
+              "mainlineSource": "https://kspservices.big.go.id/satupeta/rest/services/PUBLIK/SARANA_PRASARANA/MapServer/14",
+              "boundarySource": "https://www.jmtransjawatol.co.id/id/layanan/jalan-tol/jaringan-jalan-tol-jtt",
+              "source": "https://bpjt.pu.go.id/info-tarif-dan-golongan/",
+              "ruleSource": "https://www.jmtransjawatol.co.id/id/layanan/jalan-tol/jaringan-jalan-tol-jtt"
+            }
+          ],
+          "fare": 173000,
+          "start": {
+            "latitude": -6.22355,
+            "longitude": 106.87482
+          },
+          "end": {
+            "latitude": -6.70036,
+            "longitude": 108.48677
+          }
+        }
+      ],
+      "total": 173000,
+      "knownSubtotal": 173000,
+      "calculatedAt": "2026-11-20T08:59:59.229Z",
+      "tariffsAvailable": true,
+      "tariffFetchedAt": "2026-11-20T08:59:59.179Z"
+    },
+    {
+      "origin": "Ibox - CSB Mall Cirebon · Jalan Doktor Cipto Mangunkusumo 59, Kecamatan Kota Cirebon, Jawa Barat 45131",
+      "destination": "Loket Pembatalan Stasiun Gambir · Jalan Medan Merdeka Timur 1, Kelurahan DKI Jakarta, Kecamatan Jakarta, DKI Jakarta 10110",
+      "status": 200,
+      "distance": 217636,
+      "duration": 11541,
+      "tolls": [
+        {
+          "names": [
+            "Jalan Tol Palimanan - Kanci",
+            "Jalan Tol Insinyur Wiyoto Wiyono",
+            "Tol Wiyoto Wiyono"
+          ],
+          "exitRoads": [
+            "Jalan Layang MBZ Sheikh Mohamed Bin Zayed"
+          ],
+          "charges": [
+            {
+              "systemId": "palikanci",
+              "name": "Palimanan–Kanci",
+              "names": [
+                "Palimanan Kanci"
+              ],
+              "type": "closed",
+              "fare": 3000,
+              "entry": "Plumbon 1",
+              "exit": "Palimanan",
+              "reason": null,
+              "geometrySource": "https://sigi.pu.go.id/geoapi/",
+              "mainlineSource": "https://kspservices.big.go.id/satupeta/rest/services/PUBLIK/SARANA_PRASARANA/MapServer/14",
+              "boundarySource": "https://www.jmtransjawatol.co.id/id/layanan/jalan-tol/jaringan-jalan-tol-jtt",
+              "source": "https://bpjt.pu.go.id/info-tarif-dan-golongan/",
+              "ruleSource": "https://www.jmtransjawatol.co.id/id/layanan/jalan-tol/jaringan-jalan-tol-jtt"
+            },
+            {
+              "systemId": "cipali",
+              "name": "Cikopo–Palimanan (Cipali)",
+              "names": [
+                "Cipali"
+              ],
+              "type": "closed",
+              "fare": 132000,
+              "entry": "Palimanan",
+              "exit": "Cikopo",
+              "reason": null,
+              "geometrySource": "https://sigi.pu.go.id/geoapi/",
+              "mainlineSource": "https://kspservices.big.go.id/satupeta/rest/services/PUBLIK/SARANA_PRASARANA/MapServer/14",
+              "boundarySource": "https://www.jmtransjawatol.co.id/id/layanan/jalan-tol/jaringan-jalan-tol-jtt",
+              "source": "https://bpjt.pu.go.id/info-tarif-dan-golongan/",
+              "ruleSource": "https://www.jsb.co.id/calculator"
+            },
+            {
+              "systemId": "jakarta-cikampek",
+              "name": "Jakarta–Cikampek",
+              "names": [
+                "Jakarta Cikampek"
+              ],
+              "type": "closed",
+              "fare": null,
+              "entry": "Cikampek",
+              "exit": "Jakarta IC",
+              "reason": "Pasangan tarif tidak tersedia atau tidak konsisten",
+              "geometrySource": "https://sigi.pu.go.id/geoapi/",
+              "mainlineSource": "https://kspservices.big.go.id/satupeta/rest/services/PUBLIK/SARANA_PRASARANA/MapServer/14",
+              "boundarySource": "https://www.jmtransjawatol.co.id/id/layanan/jalan-tol/jaringan-jalan-tol-jtt",
+              "source": "https://bpjt.pu.go.id/info-tarif-dan-golongan/",
+              "ruleSource": "https://investor.jasamarga.com/misc/AR/html/2024/961/"
+            },
+            {
+              "systemId": "dalam-kota-jakarta",
+              "name": "Dalam Kota Jakarta terintegrasi",
+              "names": [
+                "Jalan Tol Insinyur Wiyoto Wiyono",
+                "Tol Wiyoto Wiyono"
+              ],
+              "type": "open",
+              "fare": 11000,
+              "entry": null,
+              "exit": null,
+              "reason": null,
+              "geometrySource": "https://sigi.pu.go.id/geoapi/",
+              "mainlineSource": "https://kspservices.big.go.id/satupeta/rest/services/PUBLIK/SARANA_PRASARANA/MapServer/14",
+              "boundarySource": null,
+              "source": "https://bpjt.pu.go.id/info-tarif-dan-golongan/",
+              "ruleSource": "https://investor.jasamarga.com/misc/AR/html/2024/961/"
+            }
+          ],
+          "fare": null,
+          "start": {
+            "latitude": -6.70065,
+            "longitude": 108.48515
+          },
+          "end": {
+            "latitude": -6.20026,
+            "longitude": 106.87325
+          }
+        }
+      ],
+      "total": null,
+      "knownSubtotal": 146000,
+      "calculatedAt": "2026-11-20T09:00:02.125Z",
+      "tariffsAvailable": true,
+      "tariffFetchedAt": "2026-11-20T09:00:02.091Z"
+    },
+    {
+      "origin": "Ibox - CSB Mall Cirebon · Jalan Doktor Cipto Mangunkusumo 59, Kecamatan Kota Cirebon, Jawa Barat 45131",
+      "destination": "Shaburi & Kintan Buffet Paragon Mall Semarang · Jalan Pemuda, Kelurahan Semarang Tengah, Kecamatan Semarang, Jawa Tengah 50132",
+      "status": 200,
+      "distance": 230499,
+      "duration": 10853,
+      "tolls": [
+        {
+          "names": [
+            "Jalan Tol Palimanan - Kanci",
+            "Jalan Tol Batang - Semarang",
+            "Jalan Tol Jatingaleh - Krapyak"
+          ],
+          "exitRoads": [
+            "Jalan Siliwangi"
+          ],
+          "charges": [
+            {
+              "systemId": "palikanci",
+              "name": "Palimanan–Kanci",
+              "names": [
+                "Palimanan Kanci"
+              ],
+              "type": "closed",
+              "fare": 6500,
+              "entry": "Ciperna Barat",
+              "exit": "Kanci",
+              "reason": null,
+              "geometrySource": "https://sigi.pu.go.id/geoapi/",
+              "mainlineSource": "https://kspservices.big.go.id/satupeta/rest/services/PUBLIK/SARANA_PRASARANA/MapServer/14",
+              "boundarySource": "https://www.jmtransjawatol.co.id/id/layanan/jalan-tol/jaringan-jalan-tol-jtt",
+              "source": "https://bpjt.pu.go.id/info-tarif-dan-golongan/",
+              "ruleSource": "https://www.jmtransjawatol.co.id/id/layanan/jalan-tol/jaringan-jalan-tol-jtt"
+            },
+            {
+              "systemId": "kanci-pejagan",
+              "name": "Kanci–Pejagan",
+              "names": [
+                "Kanci Pejagan"
+              ],
+              "type": "closed",
+              "fare": 31500,
+              "entry": "Kanci",
+              "exit": "Pejagan",
+              "reason": null,
+              "geometrySource": "https://sigi.pu.go.id/geoapi/",
+              "mainlineSource": "https://kspservices.big.go.id/satupeta/rest/services/PUBLIK/SARANA_PRASARANA/MapServer/14",
+              "boundarySource": "https://www.jmtransjawatol.co.id/id/layanan/jalan-tol/jaringan-jalan-tol-jtt",
+              "source": "https://bpjt.pu.go.id/info-tarif-dan-golongan/",
+              "ruleSource": "https://www.jmtransjawatol.co.id/id/layanan/jalan-tol/jaringan-jalan-tol-jtt"
+            },
+            {
+              "systemId": "pejagan-pemalang",
+              "name": "Pejagan–Pemalang",
+              "names": [
+                "Pejagan Pemalang"
+              ],
+              "type": "closed",
+              "fare": 66000,
+              "entry": "Pejagan",
+              "exit": "Pemalang",
+              "reason": null,
+              "geometrySource": "https://sigi.pu.go.id/geoapi/",
+              "mainlineSource": "https://kspservices.big.go.id/satupeta/rest/services/PUBLIK/SARANA_PRASARANA/MapServer/14",
+              "boundarySource": "https://www.jmtransjawatol.co.id/id/layanan/jalan-tol/jaringan-jalan-tol-jtt",
+              "source": "https://bpjt.pu.go.id/info-tarif-dan-golongan/",
+              "ruleSource": "https://www.jsb.co.id/calculator"
+            },
+            {
+              "systemId": "pemalang-batang",
+              "name": "Pemalang–Batang",
+              "names": [
+                "Pemalang Batang"
+              ],
+              "type": "closed",
+              "fare": 53000,
+              "entry": "Pemalang/Sewaka",
+              "exit": "Pasekaran",
+              "reason": null,
+              "geometrySource": "https://sigi.pu.go.id/geoapi/",
+              "mainlineSource": "https://kspservices.big.go.id/satupeta/rest/services/PUBLIK/SARANA_PRASARANA/MapServer/14",
+              "boundarySource": "https://www.jmtransjawatol.co.id/id/layanan/jalan-tol/jaringan-jalan-tol-jtt",
+              "source": "https://bpjt.pu.go.id/info-tarif-dan-golongan/",
+              "ruleSource": "https://www.jmtransjawatol.co.id/id/layanan/jalan-tol/jaringan-jalan-tol-jtt"
+            },
+            {
+              "systemId": "semarang-batang",
+              "name": "Semarang–Batang",
+              "names": [
+                "Semarang Batang"
+              ],
+              "type": "closed",
+              "fare": 144500,
+              "entry": "Batang/Pasekaran",
+              "exit": "Semarang/Kalikangkung",
+              "reason": null,
+              "geometrySource": "https://sigi.pu.go.id/geoapi/",
+              "mainlineSource": "https://kspservices.big.go.id/satupeta/rest/services/PUBLIK/SARANA_PRASARANA/MapServer/14",
+              "boundarySource": "https://www.jmtransjawatol.co.id/id/layanan/jalan-tol/jaringan-jalan-tol-jtt",
+              "source": "https://bpjt.pu.go.id/info-tarif-dan-golongan/",
+              "ruleSource": "https://www.jsb.co.id/calculator"
+            },
+            {
+              "systemId": "semarang-abc",
+              "name": "Semarang ABC",
+              "names": [
+                "Semarang ABC"
+              ],
+              "type": "open",
+              "fare": 6000,
+              "entry": null,
+              "exit": null,
+              "reason": null,
+              "geometrySource": "https://sigi.pu.go.id/geoapi/",
+              "mainlineSource": "https://kspservices.big.go.id/satupeta/rest/services/PUBLIK/SARANA_PRASARANA/MapServer/14",
+              "boundarySource": null,
+              "source": "https://bpjt.pu.go.id/info-tarif-dan-golongan/",
+              "ruleSource": "https://www.jmtransjawatol.co.id/id/layanan/jalan-tol/jaringan-jalan-tol-jtt"
+            }
+          ],
+          "fare": 307500,
+          "start": {
+            "latitude": -6.76038,
+            "longitude": 108.53242
+          },
+          "end": {
+            "latitude": -6.98786,
+            "longitude": 110.36814
+          }
+        }
+      ],
+      "total": 307500,
+      "knownSubtotal": 307500,
+      "calculatedAt": "2026-11-20T09:00:04.514Z",
+      "tariffsAvailable": true,
+      "tariffFetchedAt": "2026-11-20T09:00:04.505Z"
+    },
+    {
+      "origin": "Shaburi & Kintan Buffet Paragon Mall Semarang · Jalan Pemuda, Kelurahan Semarang Tengah, Kecamatan Semarang, Jawa Tengah 50132",
+      "destination": "Ibox - CSB Mall Cirebon · Jalan Doktor Cipto Mangunkusumo 59, Kecamatan Kota Cirebon, Jawa Barat 45131",
+      "status": 200,
+      "distance": 229905,
+      "duration": 10515,
+      "tolls": [
+        {
+          "names": [
+            "Jalan Tol Batang - Semarang"
+          ],
+          "exitRoads": [
+            "Jalan Cirebon - Kuningan"
+          ],
+          "charges": [
+            {
+              "systemId": "semarang-abc",
+              "name": "Semarang ABC",
+              "names": [
+                "Semarang ABC"
+              ],
+              "type": "open",
+              "fare": 6000,
+              "entry": null,
+              "exit": null,
+              "reason": null,
+              "geometrySource": "https://sigi.pu.go.id/geoapi/",
+              "mainlineSource": "https://kspservices.big.go.id/satupeta/rest/services/PUBLIK/SARANA_PRASARANA/MapServer/14",
+              "boundarySource": null,
+              "source": "https://bpjt.pu.go.id/info-tarif-dan-golongan/",
+              "ruleSource": "https://www.jmtransjawatol.co.id/id/layanan/jalan-tol/jaringan-jalan-tol-jtt"
+            },
+            {
+              "systemId": "semarang-batang",
+              "name": "Semarang–Batang",
+              "names": [
+                "Semarang Batang"
+              ],
+              "type": "closed",
+              "fare": 144500,
+              "entry": "Semarang/Kalikangkung",
+              "exit": "Batang/Pasekaran",
+              "reason": null,
+              "geometrySource": "https://sigi.pu.go.id/geoapi/",
+              "mainlineSource": "https://kspservices.big.go.id/satupeta/rest/services/PUBLIK/SARANA_PRASARANA/MapServer/14",
+              "boundarySource": "https://www.jmtransjawatol.co.id/id/layanan/jalan-tol/jaringan-jalan-tol-jtt",
+              "source": "https://bpjt.pu.go.id/info-tarif-dan-golongan/",
+              "ruleSource": "https://www.jsb.co.id/calculator"
+            },
+            {
+              "systemId": "pemalang-batang",
+              "name": "Pemalang–Batang",
+              "names": [
+                "Pemalang Batang"
+              ],
+              "type": "closed",
+              "fare": 53000,
+              "entry": "Pasekaran",
+              "exit": "Pemalang/Sewaka",
+              "reason": null,
+              "geometrySource": "https://sigi.pu.go.id/geoapi/",
+              "mainlineSource": "https://kspservices.big.go.id/satupeta/rest/services/PUBLIK/SARANA_PRASARANA/MapServer/14",
+              "boundarySource": "https://www.jmtransjawatol.co.id/id/layanan/jalan-tol/jaringan-jalan-tol-jtt",
+              "source": "https://bpjt.pu.go.id/info-tarif-dan-golongan/",
+              "ruleSource": "https://www.jmtransjawatol.co.id/id/layanan/jalan-tol/jaringan-jalan-tol-jtt"
+            },
+            {
+              "systemId": "pejagan-pemalang",
+              "name": "Pejagan–Pemalang",
+              "names": [
+                "Pejagan Pemalang"
+              ],
+              "type": "closed",
+              "fare": 66000,
+              "entry": "Pemalang",
+              "exit": "Pejagan",
+              "reason": null,
+              "geometrySource": "https://sigi.pu.go.id/geoapi/",
+              "mainlineSource": "https://kspservices.big.go.id/satupeta/rest/services/PUBLIK/SARANA_PRASARANA/MapServer/14",
+              "boundarySource": "https://www.jmtransjawatol.co.id/id/layanan/jalan-tol/jaringan-jalan-tol-jtt",
+              "source": "https://bpjt.pu.go.id/info-tarif-dan-golongan/",
+              "ruleSource": "https://www.jsb.co.id/calculator"
+            },
+            {
+              "systemId": "kanci-pejagan",
+              "name": "Kanci–Pejagan",
+              "names": [
+                "Kanci Pejagan"
+              ],
+              "type": "closed",
+              "fare": null,
+              "entry": "Pejagan",
+              "exit": "Kanci",
+              "reason": "Pasangan tarif tidak tersedia atau tidak konsisten",
+              "geometrySource": "https://sigi.pu.go.id/geoapi/",
+              "mainlineSource": "https://kspservices.big.go.id/satupeta/rest/services/PUBLIK/SARANA_PRASARANA/MapServer/14",
+              "boundarySource": "https://www.jmtransjawatol.co.id/id/layanan/jalan-tol/jaringan-jalan-tol-jtt",
+              "source": "https://bpjt.pu.go.id/info-tarif-dan-golongan/",
+              "ruleSource": "https://www.jmtransjawatol.co.id/id/layanan/jalan-tol/jaringan-jalan-tol-jtt"
+            },
+            {
+              "systemId": "palikanci",
+              "name": "Palimanan–Kanci",
+              "names": [
+                "Palimanan Kanci"
+              ],
+              "type": "closed",
+              "fare": 6500,
+              "entry": "Kanci",
+              "exit": "Ciperna Timur",
+              "reason": null,
+              "geometrySource": "https://sigi.pu.go.id/geoapi/",
+              "mainlineSource": "https://kspservices.big.go.id/satupeta/rest/services/PUBLIK/SARANA_PRASARANA/MapServer/14",
+              "boundarySource": "https://www.jmtransjawatol.co.id/id/layanan/jalan-tol/jaringan-jalan-tol-jtt",
+              "source": "https://bpjt.pu.go.id/info-tarif-dan-golongan/",
+              "ruleSource": "https://www.jmtransjawatol.co.id/id/layanan/jalan-tol/jaringan-jalan-tol-jtt"
+            }
+          ],
+          "fare": null,
+          "start": {
+            "latitude": -6.9882,
+            "longitude": 110.36836
+          },
+          "end": {
+            "latitude": -6.76685,
+            "longitude": 108.52508
+          }
+        }
+      ],
+      "total": null,
+      "knownSubtotal": 276000,
+      "calculatedAt": "2026-11-20T09:00:05.854Z",
+      "tariffsAvailable": true,
+      "tariffFetchedAt": "2026-11-20T09:00:05.844Z"
+    },
+    {
+      "origin": "Shaburi & Kintan Buffet Paragon Mall Semarang · Jalan Pemuda, Kelurahan Semarang Tengah, Kecamatan Semarang, Jawa Tengah 50132",
+      "destination": "Chipmunks Indonesia Tunjungan Plaza 5 · Jalan Jenderal Basuki Rahmat, Kecamatan Surabaya, Jawa Timur 60261",
+      "status": 200,
+      "distance": 350159,
+      "duration": 14569,
+      "tolls": [
+        {
+          "names": [
+            "Jalan Tol Srondol - Jatingaleh",
+            "Jalan Tol Banyumanik - Ungaran"
+          ],
+          "exitRoads": [
+            "Jalan Raya Bungurasih"
+          ],
+          "charges": [
+            {
+              "systemId": "semarang-abc",
+              "name": "Semarang ABC",
+              "names": [
+                "Jalan Tol Srondol - Jatingaleh"
+              ],
+              "type": "open",
+              "fare": 6000,
+              "entry": null,
+              "exit": null,
+              "reason": null,
+              "geometrySource": "https://sigi.pu.go.id/geoapi/",
+              "mainlineSource": "https://kspservices.big.go.id/satupeta/rest/services/PUBLIK/SARANA_PRASARANA/MapServer/14",
+              "boundarySource": null,
+              "source": "https://bpjt.pu.go.id/info-tarif-dan-golongan/",
+              "ruleSource": "https://www.jmtransjawatol.co.id/id/layanan/jalan-tol/jaringan-jalan-tol-jtt"
+            },
+            {
+              "systemId": "semarang-solo",
+              "name": "Semarang–Solo",
+              "names": [
+                "Semarang Solo"
+              ],
+              "type": "closed",
+              "fare": 92000,
+              "entry": "Banyumanik",
+              "exit": "Kartasura",
+              "reason": null,
+              "geometrySource": "https://sigi.pu.go.id/geoapi/",
+              "mainlineSource": "https://kspservices.big.go.id/satupeta/rest/services/PUBLIK/SARANA_PRASARANA/MapServer/14",
+              "boundarySource": "https://www.jmtransjawatol.co.id/id/layanan/jalan-tol/jaringan-jalan-tol-jtt",
+              "source": "https://bpjt.pu.go.id/info-tarif-dan-golongan/",
+              "ruleSource": "https://www.jmtransjawatol.co.id/id/layanan/jalan-tol/jaringan-jalan-tol-jtt"
+            },
+            {
+              "systemId": "solo-ngawi",
+              "name": "Solo–Ngawi",
+              "names": [
+                "Solo Ngawi"
+              ],
+              "type": "closed",
+              "fare": 163500,
+              "entry": "Kartasura",
+              "exit": "Klitik",
+              "reason": null,
+              "geometrySource": "https://sigi.pu.go.id/geoapi/",
+              "mainlineSource": "https://kspservices.big.go.id/satupeta/rest/services/PUBLIK/SARANA_PRASARANA/MapServer/14",
+              "boundarySource": "https://www.jmtransjawatol.co.id/id/layanan/jalan-tol/jaringan-jalan-tol-jtt",
+              "source": "https://bpjt.pu.go.id/info-tarif-dan-golongan/",
+              "ruleSource": "https://www.jmtransjawatol.co.id/id/layanan/jalan-tol/jaringan-jalan-tol-jtt"
+            },
+            {
+              "systemId": "ngawi-kertosono",
+              "name": "Ngawi–Kertosono",
+              "names": [
+                "Ngawi Kertosono"
+              ],
+              "type": "closed",
+              "fare": 102000,
+              "entry": "Klitik",
+              "exit": "Kertosono",
+              "reason": null,
+              "geometrySource": "https://sigi.pu.go.id/geoapi/",
+              "mainlineSource": "https://kspservices.big.go.id/satupeta/rest/services/PUBLIK/SARANA_PRASARANA/MapServer/14",
+              "boundarySource": "https://www.jmtransjawatol.co.id/id/layanan/jalan-tol/jaringan-jalan-tol-jtt",
+              "source": "https://bpjt.pu.go.id/info-tarif-dan-golongan/",
+              "ruleSource": "https://www.jmtransjawatol.co.id/id/layanan/jalan-tol/jaringan-jalan-tol-jtt"
+            },
+            {
+              "systemId": "kertosono-mojokerto",
+              "name": "Kertosono–Mojokerto",
+              "names": [
+                "Kertosono Mojokerto"
+              ],
+              "type": "closed",
+              "fare": 55000,
+              "entry": "Batas Barat",
+              "exit": "Mojokerto",
+              "reason": null,
+              "geometrySource": "https://sigi.pu.go.id/geoapi/",
+              "mainlineSource": "https://kspservices.big.go.id/satupeta/rest/services/PUBLIK/SARANA_PRASARANA/MapServer/14",
+              "boundarySource": "https://www.jmtransjawatol.co.id/id/layanan/jalan-tol/jaringan-jalan-tol-jtt",
+              "source": "https://bpjt.pu.go.id/info-tarif-dan-golongan/",
+              "ruleSource": "https://www.jmtransjawatol.co.id/id/layanan/jalan-tol/jaringan-jalan-tol-jtt"
+            },
+            {
+              "systemId": "surabaya-mojokerto",
+              "name": "Surabaya–Mojokerto",
+              "names": [
+                "Surabaya Mojokerto"
+              ],
+              "type": "mixed",
+              "fare": 43500,
+              "entry": "Mojokerto",
+              "exit": "SS Waru",
+              "reason": null,
+              "geometrySource": "https://sigi.pu.go.id/geoapi/",
+              "mainlineSource": "https://kspservices.big.go.id/satupeta/rest/services/PUBLIK/SARANA_PRASARANA/MapServer/14",
+              "boundarySource": "https://www.jmtransjawatol.co.id/id/layanan/jalan-tol/jaringan-jalan-tol-jtt",
+              "source": "https://bpjt.pu.go.id/info-tarif-dan-golongan/",
+              "ruleSource": "https://investor.jasamarga.com/newsroom/PT_Jasa_Marga_(Persero)_Tbk_30_September_2026_(1).pdf"
+            }
+          ],
+          "fare": 462000,
+          "start": {
+            "latitude": -7.0311,
+            "longitude": 110.41825
+          },
+          "end": {
+            "latitude": -7.34598,
+            "longitude": 112.72162
+          }
+        }
+      ],
+      "total": 462000,
+      "knownSubtotal": 462000,
+      "calculatedAt": "2026-11-20T09:00:07.307Z",
+      "tariffsAvailable": true,
+      "tariffFetchedAt": "2026-11-20T09:00:07.279Z"
+    },
+    {
+      "origin": "Chipmunks Indonesia Tunjungan Plaza 5 · Jalan Jenderal Basuki Rahmat, Kecamatan Surabaya, Jawa Timur 60261",
+      "destination": "Shaburi & Kintan Buffet Paragon Mall Semarang · Jalan Pemuda, Kelurahan Semarang Tengah, Kecamatan Semarang, Jawa Tengah 50132",
+      "status": 200,
+      "distance": 366085,
+      "duration": 15580,
+      "tolls": [
+        {
+          "names": [
+            "Jalan Dupak Rukun",
+            "Jalan Tol Surabaya - Gresik"
+          ],
+          "exitRoads": [],
+          "charges": [
+            {
+              "systemId": null,
+              "name": "Jalan Dupak Rukun",
+              "names": [
+                "Jalan Dupak Rukun"
+              ],
+              "type": "unknown",
+              "fare": null,
+              "entry": null,
+              "exit": null,
+              "reason": "Ruas belum dipetakan",
+              "geometrySource": "https://sigi.pu.go.id/geoapi/",
+              "mainlineSource": "https://kspservices.big.go.id/satupeta/rest/services/PUBLIK/SARANA_PRASARANA/MapServer/14",
+              "boundarySource": null,
+              "source": "https://bpjt.pu.go.id/info-tarif-dan-golongan/",
+              "ruleSource": null
+            },
+            {
+              "systemId": null,
+              "name": "Jalan Tol Surabaya - Gresik",
+              "names": [
+                "Jalan Tol Surabaya - Gresik"
+              ],
+              "type": "unknown",
+              "fare": null,
+              "entry": null,
+              "exit": null,
+              "reason": "Ruas belum dipetakan",
+              "geometrySource": "https://sigi.pu.go.id/geoapi/",
+              "mainlineSource": "https://kspservices.big.go.id/satupeta/rest/services/PUBLIK/SARANA_PRASARANA/MapServer/14",
+              "boundarySource": null,
+              "source": "https://bpjt.pu.go.id/info-tarif-dan-golongan/",
+              "ruleSource": null
+            }
+          ],
+          "fare": null,
+          "start": {
+            "latitude": -7.24497,
+            "longitude": 112.71418
+          },
+          "end": {
+            "latitude": -7.16463,
+            "longitude": 112.59483
+          }
+        },
+        {
+          "names": [
+            "Jalan Tol Krian-Legundi-Bunder-Manyar",
+            "Jalan Tol Surabaya - Mojokerto",
+            "Jalan Tol Solo - Ngawi",
+            "Jalan Tol Boyolali - Kartosuro",
+            "Jalan Tol Ungaran - Bawen",
+            "Jalan Tol Banyumanik - Ungaran",
+            "Jalan Tol Srondol - Jatingaleh"
+          ],
+          "exitRoads": [
+            "Jalan Jatiluhur"
+          ],
+          "charges": [
+            {
+              "systemId": null,
+              "name": "Jalan Tol Krian-Legundi-Bunder-Manyar",
+              "names": [
+                "Jalan Tol Krian-Legundi-Bunder-Manyar"
+              ],
+              "type": "unknown",
+              "fare": null,
+              "entry": null,
+              "exit": null,
+              "reason": "Ruas belum dipetakan",
+              "geometrySource": "https://sigi.pu.go.id/geoapi/",
+              "mainlineSource": "https://kspservices.big.go.id/satupeta/rest/services/PUBLIK/SARANA_PRASARANA/MapServer/14",
+              "boundarySource": null,
+              "source": "https://bpjt.pu.go.id/info-tarif-dan-golongan/",
+              "ruleSource": null
+            },
+            {
+              "systemId": "surabaya-mojokerto",
+              "name": "Surabaya–Mojokerto",
+              "names": [
+                "Surabaya Mojokerto"
+              ],
+              "type": "mixed",
+              "fare": null,
+              "entry": null,
+              "exit": "Mojokerto",
+              "reason": "Sambungan atau gerbang perjalanan belum teridentifikasi",
+              "geometrySource": "https://sigi.pu.go.id/geoapi/",
+              "mainlineSource": "https://kspservices.big.go.id/satupeta/rest/services/PUBLIK/SARANA_PRASARANA/MapServer/14",
+              "boundarySource": "https://www.jmtransjawatol.co.id/id/layanan/jalan-tol/jaringan-jalan-tol-jtt",
+              "source": "https://bpjt.pu.go.id/info-tarif-dan-golongan/",
+              "ruleSource": "https://investor.jasamarga.com/newsroom/PT_Jasa_Marga_(Persero)_Tbk_30_September_2026_(1).pdf"
+            },
+            {
+              "systemId": "kertosono-mojokerto",
+              "name": "Kertosono–Mojokerto",
+              "names": [
+                "Kertosono Mojokerto"
+              ],
+              "type": "closed",
+              "fare": 55000,
+              "entry": "Mojokerto",
+              "exit": "Batas Barat",
+              "reason": null,
+              "geometrySource": "https://sigi.pu.go.id/geoapi/",
+              "mainlineSource": "https://kspservices.big.go.id/satupeta/rest/services/PUBLIK/SARANA_PRASARANA/MapServer/14",
+              "boundarySource": "https://www.jmtransjawatol.co.id/id/layanan/jalan-tol/jaringan-jalan-tol-jtt",
+              "source": "https://bpjt.pu.go.id/info-tarif-dan-golongan/",
+              "ruleSource": "https://www.jmtransjawatol.co.id/id/layanan/jalan-tol/jaringan-jalan-tol-jtt"
+            },
+            {
+              "systemId": "ngawi-kertosono",
+              "name": "Ngawi–Kertosono",
+              "names": [
+                "Ngawi Kertosono"
+              ],
+              "type": "closed",
+              "fare": 102000,
+              "entry": "Kertosono",
+              "exit": "Klitik",
+              "reason": null,
+              "geometrySource": "https://sigi.pu.go.id/geoapi/",
+              "mainlineSource": "https://kspservices.big.go.id/satupeta/rest/services/PUBLIK/SARANA_PRASARANA/MapServer/14",
+              "boundarySource": "https://www.jmtransjawatol.co.id/id/layanan/jalan-tol/jaringan-jalan-tol-jtt",
+              "source": "https://bpjt.pu.go.id/info-tarif-dan-golongan/",
+              "ruleSource": "https://www.jmtransjawatol.co.id/id/layanan/jalan-tol/jaringan-jalan-tol-jtt"
+            },
+            {
+              "systemId": "solo-ngawi",
+              "name": "Solo–Ngawi",
+              "names": [
+                "Solo Ngawi"
+              ],
+              "type": "closed",
+              "fare": 163500,
+              "entry": "Klitik",
+              "exit": "Kartasura",
+              "reason": null,
+              "geometrySource": "https://sigi.pu.go.id/geoapi/",
+              "mainlineSource": "https://kspservices.big.go.id/satupeta/rest/services/PUBLIK/SARANA_PRASARANA/MapServer/14",
+              "boundarySource": "https://www.jmtransjawatol.co.id/id/layanan/jalan-tol/jaringan-jalan-tol-jtt",
+              "source": "https://bpjt.pu.go.id/info-tarif-dan-golongan/",
+              "ruleSource": "https://www.jmtransjawatol.co.id/id/layanan/jalan-tol/jaringan-jalan-tol-jtt"
+            },
+            {
+              "systemId": "semarang-solo",
+              "name": "Semarang–Solo",
+              "names": [
+                "Semarang Solo"
+              ],
+              "type": "closed",
+              "fare": 92000,
+              "entry": "Kartasura",
+              "exit": "Banyumanik",
+              "reason": null,
+              "geometrySource": "https://sigi.pu.go.id/geoapi/",
+              "mainlineSource": "https://kspservices.big.go.id/satupeta/rest/services/PUBLIK/SARANA_PRASARANA/MapServer/14",
+              "boundarySource": "https://www.jmtransjawatol.co.id/id/layanan/jalan-tol/jaringan-jalan-tol-jtt",
+              "source": "https://bpjt.pu.go.id/info-tarif-dan-golongan/",
+              "ruleSource": "https://www.jmtransjawatol.co.id/id/layanan/jalan-tol/jaringan-jalan-tol-jtt"
+            },
+            {
+              "systemId": "semarang-abc",
+              "name": "Semarang ABC",
+              "names": [
+                "Jalan Tol Srondol - Jatingaleh"
+              ],
+              "type": "open",
+              "fare": 6000,
+              "entry": null,
+              "exit": null,
+              "reason": null,
+              "geometrySource": "https://sigi.pu.go.id/geoapi/",
+              "mainlineSource": "https://kspservices.big.go.id/satupeta/rest/services/PUBLIK/SARANA_PRASARANA/MapServer/14",
+              "boundarySource": null,
+              "source": "https://bpjt.pu.go.id/info-tarif-dan-golongan/",
+              "ruleSource": "https://www.jmtransjawatol.co.id/id/layanan/jalan-tol/jaringan-jalan-tol-jtt"
+            }
+          ],
+          "fare": null,
+          "start": {
+            "latitude": -7.16829,
+            "longitude": 112.59525
+          },
+          "end": {
+            "latitude": -7.0316,
+            "longitude": 110.4188
+          }
+        }
+      ],
+      "total": null,
+      "knownSubtotal": 418500,
+      "calculatedAt": "2026-11-20T09:00:08.750Z",
+      "tariffsAvailable": true,
+      "tariffFetchedAt": "2026-11-20T09:00:08.731Z"
+    }
+  ]
+}
