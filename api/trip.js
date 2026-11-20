@@ -20,7 +20,7 @@ export default async function handler(req,res){
    return send(200,{places:(data.results||[]).filter(p=>p.address?.countryCode==='ID'&&validPosition(p.position)).map(p=>({name:[p.poi?.name,p.address?.freeformAddress].filter(Boolean).join(' · '),position:p.position}))});
   }
   const a=body.origin,b=body.destination;
-  const data=await get(`/routing/1/calculateRoute/${a.lat},${a.lon}:${b.lat},${b.lon}/json`,{travelMode:'car',routeType:'fastest',traffic:'true',sectionType:'tollRoad',instructionsType:'coded',language:'id-ID'});
+  const data=await get(`/routing/1/calculateRoute/${a.lat},${a.lon}:${b.lat},${b.lon}/json`,{travelMode:'car',routeType:'fastest',traffic:'true',sectionType:'toll',instructionsType:'coded',language:'id-ID'});
   if(!data.routes?.length)return send(422,{error:'Rute tidak ditemukan. Coba lokasi lain.'});
   const tariffs=await fetchTripTariffs();
   return send(200,{...tripSummary(data.routes[0],tariffs.rows),calculatedAt:new Date().toISOString(),tariffsAvailable:tariffs.rows.length>0,tariffFetchedAt:tariffs.fetchedAt});

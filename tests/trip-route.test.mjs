@@ -89,3 +89,21 @@ test('Karawaci local exit guidance is not an extra toll system; other roads rema
  sample.guidance.instructions[1].street='Jalan Diponegoro';sample.guidance.instructions[1].maneuver='ENTER_MOTORWAY';assert.equal(tripSummary(sample,prices).total,null);
  sample.guidance.instructions[1].maneuver='KEEP_RIGHT';sample.legs[0].points=fixture.points.map(p=>({...p,latitude:p.latitude+.02}));assert.equal(tripSummary(sample,prices).total,null);
 });
+
+
+test('current TomTom TOLL sections are priced, including mixed legacy fixtures without duplicate charges',()=>{
+ const current=structuredClone(route);current.sections[0].sectionType='TOLL';
+ assert.equal(tripSummary(current,tariffs).total,7500);
+ current.sections.push({...current.sections[0],sectionType:'TOLL_ROAD'});
+ assert.equal(tripSummary(current,tariffs).total,7500);
+ current.sections[0].endPointIndex=99;assert.throws(()=>tripSummary(current,tariffs),/Invalid toll section/);
+});
+
+test('routing endpoint requests supported toll sections and recognizes the response',async()=>{
+ const oldFetch=global.fetch,oldKey=process.env.tomtom_api_key;process.env.tomtom_api_key='test-key';let routed=false;
+ try{global.fetch=async url=>{
+  if(String(url).includes('/routing/')){routed=true;assert.equal(url.searchParams.get('sectionType'),'toll');const current=structuredClone(route);current.sections[0].sectionType='TOLL';return {ok:true,json:async()=>({routes:[current]})};}
+  return {ok:false};
+ };const result=await call({action:'route',origin:{lat:-6,lon:106},destination:{lat:-6.2,lon:106.2}});assert.equal(result.statusCode,200);assert.equal(routed,true);assert.equal(result.body.tolls.length,1);assert.equal(result.body.total,null);assert.equal(result.body.tariffsAvailable,false);
+ }finally{global.fetch=oldFetch;if(oldKey===undefined)delete process.env.tomtom_api_key;else process.env.tomtom_api_key=oldKey;}
+});
