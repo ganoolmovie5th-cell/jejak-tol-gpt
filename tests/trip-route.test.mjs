@@ -102,7 +102,7 @@ test('current TomTom TOLL sections are priced, including mixed legacy fixtures w
 test('routing endpoint requests supported toll sections and recognizes the response',async()=>{
  const oldFetch=global.fetch,oldKey=process.env.tomtom_api_key;process.env.tomtom_api_key='test-key';let routed=false;
  try{global.fetch=async url=>{
-  if(String(url).includes('/routing/')){routed=true;assert.equal(url.searchParams.get('sectionType'),'toll');const current=structuredClone(route);current.sections[0].sectionType='TOLL';return {ok:true,json:async()=>({routes:[current]})};}
+  if(String(url).includes('/routing/')){routed=true;assert.deepEqual(url.searchParams.getAll('sectionType'),['toll','motorway']);const current=structuredClone(route);current.sections[0].sectionType='TOLL';return {ok:true,json:async()=>({routes:[current]})};}
   return {ok:false};
  };const result=await call({action:'route',origin:{lat:-6,lon:106},destination:{lat:-6.2,lon:106.2}});assert.equal(result.statusCode,200);assert.equal(routed,true);assert.equal(result.body.tolls.length,1);assert.equal(result.body.total,null);assert.equal(result.body.tariffsAvailable,false);
  }finally{global.fetch=oldFetch;if(oldKey===undefined)delete process.env.tomtom_api_key;else process.env.tomtom_api_key=oldKey;}

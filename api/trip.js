@@ -22,7 +22,6 @@ export default async function handler(req,res){
   const a=body.origin,b=body.destination;
   const data=await get(`/routing/1/calculateRoute/${a.lat},${a.lon}:${b.lat},${b.lon}/json`,{travelMode:'car',routeType:'fastest',traffic:'true',sectionType:['toll','motorway'],instructionsType:'coded',language:'id-ID'});
   if(!data.routes?.length)return send(422,{error:'Rute tidak ditemukan. Coba lokasi lain.'});
-  if(body.audit==='gambir-cirebon'&&a.lat===-6.1762&&a.lon===106.8306&&b.lat===-6.718318&&b.lon===108.549785)return send(200,{route:data.routes[0]});
   const tariffs=await fetchTripTariffs();
   return send(200,{...tripSummary(data.routes[0],tariffs.rows),calculatedAt:new Date().toISOString(),tariffsAvailable:tariffs.rows.length>0,tariffFetchedAt:tariffs.fetchedAt});
  }catch(error){return send(error.status===429?429:502,{error:error.status===429?'Kuota layanan rute sedang terbatas. Coba lagi nanti.':[401,403].includes(error.status)?'Akses TomTom ditolak. Periksa izin Search dan Routing pada API key.':error.status===400?'Parameter layanan rute belum didukung.':'Rute belum dapat dimuat. Periksa lokasi atau coba lagi nanti.'});}
