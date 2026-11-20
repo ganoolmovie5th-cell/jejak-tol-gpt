@@ -1,5 +1,5 @@
 import test from 'node:test';import assert from 'node:assert/strict';
-import {priceTollSection} from '../lib/toll-network.mjs';
+import {priceTollSection,matchBoundaryGate,isDupakTollAccess} from '../lib/toll-network.mjs';
 import data from '../data/east-java-toll-gates.json' with {type:'json'};
 const row=(road,origin,destination,fare)=>({road,origin,destination,fares:[fare]});
 const route=(a,b)=>[a,b].map(g=>({latitude:g.lat,longitude:g.lon}));
@@ -16,4 +16,13 @@ test('KLBM joins Sumo at its own named Wringinanom tariff boundary',()=>{
  const result=priceTollSection(['Krian Legundi Bunder Manyar','Surabaya Mojokerto'],rows,route(a,b),section);
  assert.equal(result[0].fare,42000);assert.equal(result[0].exit,'SS Wringinanom');assert.equal(result[1].entry,'Wringinanom Junction');assert.equal(result[1].fare,null);
  assert.equal(priceTollSection(['Krian Legundi Bunder Manyar'],[],route(a,b),section)[0].fare,null);
+});
+
+test('Dupak open access is identified only on mapped Sugres geometry near its endpoint',()=>{
+ const p={latitude:-7.24497,longitude:112.71418};
+ assert.equal(isDupakTollAccess('Jalan Dupak Rukun',p),true);
+ assert.equal(matchBoundaryGate([p,p],0,'surabaya-gresik').tariffName,'Dupak');
+ assert.equal(isDupakTollAccess('Jalan Dupak Rukun',{...p,latitude:p.latitude+.002}),false);
+ assert.equal(isDupakTollAccess('Jalan Lain',p),false);
+ assert.equal(isDupakTollAccess('Jalan Dupak Rukun',{latitude:-7.238689,longitude:112.678086}),false);
 });
