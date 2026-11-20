@@ -3,7 +3,7 @@
   "sha256": "ae6a5a7b2bf23ac1de11583d5dc3b71d8ac055dabd36935e2374c883889596ab",
   "checkedAt": "2026-11-20",
   "operationSource": "https://www.ctptollways.co.id/tarif",
-  "note": "PU coordinates matched by exact gate name to current operator tariff table. Gabus/Tambelang and Semper are not equated without evidence.",
+  "note": "PU points matched to active operator tariff names. Feature 185 uses corroborated Gabus identity; original PU name/status retained. Semper remains separate.",
   "gates": [
     {
       "id": "pu-ctp-181",
@@ -74,6 +74,34 @@
       "lat": -6.285495735861769,
       "source": "https://sigi.pu.go.id/serverpu/rest/services/Hosted/Gerbang_Tol_(all)_Point/FeatureServer/0",
       "sourceStatus": "Operasi"
+    },
+    {
+      "id": "pu-ctp-185",
+      "name": "GT GABUS",
+      "originalName": "GT TAMBELANG",
+      "tariffName": "Gabus",
+      "system": "cibitung-cilincing",
+      "lon": 107.06841181794253,
+      "lat": -6.1870613549751186,
+      "source": "https://sigi.pu.go.id/serverpu/rest/services/Hosted/Gerbang_Tol_(all)_Point/FeatureServer/0",
+      "sourceStatus": "Konstruksi",
+      "nameEvidence": {
+        "checkedAt": "2026-11-21",
+        "localitySource": "https://www.bekasikab.go.id/jelang-diresmikan-presiden-jokowi-pj-bupati-bekasi-dani-ramdan-tinjau-gerbang-tol-gabus",
+        "operatorSource": "https://www.ctptollways.co.id/tarif",
+        "geocoder": "TomTom Search: Gerbang Tol Gabus, Tambun Utara",
+        "positions": [
+          {
+            "lat": -6.186737,
+            "lon": 107.06844
+          },
+          {
+            "lat": -6.186652,
+            "lon": 107.068374
+          }
+        ],
+        "interpretation": "Specific PU feature 185 matched by location, locality and current operator name; not a global Tambelang alias."
+      }
     }
   ]
 }
