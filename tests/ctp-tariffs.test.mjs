@@ -46,5 +46,18 @@ test('recorded Gabus–Semper exit uses Marunda net fare only with refund exit e
   r=>{r.guidance.instructions.find(i=>i.maneuver==='TAKE_EXIT').street='Jalan Tol Lingkar Luar Jakarta';},
   r=>{r.legs[0].points=r.legs[0].points.map(p=>p.longitude>106.97&&p.longitude<106.98?{...p,latitude:p.latitude+.01}:p);},
   r=>{r.legs[0].points=r.legs[0].points.slice(0,299);}
- ]){const bad=structuredClone(route);mutate(bad);assert.equal(tripSummary(bad,rows).tolls[0].charges[0].note,null);}
+ ]){const bad=structuredClone(route);mutate(bad);assert.doesNotMatch(tripSummary(bad,rows).tolls[0].charges[0].note||'',/refund/);}
+});
+
+test('recognized onward JORR uses crossed Marunda boundary and one JORR payment',()=>{
+ const route=JSON.parse(fs.readFileSync(new URL('./fixtures/gabus-semper.json',import.meta.url),'utf8'));
+ const points=route.legs[0].points,section={startPointIndex:28,endPointIndex:274};
+ const rows=[...parseCtpTariffs(html),{road:'JORR S',origin:'',destination:'',fares:[17000]}];
+ const names=['Cibitung Cilincing','JORR','JORR W1'];
+ const result=priceTollSection(names,rows,points,section);
+ assert.deepEqual(result.map(c=>c.fare),[43000,17000]);assert.equal(result[0].exit,'GT MARUNDA');assert.doesNotMatch(result[0].note,/refund/);
+ const missing=points.map(p=>p.longitude>106.97&&p.longitude<106.98?{...p,latitude:p.latitude+.01}:p);
+ assert.equal(priceTollSection(names,rows,missing,section)[0].fare,null);
+ assert.equal(priceTollSection(['Cibitung Cilincing','Jalan Tol Lingkar Luar'],rows,points,section)[0].fare,null);
+ assert.equal(priceTollSection(names,rows.filter(r=>r.road!=='Cibitung-Cilincing'),points,section)[0].fare,null);
 });

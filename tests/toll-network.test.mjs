@@ -182,3 +182,10 @@ test('Jakarta inner ring aliases share one payment, without swallowing other con
  const repeat=price(['Wiyoto Wiyono','Jalan Tol Jagorawi','Wiyoto Wiyono'],[...rows,row('Jakarta-Bogor-Ciawi',7500)]);
  assert.deepEqual(repeat.map(c=>c.fare),[11000,7500,11000]);
 });
+
+test('observed full Sedyatmo name shares the same payment, generic port roads stay unknown',()=>{
+ const result=price(['Sedyatmo','Jalan Tol Profesor Insinyur Sedyatmo'],[row('Prof.Dr.Ir.Soedijatmo',8500)]);
+ assert.equal(result.length,1);assert.equal(result[0].fare,8500);
+ assert.equal(systemForRoad('Jalan Tol Pelabuhan'),undefined);
+ assert.equal(systemForRoad('Jalan Tol Lingkar Luar'),undefined);
+});
