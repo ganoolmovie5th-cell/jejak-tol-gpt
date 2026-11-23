@@ -36,3 +36,15 @@ test('Gabus uses live directed fares and does not become a global Tambelang alia
  for(const route of [points,[...points].reverse()])assert.equal(priceTollSection(['Cibitung Cilincing'],parseCtpTariffs(html),route,section)[0].fare,20000);
  assert.equal(priceTollSection(['Jalan Tambelang'],parseCtpTariffs(html),points,section)[0].systemId,null);
 });
+
+test('recorded Gabus–Semper exit uses Marunda net fare only with refund exit evidence',async()=>{
+ const {tripSummary}=await import('../lib/trip-route.mjs');
+ const route=JSON.parse(fs.readFileSync(new URL('./fixtures/gabus-semper.json',import.meta.url),'utf8'));
+ const rows=parseCtpTariffs(html),result=tripSummary(route,rows),charge=result.tolls[0].charges[0];
+ assert.equal(charge.exit,'GT MARUNDA');assert.equal(charge.fare,43000);assert.match(charge.note,/refund JORR/);assert.match(charge.ruleSource,/transaksi-refund/);
+ for(const mutate of [
+  r=>{r.guidance.instructions.find(i=>i.maneuver==='TAKE_EXIT').street='Jalan Tol Lingkar Luar Jakarta';},
+  r=>{r.legs[0].points=r.legs[0].points.map(p=>p.longitude>106.97&&p.longitude<106.98?{...p,latitude:p.latitude+.01}:p);},
+  r=>{r.legs[0].points=r.legs[0].points.slice(0,299);}
+ ]){const bad=structuredClone(route);mutate(bad);assert.equal(tripSummary(bad,rows).tolls[0].charges[0].note,null);}
+});
