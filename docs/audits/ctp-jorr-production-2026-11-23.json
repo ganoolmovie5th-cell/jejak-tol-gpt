@@ -1,0 +1,262 @@
+[
+  {
+    "name": "semper",
+    "destination": {
+      "lat": -6.1336,
+      "lon": 106.926107
+    },
+    "data": {
+      "distance": 27374,
+      "duration": 1966,
+      "tolls": [
+        {
+          "names": [
+            "Jalan Tol Cibitung - Cilincing"
+          ],
+          "exitRoads": [
+            "Jalan Syech Nawawi Al-Bantani"
+          ],
+          "charges": [
+            {
+              "systemId": "cibitung-cilincing",
+              "name": "Cibitung–Cilincing",
+              "names": [
+                "Cibitung Cilincing"
+              ],
+              "type": "closed",
+              "fare": 43000,
+              "entry": "GT GABUS",
+              "exit": "GT MARUNDA",
+              "reason": null,
+              "geometrySource": "https://sigi.pu.go.id/serverpu/rest/services/Hosted/Gerbang_Tol_(all)_Point/FeatureServer/0",
+              "mainlineSource": "https://kspservices.big.go.id/satupeta/rest/services/PUBLIK/SARANA_PRASARANA/MapServer/14",
+              "boundarySource": null,
+              "source": "https://www.ctptollways.co.id/tarif",
+              "ruleSource": "https://www.ctptollways.co.id/berita/transaksi-refund-pertama-di-jalan-tol-di-indonesia-912669",
+              "note": "Biaya bersih setelah refund JORR di Semper. Saldo saat tap Marunda harus mencukupi biaya JTCC dan JORR."
+            }
+          ],
+          "fare": 43000,
+          "start": {
+            "latitude": -6.19068,
+            "longitude": 107.06685
+          },
+          "end": {
+            "latitude": -6.13785,
+            "longitude": 106.93751
+          }
+        }
+      ],
+      "total": 43000,
+      "knownSubtotal": 43000,
+      "calculatedAt": "2026-11-23T04:14:29.984Z",
+      "tariffsAvailable": true,
+      "tariffFetchedAt": "2026-11-23T04:14:28.932Z",
+      "tariffSources": [
+        {
+          "source": "https://bpjt.pu.go.id/info-tarif-dan-golongan/",
+          "fetchedAt": "2026-11-23T04:14:28.932Z"
+        },
+        {
+          "source": "https://www.ctptollways.co.id/tarif",
+          "fetchedAt": "2026-11-23T04:14:29.953Z"
+        }
+      ]
+    }
+  },
+  {
+    "name": "pik",
+    "destination": {
+      "lat": -6.109196,
+      "lon": 106.740207
+    },
+    "data": {
+      "distance": 54183,
+      "duration": 3782,
+      "tolls": [
+        {
+          "names": [
+            "Jalan Tol Cibitung - Cilincing",
+            "Jalan Tol Lingkar Luar",
+            "Jalan Tol Pelabuhan"
+          ],
+          "exitRoads": [
+            "Jalan RE Martadinata"
+          ],
+          "charges": [
+            {
+              "systemId": "cibitung-cilincing",
+              "name": "Cibitung–Cilincing",
+              "names": [
+                "Cibitung Cilincing"
+              ],
+              "type": "closed",
+              "fare": null,
+              "entry": "GT GABUS",
+              "exit": null,
+              "reason": "Sambungan atau gerbang perjalanan belum teridentifikasi",
+              "geometrySource": "https://sigi.pu.go.id/serverpu/rest/services/Hosted/Gerbang_Tol_(all)_Point/FeatureServer/0",
+              "mainlineSource": "https://kspservices.big.go.id/satupeta/rest/services/PUBLIK/SARANA_PRASARANA/MapServer/14",
+              "boundarySource": null,
+              "source": "https://www.ctptollways.co.id/tarif",
+              "ruleSource": "https://www.ctptollways.co.id/tarif",
+              "note": null
+            },
+            {
+              "systemId": null,
+              "name": "Jalan Tol Lingkar Luar",
+              "names": [
+                "Jalan Tol Lingkar Luar"
+              ],
+              "type": "unknown",
+              "fare": null,
+              "entry": null,
+              "exit": null,
+              "reason": "Ruas belum dipetakan",
+              "geometrySource": "https://sigi.pu.go.id/geoapi/",
+              "mainlineSource": "https://kspservices.big.go.id/satupeta/rest/services/PUBLIK/SARANA_PRASARANA/MapServer/14",
+              "boundarySource": null,
+              "source": "https://bpjt.pu.go.id/info-tarif-dan-golongan/",
+              "ruleSource": null,
+              "note": null
+            },
+            {
+              "systemId": null,
+              "name": "Jalan Tol Pelabuhan",
+              "names": [
+                "Jalan Tol Pelabuhan"
+              ],
+              "type": "unknown",
+              "fare": null,
+              "entry": null,
+              "exit": null,
+              "reason": "Ruas belum dipetakan",
+              "geometrySource": "https://sigi.pu.go.id/geoapi/",
+              "mainlineSource": "https://kspservices.big.go.id/satupeta/rest/services/PUBLIK/SARANA_PRASARANA/MapServer/14",
+              "boundarySource": null,
+              "source": "https://bpjt.pu.go.id/info-tarif-dan-golongan/",
+              "ruleSource": null,
+              "note": null
+            }
+          ],
+          "fare": null,
+          "start": {
+            "latitude": -6.19068,
+            "longitude": 107.06685
+          },
+          "end": {
+            "latitude": -6.1272,
+            "longitude": 106.84907
+          }
+        },
+        {
+          "names": [
+            "Jalan Tol Pelabuhan",
+            "Jalan Tol Profesor Insinyur Sedyatmo"
+          ],
+          "exitRoads": [
+            "Jalan Pantai Indah Kapuk"
+          ],
+          "charges": [
+            {
+              "systemId": null,
+              "name": "Jalan Tol Pelabuhan",
+              "names": [
+                "Jalan Tol Pelabuhan"
+              ],
+              "type": "unknown",
+              "fare": null,
+              "entry": null,
+              "exit": null,
+              "reason": "Ruas belum dipetakan",
+              "geometrySource": "https://sigi.pu.go.id/geoapi/",
+              "mainlineSource": "https://kspservices.big.go.id/satupeta/rest/services/PUBLIK/SARANA_PRASARANA/MapServer/14",
+              "boundarySource": null,
+              "source": "https://bpjt.pu.go.id/info-tarif-dan-golongan/",
+              "ruleSource": null,
+              "note": null
+            },
+            {
+              "systemId": "dalam-kota-jakarta",
+              "name": "Dalam Kota Jakarta terintegrasi",
+              "names": [
+                "Insinyur Wiyoto Wiyono"
+              ],
+              "type": "open",
+              "fare": 11000,
+              "entry": null,
+              "exit": null,
+              "reason": null,
+              "geometrySource": "https://sigi.pu.go.id/geoapi/",
+              "mainlineSource": "https://kspservices.big.go.id/satupeta/rest/services/PUBLIK/SARANA_PRASARANA/MapServer/14",
+              "boundarySource": null,
+              "source": "https://bpjt.pu.go.id/info-tarif-dan-golongan/",
+              "ruleSource": "https://investor.jasamarga.com/misc/AR/html/2024/961/",
+              "note": null
+            },
+            {
+              "systemId": "sedyatmo",
+              "name": "Sedyatmo",
+              "names": [
+                "Sedyatmo"
+              ],
+              "type": "open",
+              "fare": 8500,
+              "entry": null,
+              "exit": null,
+              "reason": null,
+              "geometrySource": "https://sigi.pu.go.id/geoapi/",
+              "mainlineSource": "https://kspservices.big.go.id/satupeta/rest/services/PUBLIK/SARANA_PRASARANA/MapServer/14",
+              "boundarySource": null,
+              "source": "https://bpjt.pu.go.id/info-tarif-dan-golongan/",
+              "ruleSource": "https://investor-id.jasamarga.com/newsroom/LK_JSMR_31_Desember_2025.pdf",
+              "note": null
+            },
+            {
+              "systemId": "jorr",
+              "name": "JORR 1 terintegrasi",
+              "names": [
+                "Lingkar Luar Jakarta"
+              ],
+              "type": "open",
+              "fare": 17000,
+              "entry": null,
+              "exit": null,
+              "reason": null,
+              "geometrySource": "https://sigi.pu.go.id/geoapi/",
+              "mainlineSource": "https://kspservices.big.go.id/satupeta/rest/services/PUBLIK/SARANA_PRASARANA/MapServer/14",
+              "boundarySource": null,
+              "source": "https://bpjt.pu.go.id/info-tarif-dan-golongan/",
+              "ruleSource": "https://investor-id.jasamarga.com/newsroom/LK_JSMR_31_Desember_2025.pdf",
+              "note": null
+            }
+          ],
+          "fare": null,
+          "start": {
+            "latitude": -6.13111,
+            "longitude": 106.82737
+          },
+          "end": {
+            "latitude": -6.10964,
+            "longitude": 106.73853
+          }
+        }
+      ],
+      "total": null,
+      "knownSubtotal": 36500,
+      "calculatedAt": "2026-11-23T04:14:32.954Z",
+      "tariffsAvailable": true,
+      "tariffFetchedAt": "2026-11-23T04:14:32.935Z",
+      "tariffSources": [
+        {
+          "source": "https://bpjt.pu.go.id/info-tarif-dan-golongan/",
+          "fetchedAt": "2026-11-23T04:14:32.935Z"
+        },
+        {
+          "source": "https://www.ctptollways.co.id/tarif",
+          "fetchedAt": "2026-11-23T04:14:31.549Z"
+        }
+      ]
+    }
+  }
+]
