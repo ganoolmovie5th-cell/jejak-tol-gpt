@@ -74,3 +74,18 @@ test('official Karawaci geometry identifies ramps without joining the public-roa
  const displaced=fixture.points.map(p=>({...p,latitude:p.latitude+.02}));
  assert.deepEqual(junctionEvents(displaced,{startPointIndex:fixture.gapEnd,endPointIndex:displaced.length-1}),[]);
 });
+
+test('generic toll labels require complete unambiguous geometry for their named interval',async()=>{
+ const {genericRoadSystem}=await import('../lib/pu-route-geometry.mjs');
+ const features=[{system:'jorr',paths:[[[110,-7],[110.03,-7]]]}];
+ const points=Array.from({length:31},(_,i)=>({longitude:110+i*.001,latitude:-7}));
+ assert.equal(genericRoadSystem('Jalan Tol Lingkar Luar',points,0,30,features),'jorr');
+ assert.equal(continuousTollGap(points,0,30,'jorr',features),false); // Gap bridging retains its 1.5 km cap.
+ assert.equal(genericRoadSystem('Jalan Tol Pelabuhan',points,0,30,features),'jorr');
+ assert.equal(genericRoadSystem('Jalan Tol Pelabuhan',points,0,30,[{...features[0],system:'dalam-kota-jakarta'}]),'dalam-kota-jakarta');
+ assert.equal(genericRoadSystem('Jalan Tol Lingkar Luar',points,0,30,[{...features[0],system:'dalam-kota-jakarta'}]),null);
+ for(const f of [[...features,{...features[0],system:'other'}],[{system:'jorr',paths:[[[110,-7],[110.01,-7]],[[110.02,-7],[110.03,-7]]]}]])assert.equal(genericRoadSystem('Jalan Tol Lingkar Luar',points,0,30,f),null);
+ assert.equal(genericRoadSystem('Jalan Tol Lingkar Luar',points.map(p=>({...p,latitude:-7.001})),0,30,features),null);
+ assert.equal(genericRoadSystem('Jalan Pelabuhan',points,0,30,features),null);
+ assert.equal(genericRoadSystem('Jalan Tol Lingkar Luar',points,0,0,features),null);
+});
