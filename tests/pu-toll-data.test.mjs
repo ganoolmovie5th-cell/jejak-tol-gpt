@@ -89,3 +89,14 @@ test('generic toll labels require complete unambiguous geometry for their named 
  assert.equal(genericRoadSystem('Jalan Pelabuhan',points,0,30,features),null);
  assert.equal(genericRoadSystem('Jalan Tol Lingkar Luar',points,0,0,features),null);
 });
+
+test('generic JORR guidance on published mainline produces one charge through tripSummary',async()=>{
+ const {tripSummary}=await import('../lib/trip-route.mjs');
+ // BIG MapServer/14 JORR mainline sample; an unnamed maneuver must not truncate its named interval.
+ const points=[[106.892614,-6.306669],[106.895471,-6.307356],[106.896419,-6.307702],[106.897294,-6.308095],[106.898687,-6.308915],[106.901076,-6.310712],[106.901386,-6.310896],[106.901977,-6.311168],[106.902606,-6.311364]].map(([longitude,latitude])=>({longitude,latitude}));
+ const route={summary:{lengthInMeters:1300,travelTimeInSeconds:60},legs:[{points}],guidance:{instructions:[{pointIndex:0,street:'Jalan Tol Lingkar Luar',maneuver:'ENTER_MOTORWAY'},{pointIndex:1,maneuver:'FOLLOW'}]},sections:[{sectionType:'TOLL',startPointIndex:0,endPointIndex:8}]};
+ const rows=[{road:'JORR S',origin:'',destination:'',fares:[17000]}];
+ const result=tripSummary(route,rows);assert.equal(result.total,17000);assert.equal(result.tolls[0].charges.length,1);
+ const bad=structuredClone(route);bad.legs[0].points[4].latitude+=.001;
+ assert.equal(tripSummary(bad,rows).total,null);
+});
